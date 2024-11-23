@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Memoria Futurista</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1e3c72, #2a5298, #0f0c29);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      min-height: 100vh;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    #mainContainer {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      max-width: 1200px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    #gameContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+    }
+    #header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+      width: 100%;
+    }
+    #gameBoard {
+      display: grid;
+      gap: 10px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(0, 255, 204, 0.8);
+      width: 100%;
+      max-width: 500px;
+    }
+    #recordBoard {
+      margin-top: 30px;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.85);
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
+      max-height: 600px;
+      overflow-y: auto;
+      width: 100%;
+      max-width: 300px;
+      color: #ffd700;
+    }
+    #recordBoard h3 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      color: #ffdf00;
+    }
+    .card {
+      width: 100%;
+      height: 80px;
+      background: linear-gradient(135deg, #00ffcc, #007bff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+      border-radius: 20px;
+      transition: transform 0.4s, background 0.4s, box-shadow 0.4s;
+      color: transparent;
+    }
+    .card:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+    }
+    .flipped, .matched {
+      background: #ffffff;
+      color: #000;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+      transform: scale(1.1);
+    }
+    #timer, #level, #completionTime {
+      font-size: 2rem;
+      margin: 10px;
+      font-family: 'Orbitron', sans-serif;
+    }
+    #completionTime {
+      display: none;
+      margin-top: 20px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      font-size: 1.2rem;
+      padding: 5px 0;
+      border-bottom: 1px solid #ffd700;
+    }
+    #levelSelector {
+      margin-top: 20px;
+      text-align: center;
+    }
+    #levelSelector button {
+      margin: 5px;
+      padding: 10px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #00ffcc;
+      color: #000;
+      transition: background 0.3s;
+    }
+    #levelSelector button:hover {
+      background: #007bff;
+      color: #fff;
+    }
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+      }
+      #mainContainer {
+        flex-direction: column;
+        align-items: center;
+      }
+      #gameContainer {
+        width: 100%;
+        max-width: 100%;
+      }
+      #recordBoard {
+        margin-left: 0;
+        margin-top: 20px;
+        width: 90%;
+        align-self: center;
+      }
+      .card {
+        height: 60px;
+        font-size: 1.5rem;
+      }
+      #gameBoard {
+        gap: 5px;
+        padding: 10px;
+      }
+      #header {
+        width: 95%;
+      }
+      #levelSelector button {
+        padding: 8px;
+        font-size: 0.9rem;
+      }
+    }
+    @media (max-width: 480px) {
+      body {
+        padding: 5px;
+      }
+      #mainContainer {
+        flex-direction: column;
+        align-items: center;
+      }
+      #gameContainer {
+        max-width: 100%;
+      }
+      .card {
+        height: 50px;
+        font-size: 1.2rem;
+      }
+      #header, #recordBoard {
+        width: 95%;
+        padding: 10px;
+      }
+      #timer, #level, #completionTime {
+        font-size: 1.5rem;
+      }
+      #levelSelector button {
+        padding: 6px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="mainContainer">
+    <div id="gameContainer">
+      <div id="header">
+        <div id="level">Nivel: 1</div>
+        <div id="timer">Tiempo: 0s</div>
+        <div id="completionTime">Tiempo de finalización: </div>
+      </div>
+      <div id="gameBoard"></div>
+      <div id="levelSelector">
+        <button id="prevLevel" onclick="goToPreviousLevel()">Nivel Anterior</button>
+        <button id="nextLevel" onclick="goToNextLevel()">Nivel Siguiente</button>
+        <button id="currentLevel" onclick="goToCurrentLevel()">Ir al Nivel Actual</button>
+      </div>
+    </div>
+    <div id="recordBoard">
+      <h3>Historial de Niveles</h3>
+      <ul id="recordList"></ul>
+    </div>
+  </div>
+  <script>
+    const symbols = ['🍔', '🍕', '🍗', '🍟', '🍱', '🍲', '🍳', '🍿', '🍦', '🍩', '🍰', '🍫', '🍬', '🍭'];
+    let cards = [...symbols, ...symbols];
+    let gameBoard = document.getElementById('gameBoard');
+    let flippedCards = [];
+    let matchedCards = [];
+    let level = JSON.parse(localStorage.getItem('memoryLevel')) || 1;
+    let timeElapsed = 0;
+    let timerInterval;
+    let records = JSON.parse(localStorage.getItem('memoryRecords')) || [];
+    let maxLevelReached = Math.max(level, ...records.map(record => record.level));
+
+    document.getElementById('level').textContent = `Nivel: ${level}`;
+    displayRecords();
+    updateLevelButtonState();
+
+    // Barajar las cartas
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function createBoard() {
+      clearInterval(timerInterval);
+      timeElapsed = 0;
+      document.getElementById('timer').textContent = `Tiempo: ${timeElapsed}s`;
+      document.getElementById('completionTime').style.display = 'none';
+      startTimer();
+      const numSymbols = Math.min(level + 3, symbols.length);
+      cards = [...symbols.slice(0, numSymbols), ...symbols.slice(0, numSymbols)];
+      shuffle(cards);
+      gameBoard.innerHTML = '';
+      const gridSize = Math.ceil(Math.sqrt(cards.length));
+      gameBoard.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+      gameBoard.style.gridTemplateRows = `repeat(${gridSize}, 100px)`;
+      cards.forEach((symbol, index) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.dataset.symbol = symbol;
+        card.dataset.index = index;
+        card.addEventListener('click', flipCard);
+        gameBoard.appendChild(card);
+      });
+    }
+
+    function flipCard() {
+      if (flippedCards.length < 2 && !this.classList.contains('flipped') && !this.classList.contains('matched')) {
+        this.classList.add('flipped');
+        this.textContent = this.dataset.symbol;
+        flippedCards.push(this);
+
+        if (flippedCards.length === 2) {
+          checkForMatch();
+        }
+      }
+    }
+
+    function checkForMatch() {
+      const [card1, card2] = flippedCards;
+      if (card1.dataset.symbol === card2.dataset.symbol) {
+        card1.classList.add('matched');
+        card2.classList.add('matched');
+        matchedCards.push(card1, card2);
+        flippedCards = [];
+        checkForWin();
+      } else {
+        setTimeout(() => {
+          card1.classList.remove('flipped');
+          card2.classList.remove('flipped');
+          card1.textContent = '';
+          card2.textContent = '';
+          flippedCards = [];
+        }, 1000);
+      }
+    }
+
+    function checkForWin() {
+      if (matchedCards.length === cards.length) {
+        clearInterval(timerInterval);
+        setTimeout(() => {
+          alert(`¡Felicidades! ¡Has emparejado todas las cartas! Completaste el nivel en ${timeElapsed} segundos.`);
+          records.push({ level: level, time: timeElapsed });
+          localStorage.setItem('memoryRecords', JSON.stringify(records));
+          level++;
+          maxLevelReached = Math.max(maxLevelReached, level);
+          localStorage.setItem('memoryLevel', JSON.stringify(level));
+          document.getElementById('level').textContent = `Nivel: ${level}`;
+          document.getElementById('completionTime').textContent = `Tiempo de finalización: ${timeElapsed}s`;
+          document.getElementById('completionTime').style.display = 'block';
+          displayRecords();
+          updateLevelButtonState();
+          createBoard();
+        }, 500);
+      }
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        timeElapsed++;
+        document.getElementById('timer').textContent = `Tiempo: ${timeElapsed}s`;
+      }, 1000);
+    }
+
+    function displayRecords() {
+      const recordList = document.getElementById('recordList');
+      recordList.innerHTML = '';
+      records.forEach(record => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `Nivel ${record.level}: ${record.time} segundos`;
+        recordList.appendChild(listItem);
+      });
+    }
+
+    function goToPreviousLevel() {
+      if (level > 1) {
+        level--;
+        localStorage.setItem('memoryLevel', JSON.stringify(level));
+        document.getElementById('level').textContent = `Nivel: ${level}`;
+        updateLevelButtonState();
+        createBoard();
+      }
+    }
+
+    function goToNextLevel() {
+      if (level < maxLevelReached) {
+        level++;
+        localStorage.setItem('memoryLevel', JSON.stringify(level));
+        document.getElementById('level').textContent = `Nivel: ${level}`;
+        updateLevelButtonState();
+        createBoard();
+      }
+    }
+
+    function goToCurrentLevel() {
+      level = maxLevelReached;
+      localStorage.setItem('memoryLevel', JSON.stringify(level));
+      document.getElementById('level').textContent = `Nivel: ${level}`;
+      updateLevelButtonState();
+      createBoard();
+    }
+
+    function updateLevelButtonState() {
+      const prevButton = document.getElementById('prevLevel');
+      const nextButton = document.getElementById('nextLevel');
+      const currentButton = document.getElementById('currentLevel');
+      
+      prevButton.disabled = level <= 1;
+      nextButton.disabled = level >= maxLevelReached;
+      currentButton.disabled = level === maxLevelReached;
+    }
+
+    createBoard();
+  </script>
+</body>
+</html>
+
