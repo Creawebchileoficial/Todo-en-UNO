@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Asistencia Universitaria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 1rem;
+            display: block;
+            color: #f0f0f0;
+        }
+        input {
+            width: calc(100% - 2rem);
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            transition: box-shadow 0.3s;
+        }
+        input:focus {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            margin-top: 1.5rem;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .legend {
+            margin-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            font-size: 1rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            width: 48%;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        .color-sin-info {
+            background-color: #d3d3d3;
+        }
+        .color-asistida {
+            background-color: #90ee90;
+        }
+        .color-atraso {
+            background-color: #ffd700;
+        }
+        .color-inasistencia {
+            background-color: #ff6f61;
+        }
+        .color-justificada {
+            background-color: #87cefa;
+        }
+        @media (max-width: 500px) {
+            .container {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            button {
+                padding: 0.6rem;
+                font-size: 1rem;
+            }
+            input {
+                padding: 0.6rem;
+            }
+            .legend-item {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Asistencia</h1>
+        <label for="asistidas">Clases Asistidas</label>
+        <input type="number" id="asistidas" placeholder="Ingrese número de asistencias" oninput="actualizarLegend('asistidas', 'asistida')">
+
+        <label for="atrasos">Clases con Atraso</label>
+        <input type="number" id="atrasos" placeholder="Ingrese número de atrasos" oninput="actualizarLegend('atrasos', 'atraso')">
+
+        <label for="inasistencias">Clases con Inasistencia</label>
+        <input type="number" id="inasistencias" placeholder="Ingrese número de inasistencias" oninput="actualizarLegend('inasistencias', 'inasistencia')">
+
+        <label for="total">Total de Clases</label>
+        <input type="number" id="total" placeholder="Ingrese el total de clases">
+
+        <label for="justificadas">Faltas Justificadas</label>
+        <input type="number" id="justificadas" placeholder="Ingrese número de faltas justificadas" oninput="actualizarLegend('justificadas', 'justificada')">
+
+        <label for="sinInfo">Faltas sin Información</label>
+        <input type="number" id="sinInfo" placeholder="Ingrese número de faltas sin información" oninput="actualizarLegend('sinInfo', 'sin-info')">
+
+        <button onclick="calcularAsistencia()">Calcular Asistencia</button>
+
+        <div class="result" id="resultado"></div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color color-sin-info"></div> Sin Información: <span id="legend-sin-info">0</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-asistida"></div> Asistida: <span id="legend-asistida">0</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-atraso"></div> Atraso: <span id="legend-atraso">0</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-inasistencia"></div> Inasistencia: <span id="legend-inasistencia">0</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color color-justificada"></div> Falta Justificada: <span id="legend-justificada">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calcularAsistencia() {
+            const asistidas = parseInt(document.getElementById('asistidas').value) || 0;
+            const atrasos = parseInt(document.getElementById('atrasos').value) || 0;
+            const inasistencias = parseInt(document.getElementById('inasistencias').value) || 0;
+            const total = parseInt(document.getElementById('total').value) || 0;
+            const justificadas = parseInt(document.getElementById('justificadas').value) || 0;
+            const sinInfo = parseInt(document.getElementById('sinInfo').value) || 0;
+
+            if (total <= justificadas + sinInfo) {
+                document.getElementById('resultado').innerText = 'Error: Verifique los datos ingresados.';
+                return;
+            }
+            
+            const asistenciaReal = total - justificadas - sinInfo;
+            const porcentajeAsistencia = Math.floor(((asistidas + atrasos) / asistenciaReal) * 100);
+            document.getElementById('resultado').innerText = `Porcentaje de Asistencia: ${porcentajeAsistencia}%`;
+        }
+
+        function actualizarLegend(inputId, legendId) {
+            const value = parseInt(document.getElementById(inputId).value) || 0;
+            document.getElementById(`legend-${legendId}`).innerText = value;
+        }
+    </script>
+</body>
+</html>
