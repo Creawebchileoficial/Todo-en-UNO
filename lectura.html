@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Tiempo de Lectura</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        /* Contenedor principal */
+        .container {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            text-align: center;
+        }
+        /* Título */
+        h2 {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+        /* Estilo de los inputs y botones */
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        /* Resultado */
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        /* Espacio en el footer */
+        .footer-space {
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculadora de Tiempo de Lectura</h2>
+        <p>Ingrese el número de páginas y su velocidad de lectura para estimar el tiempo total.</p>
+        
+        <input type="number" id="page-count" placeholder="Número de páginas" min="1" required>
+        <input type="number" id="reading-speed" placeholder="Velocidad de lectura (páginas por minuto)" min="1" required>
+        
+        <button onclick="calculateReadingTime()">Calcular Tiempo de Lectura</button>
+        
+        <div class="result" id="result"></div>
+    </div>
+    
+    <div class="footer-space"></div>
+    <script>
+        function calculateReadingTime() {
+            // Obtener los valores de los campos de entrada
+            const pageCount = parseInt(document.getElementById("page-count").value);
+            const readingSpeed = parseInt(document.getElementById("reading-speed").value);
+            
+            // Validar los valores ingresados
+            if (isNaN(pageCount) || isNaN(readingSpeed) || pageCount <= 0 || readingSpeed <= 0) {
+                document.getElementById("result").innerText = "Por favor, ingrese valores válidos.";
+                return;
+            }
+            
+            // Calcular el tiempo total en minutos
+            const totalMinutes = pageCount / readingSpeed;
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = Math.round(totalMinutes % 60);
+            // Mostrar el resultado
+            document.getElementById("result").innerHTML = `
+                <strong>Tiempo estimado de lectura:</strong><br>
+                ${hours} horas y ${minutes} minutos
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Estadística Descriptiva</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: left;
+        }
+        .footer-space {
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculadora de Estadística Descriptiva</h2>
+        <p>Ingresa un conjunto de números separados por comas:</p>
+        <input type="text" id="data-input" placeholder="Ejemplo: 1, 2, 3, 4, 5">
+        <button onclick="calculateStatistics()">Calcular Estadísticas</button>
+        <div class="result" id="result"></div>
+    </div>
+    <div class="footer-space"></div>
+
+    <script>
+        function calculateStatistics() {
+            const input = document.getElementById("data-input").value;
+            const data = input.split(',').map(Number).filter(num => !isNaN(num));
+            
+            if (data.length === 0) {
+                document.getElementById("result").innerText = "Por favor ingresa números válidos.";
+                return;
+            }
+
+            const mean = calculateMean(data);
+            const median = calculateMedian(data);
+            const mode = calculateMode(data);
+            const variance = calculateVariance(data, mean);
+            const stdDev = Math.sqrt(variance);
+
+            document.getElementById("result").innerHTML = `
+                <strong>Resultados:</strong><br>
+                Media: ${mean.toFixed(2)}<br>
+                Mediana: ${median}<br>
+                Moda: ${mode}<br>
+                Varianza: ${variance.toFixed(2)}<br>
+                Desviación Estándar: ${stdDev.toFixed(2)}
+            `;
+        }
+
+        function calculateMean(data) {
+            return data.reduce((a, b) => a + b) / data.length;
+        }
+
+        function calculateMedian(data) {
+            const sorted = data.slice().sort((a, b) => a - b);
+            const mid = Math.floor(sorted.length / 2);
+            return sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+        }
+
+        function calculateMode(data) {
+            const frequency = {};
+            data.forEach(num => frequency[num] = (frequency[num] || 0) + 1);
+            const maxFreq = Math.max(...Object.values(frequency));
+            const modes = Object.keys(frequency).filter(num => frequency[num] === maxFreq);
+            return modes.length === data.length ? "No hay moda" : modes.join(', ');
+        }
+
+        function calculateVariance(data, mean) {
+            return data.reduce((acc, num) => acc + Math.pow(num - mean, 2), 0) / data.length;
+        }
+    </script>
+</body>
+</html>

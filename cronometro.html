@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronómetro de Estudio Multisesión</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; text-align: center; }
+        h1 { color: #4CAF50; margin-top: 10px; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input { width: 100%; padding: 8px; margin-top: 5px; }
+        button { margin-top: 15px; padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; width: 100%; }
+        button:hover { background-color: #45a049; }
+        #timer { font-size: 2em; margin-top: 20px; font-weight: bold; color: #333; }
+        footer { height: 200px; background-color: white; }
+    </style>
+</head>
+<body>
+    <h1>Cronómetro de Estudio Multisesión</h1>
+
+    <label for="studyTime">Tiempo de Estudio (minutos):</label>
+    <input type="number" id="studyTime" placeholder="Ej: 25" min="1" value="25">
+
+    <label for="breakTime">Tiempo de Descanso (minutos):</label>
+    <input type="number" id="breakTime" placeholder="Ej: 5" min="1" value="5">
+
+    <div id="timer">00:00</div>
+
+    <button onclick="startTimer()">Iniciar Cronómetro</button>
+    <button onclick="resetTimer()">Restablecer Cronómetro</button>
+
+    <footer></footer>
+
+    <script>
+        let studyTime, breakTime, currentMode, timerInterval;
+        const timerDisplay = document.getElementById("timer");
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval); // Limpia cualquier cronómetro en marcha
+            studyTime = parseInt(document.getElementById("studyTime").value) * 60;
+            breakTime = parseInt(document.getElementById("breakTime").value) * 60;
+            currentMode = "study"; // Comienza en modo de estudio
+            startCountdown(studyTime);
+        }
+
+        function startCountdown(time) {
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(time / 60);
+                const seconds = time % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (time > 0) {
+                    time--;
+                } else {
+                    clearInterval(timerInterval);
+                    if (currentMode === "study") {
+                        alert("¡Tiempo de descanso!");
+                        currentMode = "break";
+                        startCountdown(breakTime);
+                    } else {
+                        alert("¡Fin del descanso! Vuelve al estudio.");
+                        currentMode = "study";
+                        startCountdown(studyTime);
+                    }
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerDisplay.textContent = "00:00";
+            currentMode = "study";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Notas Universitarias</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+        .calculator {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        .calculator h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffffff;
+            font-size: 26px;
+        }
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            position: relative;
+            flex-wrap: wrap;
+        }
+        .input-group label {
+            flex: 1 0 45%;
+            font-weight: bold;
+            color: #f1f1f1;
+            margin-bottom: 5px;
+        }
+        .input-group input[type="text"] {
+            flex: 1 0 45%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+        .input-group input[type="text"]::placeholder {
+            color: #ddd;
+        }
+        .input-group .delete-btn {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background-color: #e53935;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 5px 8px;
+            line-height: 1;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .input-group .delete-btn:hover {
+            background-color: #c62828;
+        }
+        .calculator button {
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .calculator button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #fff;
+        }
+        .result span {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .result .red {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        .result .blue {
+            color: #48dbfb;
+            font-weight: bold;
+        }
+        .result .orange {
+            color: #ff9f43;
+            font-weight: bold;
+        }
+        .result .green {
+            color: #1dd1a1;
+            font-weight: bold;
+        }
+
+        /* Media Query para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .input-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .input-group label, 
+            .input-group input[type="text"] {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .input-group .delete-btn {
+                position: relative;
+                top: auto;
+                right: auto;
+                transform: none;
+                align-self: flex-end;
+            }
+            .calculator {
+                padding: 15px;
+                max-width: 95%;
+                margin-top: 10px;
+            }
+            .calculator button {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .input-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .input-group label, 
+            .input-group input[type="text"] {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            .input-group .delete-btn {
+                position: relative;
+                top: auto;
+                right: auto;
+                transform: none;
+                align-self: flex-end;
+            }
+            .calculator {
+                padding: 10px;
+                max-width: 100%;
+                margin-top: 5px;
+            }
+            .calculator button {
+                padding: 8px;
+                font-size: 12px;
+            }
+        }
+
+        footer {
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>Calculadora de Notas 🎓</h2>
+        <div id="scoreContainer">
+            <div class="input-group">
+                <label>Nota:</label>
+                <input type="text" class="score" placeholder="Ej: 40" oninput="validateInput(this)">
+                <label>Porcentaje:</label>
+                <input type="text" class="weight" placeholder="Ej: 20" oninput="validateInput(this)">
+                <button class="delete-btn" onclick="removeScore(this)">✖</button>
+            </div>
+            <div class="input-group">
+                <label>Nota:</label>
+                <input type="text" class="score" placeholder="Ej: 40" oninput="validateInput(this)">
+                <label>Porcentaje:</label>
+                <input type="text" class="weight" placeholder="Ej: 30" oninput="validateInput(this)">
+                <button class="delete-btn" onclick="removeScore(this)">✖</button>
+            </div>
+        </div>
+        <button onclick="addScore()">Añadir Nota</button>
+        <div class="input-group">
+            <label>Nota del Examen:</label>
+            <input type="text" id="examScore" placeholder="Ej: 50" oninput="validateInput(this)">
+            <label>Porcentaje del Examen:</label>
+            <input type="text" id="examWeight" placeholder="Ej: 50" oninput="validateInput(this)">
+        </div>
+        <button onclick="calculate()">Calcular</button>
+        <button onclick="resetCalculator()">Resetear</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <footer></footer>
+
+    <script>
+        function validateInput(input) {
+            // Elimina cualquier carácter que no sea un número entero
+            input.value = input.value.replace(/[^0-9]/g, '');
+        }
+
+        function addScore() {
+            const container = document.getElementById('scoreContainer');
+            const newScoreDiv = document.createElement('div');
+            newScoreDiv.classList.add('input-group');
+            newScoreDiv.innerHTML = `
+                <label>Nota:</label>
+                <input type="text" class="score" placeholder="Ej: 40" oninput="validateInput(this)">
+                <label>Porcentaje:</label>
+                <input type="text" class="weight" placeholder="Ej: 20" oninput="validateInput(this)">
+                <button class="delete-btn" onclick="removeScore(this)">✖</button>
+            `;
+            container.appendChild(newScoreDiv);
+        }
+
+        function removeScore(button) {
+            const container = document.getElementById('scoreContainer');
+            if (container.childElementCount > 1) { // Permitir al menos una nota
+                button.parentElement.remove();
+            } else {
+                alert("Debes tener al menos una nota.");
+            }
+        }
+
+        function calculate() {
+            const scores = document.querySelectorAll('.score');
+            const weights = document.querySelectorAll('.weight');
+            const examScoreElement = document.getElementById('examScore');
+            const examWeightElement = document.getElementById('examWeight');
+
+            let totalScore = 0;
+            let totalWeight = 0;
+
+            scores.forEach((score, index) => {
+                let scoreValue = parseInt(score.value);
+                let weight = parseInt(weights[index].value) / 100;
+
+                if (!isNaN(scoreValue) && !isNaN(weight)) {
+                    totalScore += scoreValue * weight;
+                    totalWeight += weight;
+                }
+            });
+
+            // Si el usuario ingresó un examen final, lo incluimos en el cálculo
+            let examScore = parseInt(examScoreElement.value);
+            let examWeight = parseInt(examWeightElement.value) / 100;
+            if (!isNaN(examScore) && !isNaN(examWeight)) {
+                totalScore += examScore * examWeight;
+                totalWeight += examWeight;
+            }
+
+            const finalScore = (totalScore / totalWeight); 
+            const resultElement = document.getElementById('result');
+            
+            resultElement.innerHTML = ''; // Limpiar resultado anterior
+
+            const positiveMessages = [
+                "¡Increíble! ¡Eres un verdadero campeón! 🌟",
+                "¡Excelente! Sigue con ese esfuerzo increíble 💪",
+                "¡Estás arrasando! 🌟",
+                "¡Muy bien hecho! ¡Sigue esforzándote! ☺",
+                "¡Gran resultado! ¡Sigue adelante! 🚀"
+            ];
+
+            const closeCallMessage = "¡Uff, por poco no pasas! Pero lo lograste, ¡tienes un 4.00! 🎉";
+
+            const motivationalMessages = [
+                "Recuerda que cada paso cuenta, ¡no te rindas! 🌟",
+                "¡No te desanimes! Lo importante es seguir intentando. 💪",
+                "El esfuerzo que pones hoy te llevará al éxito mañana. 🚀",
+                "Estás cerca, un poco más de esfuerzo y lo lograrás! 🚀",
+                "¡Casi lo tienes! No te detengas ahora 👏"
+            ];
+
+            function getRandomMessage(messages) {
+                return messages[Math.floor(Math.random() * messages.length)];
+            }
+
+            if (finalScore >= 39.5 && finalScore < 40.0) {
+                resultElement.innerHTML = `<span class="orange">Resultado final: ${finalScore.toFixed(1)}<br>${closeCallMessage}</span>`;
+            } else if (finalScore >= 40.0) {
+                resultElement.innerHTML = `<span class="green">Tu nota final es: ${finalScore.toFixed(1)} 🌟</span><span class="green">${getRandomMessage(positiveMessages)}</span>`;
+            } else {
+                resultElement.innerHTML = `<span class="red">Tu nota final es: ${finalScore.toFixed(1)} 😓</span><span class="red">${getRandomMessage(motivationalMessages)}</span>`;
+            }
+        }
+
+        function resetCalculator() {
+            document.getElementById('scoreContainer').innerHTML = `
+                <div class="input-group">
+                    <label>Nota:</label>
+                    <input type="text" class="score" placeholder="Ej: 40" oninput="validateInput(this)">
+                    <label>Porcentaje:</label>
+                    <input type="text" class="weight" placeholder="Ej: 20" oninput="validateInput(this)">
+                    <button class="delete-btn" onclick="removeScore(this)">✖</button>
+                </div>
+            `;
+            document.getElementById('examScore').value = '';
+            document.getElementById('examWeight').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

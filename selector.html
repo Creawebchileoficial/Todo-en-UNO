@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector Aleatorio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to right, #83a4d4, #b6fbff);
+            zoom: 0.9; /* Ajusta el zoom de la página */
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            max-width: 100%;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            color: #264653;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        p.description {
+            color: #264653;
+            margin-bottom: 20px;
+            font-size: 1em;
+            text-align: left;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #2a9d8f;
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: #f0fdfa;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .input-group input {
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #e76f51;
+            width: 70%;
+            box-sizing: border-box;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 15px;
+            background-color: #ffebe6;
+        }
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background-color: #f4a261;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .actions button:hover {
+            background-color: #e76f51;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.3em;
+            color: #264653;
+            text-align: left;
+            background-color: #dff3e3;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .result span {
+            color: #e76f51;
+            font-weight: bold;
+        }
+        .leftovers {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #e76f51;
+            text-align: left;
+        }
+        .recommendation {
+            margin-top: 10px;
+            font-size: 1.1em;
+            color: #2a9d8f;
+            text-align: left;
+            background-color: #ffebe6;
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                zoom: 0.85; /* Reducir el zoom en dispositivos móviles */
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .input-group input {
+                width: 90%;
+                font-size: 14px;
+            }
+            .actions button {
+                font-size: 14px;
+                padding: 10px;
+            }
+            .result, .recommendation {
+                font-size: 1em;
+            }
+            .result {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Selector Aleatorio</h2>
+        <p class="description">
+            Selecciona personas o forma grupos de manera aleatoria.
+        </p>
+        <textarea id="nameList" placeholder="Ingresa los nombres, uno por línea..."></textarea>
+        <div class="input-group">
+            <input type="number" id="numberOfPeople" placeholder="Personas por grupo o para seleccionar" min="1" max="100">
+            <input type="number" id="numberOfGroups" placeholder="Número de grupos (opcional)" min="1" max="100">
+        </div>
+        <div class="actions">
+            <button onclick="selectRandom()">Seleccionar Persona(s)</button>
+            <button onclick="selectGroups()">Formar Grupos</button>
+            <button onclick="resetList()">Resetear Todo</button>
+            <button onclick="resetResults()">Resetear Resultados</button>
+            <button onclick="addLeftoverToGroup()" id="addButton" style="display: none;">Añadir Sobras a un Grupo</button>
+        </div>
+        <div class="result" id="result"></div>
+        <div class="leftovers" id="leftovers"></div>
+        <div class="recommendation" id="recommendation"></div>
+    </div>
+
+    <script>
+        let shuffledNames = [];
+
+        function getNames() {
+            const textarea = document.getElementById('nameList');
+            const names = textarea.value.split('\n').map(name => name.trim()).filter(name => name !== "");
+            return names;
+        }
+
+        function selectRandom() {
+            shuffledNames = shuffleArray(getNames());
+            const numberOfPeople = parseInt(document.getElementById('numberOfPeople').value);
+
+            if (shuffledNames.length === 0) {
+                alert("Por favor, ingresa al menos un nombre.");
+                return;
+            }
+            
+            if (isNaN(numberOfPeople) || numberOfPeople < 1 || numberOfPeople > shuffledNames.length) {
+                alert(`Por favor, ingresa un número válido entre 1 y ${shuffledNames.length}.`);
+                return;
+            }
+            
+            const selectedNames = shuffledNames.slice(0, numberOfPeople);
+            document.getElementById('result').innerHTML = `Seleccionados: <span>${selectedNames.join(', ')}</span>`;
+            document.getElementById('leftovers').innerText = '';
+            document.getElementById('recommendation').innerText = '';
+            document.getElementById('addButton').style.display = 'none';
+        }
+
+        function selectGroups() {
+            shuffledNames = shuffleArray(getNames());
+            const peoplePerGroup = parseInt(document.getElementById('numberOfPeople').value);
+            const numberOfGroups = parseInt(document.getElementById('numberOfGroups').value);
+            const totalPeople = peoplePerGroup * numberOfGroups;
+            
+            if (shuffledNames.length === 0) {
+                alert("Por favor, ingresa al menos un nombre.");
+                return;
+            }
+            
+            if (isNaN(peoplePerGroup) || peoplePerGroup < 1 || isNaN(numberOfGroups) || numberOfGroups < 1) {
+                alert("Por favor, ingresa un número válido de personas por grupo y de grupos.");
+                return;
+            }
+            
+            if (totalPeople > shuffledNames.length) {
+                alert(`No hay suficientes nombres para formar ${numberOfGroups} grupos de ${peoplePerGroup} personas.`);
+                return;
+            }
+            
+            let resultText = '';
+            let leftoversText = '';
+            let recommendationText = '';
+            
+            for (let i = 0; i < numberOfGroups; i++) {
+                const group = shuffledNames.splice(0, peoplePerGroup);
+                resultText += `Grupo ${i + 1} <span>(${group.length} personas)</span>: ${group.join(', ')}<br>`;
+            }
+            
+            if (shuffledNames.length > 0) {
+                leftoversText = `Personas sobrantes (grupo impar): ${shuffledNames.join(', ')}`;
+                recommendationText = `Te recomiendo añadir las personas sobrantes a los grupos existentes para equilibrar los grupos.`;
+                document.getElementById('addButton').style.display = 'block';
+            } else {
+                document.getElementById('addButton').style.display = 'none';
+            }
+
+            document.getElementById('result').innerHTML = resultText;
+            document.getElementById('leftovers').innerText = leftoversText;
+            document.getElementById('recommendation').innerText = recommendationText;
+        }
+
+        function addLeftoverToGroup() {
+            const resultElement = document.getElementById('result');
+            const groups = resultElement.innerHTML.split('<br>').filter(group => group.trim() !== '');
+
+            shuffleArray(groups);
+            while (shuffledNames.length > 0) {
+                const leftover = shuffledNames.pop();
+                const randomGroupIndex = Math.floor(Math.random() * groups.length);
+                
+                const [groupInfo, members] = groups[randomGroupIndex].split(':');
+                const updatedMembers = `${members.trim()}, ${leftover}`;
+                const updatedGroupInfo = groupInfo.replace(/\(\d+ personas\)/, `(${updatedMembers.split(',').length} personas)`);
+                groups[randomGroupIndex] = `${updatedGroupInfo}: ${updatedMembers}`;
+            }
+
+            resultElement.innerHTML = groups.join('<br>');
+            document.getElementById('leftovers').innerText = '';
+            document.getElementById('recommendation').innerText = '';
+            document.getElementById('addButton').style.display = 'none';
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function resetList() {
+            document.getElementById('nameList').value = '';
+            document.getElementById('numberOfPeople').value = '';
+            document.getElementById('numberOfGroups').value = '';
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('leftovers').innerText = '';
+            document.getElementById('recommendation').innerText = '';
+            document.getElementById('addButton').style.display = 'none';
+            shuffledNames = [];
+        }
+
+        function resetResults() {
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('leftovers').innerText = '';
+            document.getElementById('recommendation').innerText = '';
+            document.getElementById('addButton').style.display = 'none';
+            shuffledNames = getNames(); // Asegurar que los nombres se pueden reutilizar
+        }
+    </script>
+</body>
+</html>

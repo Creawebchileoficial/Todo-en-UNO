@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Citas para Enlaces Web</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+        h1 { color: #4CAF50; text-align: center; margin-top: 10px; }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; margin-top: 5px; }
+        button { margin-top: 15px; padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; width: 100%; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+        footer { height: 200px; background-color: white; }
+    </style>
+</head>
+<body>
+    <h1>Generador de Citas para Enlaces Web</h1>
+
+    <label for="author">Autor (Apellido, Nombre):</label>
+    <input type="text" id="author" placeholder="Ej: Pérez, Juan">
+
+    <label for="title">Título de la Página:</label>
+    <input type="text" id="title" placeholder="Ej: Historia de la Tecnología">
+
+    <label for="website">Nombre del Sitio Web:</label>
+    <input type="text" id="website" placeholder="Ej: Wikipedia">
+
+    <label for="url">URL del Enlace:</label>
+    <input type="text" id="url" placeholder="Ej: https://www.ejemplo.com">
+
+    <label for="date">Fecha de Publicación (opcional):</label>
+    <input type="text" id="date" placeholder="Ej: 2023">
+
+    <label for="accessed">Fecha de Acceso:</label>
+    <input type="text" id="accessed" placeholder="Ej: 18 de noviembre de 2024">
+
+    <label for="style">Estilo de Cita:</label>
+    <select id="style">
+        <option value="APA">APA</option>
+        <option value="MLA">MLA</option>
+    </select>
+
+    <button onclick="generateCitation()">Generar Cita</button>
+
+    <div id="result"></div>
+
+    <script>
+        function generateCitation() {
+            const author = document.getElementById("author").value;
+            const title = document.getElementById("title").value;
+            const website = document.getElementById("website").value;
+            const url = document.getElementById("url").value;
+            const date = document.getElementById("date").value;
+            const accessed = document.getElementById("accessed").value;
+            const style = document.getElementById("style").value;
+
+            let citation = "";
+
+            if (style === "APA") {
+                citation = author
+                    ? `${author} (${date || "s.f."}). ${title}. <i>${website}</i>. Recuperado de ${url}`
+                    : `${title}. (${date || "s.f."}). <i>${website}</i>. Recuperado de ${url}`;
+            } else if (style === "MLA") {
+                citation = author
+                    ? `${author}. "${title}." <i>${website}</i>, ${date || "sin fecha"}, ${url}. Accedido ${accessed}.`
+                    : `"${title}." <i>${website}</i>, ${date || "sin fecha"}, ${url}. Accedido ${accessed}.`;
+            }
+
+            document.getElementById("result").innerHTML = `Cita Generada:<br><p>${citation}</p>`;
+        }
+    </script>
+
+    <footer></footer>
+</body>
+</html>

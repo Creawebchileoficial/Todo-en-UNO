@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Calculadora de IMC</title>
+    <style>
+        /* General */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin: 20px 0;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        /* Formulario */
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            max-width: 500px;
+            padding: 10px;
+            margin: 0 auto;
+            display: block;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            margin: 20px 0;
+            padding: 10px 15px;
+            width: calc(100% - 20px);
+            max-width: 500px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Resultados */
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        #interpretation {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            font-size: 0.9rem;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        /* Responsividad */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            label {
+                font-size: 0.9rem;
+            }
+
+            input, button {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+
+            footer {
+                font-size: 0.8rem;
+                padding: 15px;
+            }
+        }
+
+        @supports (-webkit-touch-callout: none) {
+            /* Safari-specific fixes */
+            input, button {
+                font-size: 1rem;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de IMC</h1>
+
+    <label for="weight">Peso (kg):</label>
+    <input type="number" id="weight" placeholder="Ej: 70" min="1" required>
+
+    <label for="height">Altura (cm):</label>
+    <input type="number" id="height" placeholder="Ej: 170" min="1" required>
+
+    <button onclick="calculateIMC()">Calcular IMC</button>
+
+    <div id="result"></div>
+    <div id="interpretation"></div>
+
+    <footer>
+        © 2024 PaseCtm!
+    </footer>
+
+    <script>
+        function calculateIMC() {
+            const weight = parseFloat(document.getElementById("weight").value);
+            const height = parseFloat(document.getElementById("height").value) / 100; // Convertir altura a metros
+
+            if (isNaN(weight) || isNaN(height) || height <= 0 || weight <= 0) {
+                document.getElementById("result").textContent = "Por favor, ingresa valores válidos.";
+                document.getElementById("interpretation").textContent = "";
+                return;
+            }
+
+            const imc = weight / (height * height);
+            document.getElementById("result").textContent = `Tu IMC es: ${imc.toFixed(2)}`;
+
+            let interpretation = "";
+            if (imc < 18.5) {
+                interpretation = "Bajo peso";
+            } else if (imc >= 18.5 && imc < 24.9) {
+                interpretation = "Peso normal";
+            } else if (imc >= 25 && imc < 29.9) {
+                interpretation = "Sobrepeso";
+            } else {
+                interpretation = "Obesidad";
+            }
+
+            document.getElementById("interpretation").textContent = interpretation;
+        }
+    </script>
+</body>
+</html>

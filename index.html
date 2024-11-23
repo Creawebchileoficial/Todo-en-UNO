@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pase ctm!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            margin: auto;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .button {
+            display: block;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            font-size: 1rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                max-width: 90%;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .button {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            footer {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pase ctm!</h1>
+        <!-- Botones que llevan a sus respectivas páginas -->
+        <a class="button" href="promedio.html">Calcular promedio con %</a>
+        <a class="button" href="selector.html">Selector aleatorio</a>
+        <a class="button" href="cientifica.html">Calculadora científica</a>
+        <a class="button" href="citas.html">Generador de citas</a>
+        <a class="button" href="cronometro.html">Cronómetro de Estudio Multisesión</a>
+        <a class="button" href="imc.html">Calculadora de IMC</a>
+        <a class="button" href="lectura.html">Calculadora de Tiempo de Lectura</a>
+        <a class="button" href="estadistica.html">Calculadora de Estadística Descriptiva</a>
+        <a class="button" href="curriculum.html">Generador de curriculum</a>
+    </div>
+    <footer>
+        © 2024 PaseCtm!
+    </footer>
+</body>
+</html>
