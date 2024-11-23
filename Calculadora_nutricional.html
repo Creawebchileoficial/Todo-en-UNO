@@ -2,164 +2,185 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Calculadora de IMC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Nutricional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* General */
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            color: #333;
+            max-width: 600px;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            background-color: #f0f2f5;
         }
-
         h1 {
-            color: #4CAF50;
-            margin: 20px 0;
-            font-size: 2rem;
             text-align: center;
+            color: #007bff;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
         }
-
-        /* Formulario */
         label {
-            display: block;
-            margin: 10px 0 5px;
             font-weight: bold;
-            font-size: 1rem;
-        }
-
-        input {
-            width: calc(100% - 20px);
-            max-width: 500px;
-            padding: 10px;
-            margin: 0 auto;
-            display: block;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        button {
-            margin: 20px 0;
-            padding: 10px 15px;
-            width: calc(100% - 20px);
-            max-width: 500px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        /* Resultados */
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: #333;
-        }
-
-        #interpretation {
-            font-size: 1rem;
-            color: #666;
-            margin-top: 5px;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #333;
-            color: white;
-            font-size: 0.9rem;
+            margin-top: 15px;
             width: 100%;
-            margin-top: auto;
         }
-
-        /* Responsividad */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-
-            label {
-                font-size: 0.9rem;
-            }
-
-            input, button {
-                font-size: 0.9rem;
-                padding: 8px;
-            }
-
-            footer {
-                font-size: 0.8rem;
-                padding: 15px;
-            }
+        input[type="number"], select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
         }
-
-        @supports (-webkit-touch-callout: none) {
-            /* Safari-specific fixes */
-            input, button {
-                font-size: 1rem;
-                padding: 10px;
-            }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .resultados, .explicacion {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 25px;
+            width: 100%;
+            text-align: center;
+        }
+        .resultados h2, .explicacion h3 {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .resultados p, .explicacion p {
+            font-size: 1.1rem;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>Calculadora de IMC</h1>
+    <h1>Calculadora Nutricional</h1>
+    <div>
+        <label for="peso">Peso (kg):</label>
+        <input type="number" id="peso" step="0.1">
 
-    <label for="weight">Peso (kg):</label>
-    <input type="number" id="weight" placeholder="Ej: 70" min="1" required>
+        <label for="altura">Altura (cm):</label>
+        <input type="number" id="altura" step="0.1">
 
-    <label for="height">Altura (cm):</label>
-    <input type="number" id="height" placeholder="Ej: 170" min="1" required>
+        <label for="edad">Edad (años):</label>
+        <input type="number" id="edad">
 
-    <button onclick="calculateIMC()">Calcular IMC</button>
+        <label for="sexo">Sexo:</label>
+        <select id="sexo">
+            <option value="hombre">Hombre</option>
+            <option value="mujer">Mujer</option>
+        </select>
 
-    <div id="result"></div>
-    <div id="interpretation"></div>
+        <label for="actividad">Nivel de actividad:</label>
+        <select id="actividad">
+            <option value="sedentario">Sedentario</option>
+            <option value="ligero">Actividad ligera</option>
+            <option value="moderado">Actividad moderada</option>
+            <option value="intenso">Actividad intensa</option>
+        </select>
 
-    <footer>
-        © 2024 PaseCtm!
-    </footer>
+        <button onclick="calcularIndicadores()">Calcular</button>
+    </div>
+
+    <div class="resultados">
+        <h2>Resultados:</h2>
+        <p id="resultado-imc"></p>
+        <p id="resultado-tmb"></p>
+        <p id="resultado-get"></p>
+    </div>
+
+    <div class="explicacion">
+        <h3>Explicación de Resultados:</h3>
+        <p id="explicacion-imc"></p>
+        <p id="explicacion-tmb"></p>
+        <p id="explicacion-get"></p>
+    </div>
 
     <script>
-        function calculateIMC() {
-            const weight = parseFloat(document.getElementById("weight").value);
-            const height = parseFloat(document.getElementById("height").value) / 100; // Convertir altura a metros
+        function calcularIndicadores() {
+            const peso = parseFloat(document.getElementById("peso").value);
+            const altura = parseFloat(document.getElementById("altura").value) / 100; // Convertir a metros
+            const edad = parseInt(document.getElementById("edad").value);
+            const sexo = document.getElementById("sexo").value;
+            const actividad = document.getElementById("actividad").value;
 
-            if (isNaN(weight) || isNaN(height) || height <= 0 || weight <= 0) {
-                document.getElementById("result").textContent = "Por favor, ingresa valores válidos.";
-                document.getElementById("interpretation").textContent = "";
+            // Validar que los campos no estén vacíos
+            if (isNaN(peso) || isNaN(altura) || isNaN(edad)) {
+                alert("Por favor, complete todos los campos");
                 return;
             }
 
-            const imc = weight / (height * height);
-            document.getElementById("result").textContent = `Tu IMC es: ${imc.toFixed(2)}`;
+            // Cálculo del IMC
+            const imc = peso / (altura * altura);
+            document.getElementById("resultado-imc").innerText = `IMC: ${imc.toFixed(2)}`;
 
-            let interpretation = "";
+            // Explicación del IMC
+            let estadoImc;
             if (imc < 18.5) {
-                interpretation = "Bajo peso";
+                estadoImc = "Bajo peso";
             } else if (imc >= 18.5 && imc < 24.9) {
-                interpretation = "Peso normal";
+                estadoImc = "Peso normal";
             } else if (imc >= 25 && imc < 29.9) {
-                interpretation = "Sobrepeso";
+                estadoImc = "Sobrepeso";
             } else {
-                interpretation = "Obesidad";
+                estadoImc = "Obesidad";
             }
+            document.getElementById("explicacion-imc").innerText = `Su IMC indica que usted tiene: ${estadoImc}`;
 
-            document.getElementById("interpretation").textContent = interpretation;
+            // Cálculo de la Tasa Metabólica Basal (TMB)
+            let tmb;
+            if (sexo === "hombre") {
+                tmb = 10 * peso + 6.25 * (altura * 100) - 5 * edad + 5;
+            } else {
+                tmb = 10 * peso + 6.25 * (altura * 100) - 5 * edad - 161;
+            }
+            document.getElementById("resultado-tmb").innerText = `TMB: ${tmb.toFixed(2)} kcal/día`;
+
+            // Explicación de la TMB
+            document.getElementById("explicacion-tmb").innerText = "La Tasa Metabólica Basal (TMB) es la cantidad de energía que su cuerpo necesita para realizar funciones básicas en reposo, como respirar y mantener la temperatura corporal.";
+
+            // Cálculo del Gasto Energético Total (GET)
+            let factorActividad;
+            switch (actividad) {
+                case "sedentario":
+                    factorActividad = 1.2;
+                    break;
+                case "ligero":
+                    factorActividad = 1.375;
+                    break;
+                case "moderado":
+                    factorActividad = 1.55;
+                    break;
+                case "intenso":
+                    factorActividad = 1.725;
+                    break;
+            }
+            const get = tmb * factorActividad;
+            document.getElementById("resultado-get").innerText = `GET: ${get.toFixed(2)} kcal/día`;
+
+            // Explicación del GET
+            document.getElementById("explicacion-get").innerText = "El Gasto Energético Total (GET) es la cantidad de calorías que necesita diariamente, teniendo en cuenta su nivel de actividad física. Esto incluye la energía para sus actividades diarias además de la TMB.";
         }
     </script>
 </body>
