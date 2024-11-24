@@ -180,7 +180,7 @@
           const deficit = goalAmount - totalSavings;
           const recommendedContribution = Math.ceil(deficit / (contributionsPerYear * totalYears));
           resultHTML += `<p style="color: red;">No alcanzarás tu meta de ahorro. Te faltarán $${deficit.toLocaleString('es-CL')}.</p>`;
-          resultHTML += `<p>Para alcanzar tu meta, deberías aportar al menos $${recommendedContribution.toLocaleString('es-CL')} por ${frequency}.</p>`;
+          resultHTML += `<p>Para alcanzar tu meta, deberías Agregar al menos $${recommendedContribution.toLocaleString('es-CL')} al Monto del Aporte ${frequency}.</p>`;
         }
       }
 
