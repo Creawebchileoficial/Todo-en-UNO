@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Ahorros</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f8fa;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #4caf50;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .results {
+      margin-top: 20px;
+    }
+    .results p {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Ahorros</h1>
+    <form id="savingsForm">
+      <label for="initialAmount">Monto Inicial ($CLP):</label>
+      <input type="number" id="initialAmount" placeholder="Ej. 10000" required>
+
+      <label for="goalAmount">Meta de Ahorro ($CLP) (opcional):</label>
+      <input type="number" id="goalAmount" placeholder="Ej. 500000">
+
+      <label for="frequency">Frecuencia de Aporte:</label>
+      <select id="frequency" required>
+        <option value="diario">Diario</option>
+        <option value="semanal">Semanal</option>
+        <option value="mensual">Mensual</option>
+        <option value="anual">Anual</option>
+      </select>
+
+      <label for="contributionAmount">Monto del Aporte ($CLP):</label>
+      <input type="number" id="contributionAmount" placeholder="Ej. 2000" required>
+
+      <label for="timeUnit">Unidad de Tiempo:</label>
+      <select id="timeUnit" required>
+        <option value="semanas">Semanas</option>
+        <option value="meses">Meses</option>
+        <option value="años">Años</option>
+      </select>
+
+      <label for="timePeriod">Cantidad de Tiempo:</label>
+      <input type="number" id="timePeriod" placeholder="Ej. 3" required>
+
+      <button type="button" onclick="calculateSavings()">Calcular Ahorros</button>
+      <div id="errorMessage" class="error"></div>
+    </form>
+
+    <div class="results" id="results">
+      <!-- Aquí se mostrarán los resultados -->
+    </div>
+  </div>
+
+  <script>
+    function calculateSavings() {
+      const initialAmount = parseInt(document.getElementById('initialAmount').value) || 0;
+      const goalAmount = parseInt(document.getElementById('goalAmount').value) || null;
+      const frequency = document.getElementById('frequency').value;
+      const contributionAmount = parseInt(document.getElementById('contributionAmount').value);
+      const timeUnit = document.getElementById('timeUnit').value;
+      const timePeriod = parseInt(document.getElementById('timePeriod').value);
+      const errorMessage = document.getElementById('errorMessage');
+      const results = document.getElementById('results');
+
+      // Validar entradas
+      if (isNaN(initialAmount) || isNaN(contributionAmount) || isNaN(timePeriod) || contributionAmount < 0 || timePeriod <= 0) {
+        errorMessage.textContent = 'Por favor, ingrese valores válidos para los campos obligatorios.';
+        results.innerHTML = '';
+        return;
+      }
+
+      errorMessage.textContent = '';
+
+      // Calcular la cantidad de aportes según la frecuencia
+      let contributionsPerYear;
+      switch (frequency) {
+        case 'diario':
+          contributionsPerYear = 365;
+          break;
+        case 'semanal':
+          contributionsPerYear = 52;
+          break;
+        case 'mensual':
+          contributionsPerYear = 12;
+          break;
+        case 'anual':
+          contributionsPerYear = 1;
+          break;
+      }
+
+      // Calcular el tiempo en años
+      let totalYears;
+      switch (timeUnit) {
+        case 'semanas':
+          totalYears = timePeriod / 52;
+          break;
+        case 'meses':
+          totalYears = timePeriod / 12;
+          break;
+        case 'años':
+          totalYears = timePeriod;
+          break;
+      }
+
+      // Calcular el monto total ahorrado
+      const totalContributions = contributionAmount * contributionsPerYear * totalYears;
+      const totalSavings = initialAmount + totalContributions;
+
+      // Mostrar los resultados
+      let resultHTML = `
+        <h2>Resultados</h2>
+        <p>Monto Inicial: $${initialAmount.toLocaleString('es-CL')}</p>
+        <p>Frecuencia de Aporte: ${frequency.charAt(0).toUpperCase() + frequency.slice(1)}</p>
+        <p>Aporte por período: $${contributionAmount.toLocaleString('es-CL')}</p>
+        <p>Tiempo Total de Ahorro: ${timePeriod} ${timeUnit}</p>
+        <p>Total Ahorrado: <strong>$${totalSavings.toLocaleString('es-CL')}</strong></p>
+      `;
+
+      if (goalAmount) {
+        if (totalSavings >= goalAmount) {
+          resultHTML += `<p style="color: green;">¡Felicidades! Alcanzarás tu meta de ahorro de $${goalAmount.toLocaleString('es-CL')}.</p>`;
+        } else {
+          const deficit = goalAmount - totalSavings;
+          const recommendedContribution = Math.ceil(deficit / (contributionsPerYear * totalYears));
+          resultHTML += `<p style="color: red;">No alcanzarás tu meta de ahorro. Te faltarán $${deficit.toLocaleString('es-CL')}.</p>`;
+          resultHTML += `<p>Para alcanzar tu meta, deberías aportar al menos $${recommendedContribution.toLocaleString('es-CL')} por ${frequency}.</p>`;
+        }
+      }
+
+      results.innerHTML = resultHTML;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Agua</title>
+  <style>
+    /* Estilo general */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #00b4d8, #90e0ef);
+      color: #fff;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      color: #333;
+      padding: 20px 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #0077b6;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1rem;
+      border: 2px solid #0077b6;
+      border-radius: 10px;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    input:focus, select:focus {
+      border-color: #00b4d8;
+    }
+
+    button {
+      background: #00b4d8;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background: #0077b6;
+      transform: scale(1.05);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #0077b6;
+      font-weight: bold;
+    }
+
+    .result span {
+      font-size: 2em;
+    }
+
+    .water-icon {
+      font-size: 3em;
+      margin-top: 15px;
+      color: #00b4d8;
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8em;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+
+      button {
+        font-size: 0.9rem;
+      }
+
+      .result {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Agua</h1>
+    <p>Completa los datos para obtener tu recomendación personalizada:</p>
+    <input type="number" id="weight" placeholder="Peso en kg (ejemplo: 70)" required>
+    <select id="activity">
+      <option value="0">Nivel de actividad</option>
+      <option value="0">Sedentario</option>
+      <option value="500">Moderado (1h ejercicio)</option>
+      <option value="1000">Intenso (2h o más ejercicio)</option>
+    </select>
+    <select id="extra">
+      <option value="0">Condiciones especiales</option>
+      <option value="0">Ninguna</option>
+      <option value="300">Embarazo (+300 ml)</option>
+      <option value="700">Lactancia (+700 ml)</option>
+    </select>
+    <button onclick="calculateWater()">Calcular</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculateWater() {
+      const weight = parseFloat(document.getElementById("weight").value);
+      const activity = parseFloat(document.getElementById("activity").value);
+      const extra = parseFloat(document.getElementById("extra").value);
+      const resultDiv = document.getElementById("result");
+
+      if (weight > 0) {
+        // Fórmula básica: peso (kg) x 35 ml + actividad + condiciones especiales
+        const waterIntake = (weight * 35) + activity + extra;
+        const liters = (waterIntake / 1000).toFixed(2); // Convertir a litros
+        const glasses = Math.ceil(waterIntake / 250); // Vasos de 250 ml
+        const bottles = (waterIntake / 1000).toFixed(1); // Botellas de 1 litro
+
+        resultDiv.innerHTML = `
+          <p>Tu consumo de agua diario recomendado es:</p>
+          <span>${liters} litros</span><br>
+          Equivale a <b>${glasses} vasos</b> de 250 ml o <b>${bottles} botellas</b> de 1 litro.
+          <span class="water-icon">💧</span>
+        `;
+      } else {
+        resultDiv.innerHTML = `
+          <p style="color: red;">Por favor, ingresa un peso válido.</p>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
