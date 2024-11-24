@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Gastos de Combustible</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #4caf50;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .results {
+      margin-top: 20px;
+    }
+    .results p {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Gastos de Combustible</h1>
+    <form id="fuelCalculatorForm">
+      <label for="distance">Distancia del Viaje (en km):</label>
+      <input type="number" id="distance" placeholder="Ej. 300" required>
+
+      <label for="fuelEfficiency">Rendimiento del Vehículo (km/l):</label>
+      <input type="number" id="fuelEfficiency" placeholder="Ej. 12" required>
+
+      <label for="fuelPrice">Precio del Combustible ($CLP/l):</label>
+      <input type="number" id="fuelPrice" placeholder="Ej. 1200" required>
+
+      <button type="button" onclick="calculateFuelCost()">Calcular Costo del Viaje</button>
+      <div id="errorMessage" class="error"></div>
+    </form>
+
+    <div class="results" id="results">
+      <!-- Aquí se mostrarán los resultados -->
+    </div>
+  </div>
+
+  <script>
+    function calculateFuelCost() {
+      const distance = parseInt(document.getElementById('distance').value);
+      const fuelEfficiency = parseFloat(document.getElementById('fuelEfficiency').value);
+      const fuelPrice = parseInt(document.getElementById('fuelPrice').value);
+      const errorMessage = document.getElementById('errorMessage');
+      const results = document.getElementById('results');
+
+      // Validar entradas
+      if (isNaN(distance) || distance <= 0) {
+        errorMessage.textContent = 'Por favor, ingrese una distancia válida.';
+        results.innerHTML = '';
+        return;
+      }
+
+      if (isNaN(fuelEfficiency) || fuelEfficiency <= 0) {
+        errorMessage.textContent = 'Por favor, ingrese un rendimiento válido.';
+        results.innerHTML = '';
+        return;
+      }
+
+      if (isNaN(fuelPrice) || fuelPrice <= 0) {
+        errorMessage.textContent = 'Por favor, ingrese un precio válido.';
+        results.innerHTML = '';
+        return;
+      }
+
+      errorMessage.textContent = '';
+
+      // Calcular el costo del viaje
+      const fuelNeeded = distance / fuelEfficiency; // Litros necesarios
+      const totalCost = fuelNeeded * fuelPrice; // Costo total
+
+      // Mostrar resultados
+      results.innerHTML = `
+        <h2>Resultados</h2>
+        <p>Distancia Total: <strong>${distance.toLocaleString('es-CL')} km</strong></p>
+        <p>Rendimiento del Vehículo: <strong>${fuelEfficiency.toLocaleString('es-CL')} km/l</strong></p>
+        <p>Precio del Combustible: <strong>$${fuelPrice.toLocaleString('es-CL')} por litro</strong></p>
+        <p>Combustible Necesario: <strong>${Math.ceil(fuelNeeded).toLocaleString('es-CL')} litros</strong></p>
+        <p>Costo Total del Viaje: <strong>$${Math.ceil(totalCost).toLocaleString('es-CL')}</strong></p>
+      `;
+    }
+  </script>
+</body>
+</html>

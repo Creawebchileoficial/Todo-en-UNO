@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planeador de Presupuesto 50/30/20</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f8fa;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #4caf50;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .results {
+      margin-top: 20px;
+    }
+    .results p {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+    .category {
+      background: #e8f5e9;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+    .category h3 {
+      margin: 0;
+      color: #2e7d32;
+    }
+    .category p {
+      margin: 5px 0;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Planeador de Presupuesto 50/30/20</h1>
+    <form id="budgetForm">
+      <label for="income">Ingresos Mensuales ($CLP):</label>
+      <input type="number" id="income" placeholder="Ej. 500000" required>
+
+      <button type="button" onclick="calculateBudget()">Calcular Presupuesto</button>
+      <div id="errorMessage" class="error"></div>
+    </form>
+
+    <div class="results" id="results">
+      <!-- Aquí se mostrarán los resultados -->
+    </div>
+  </div>
+
+  <script>
+    function calculateBudget() {
+      const income = parseInt(document.getElementById('income').value);
+      const errorMessage = document.getElementById('errorMessage');
+      const results = document.getElementById('results');
+
+      // Validar ingresos
+      if (isNaN(income) || income <= 0) {
+        errorMessage.textContent = 'Por favor, ingrese un ingreso mensual válido.';
+        results.innerHTML = '';
+        return;
+      }
+
+      errorMessage.textContent = '';
+
+      // Calcular categorías
+      const needs = Math.floor(income * 0.5);
+      const wants = Math.floor(income * 0.3);
+      const savings = Math.floor(income * 0.2);
+      const total = needs + wants + savings;
+
+      // Mostrar resultados
+      results.innerHTML = `
+        <h2>Resultados</h2>
+        <div class="category">
+          <h3>50% Necesidades:</h3>
+          <p>Gastos esenciales como arriendo, alimentos, transporte: <strong>$${needs.toLocaleString('es-CL')}</strong></p>
+        </div>
+        <div class="category">
+          <h3>30% Deseos:</h3>
+          <p>Entretenimiento, compras, viajes, etc.: <strong>$${wants.toLocaleString('es-CL')}</strong></p>
+        </div>
+        <div class="category">
+          <h3>20% Ahorros:</h3>
+          <p>Ahorros, inversiones o pago de deudas: <strong>$${savings.toLocaleString('es-CL')}</strong></p>
+        </div>
+        <p>Total Calculado: <strong>$${total.toLocaleString('es-CL')}</strong></p>
+      `;
+    }
+  </script>
+</body>
+</html>

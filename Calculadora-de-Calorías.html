@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Calorías y Plan Nutricional</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f8fa;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #4caf50;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .results {
+      margin-top: 20px;
+    }
+    .meal-plan {
+      background: #e8f5e9;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+    .meal-plan h3 {
+      margin: 0;
+      color: #2e7d32;
+    }
+    .meal-plan p {
+      margin: 5px 0;
+    }
+    .meal-plan ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+    .meal-plan ul li {
+      margin: 5px 0;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Calorías y Plan Nutricional</h1>
+    <form id="calorieCalculatorForm">
+      <label for="name">Nombre:</label>
+      <input type="text" id="name" placeholder="Ej. Juan Pérez" required>
+
+      <label for="age">Edad (años):</label>
+      <input type="number" id="age" placeholder="Ej. 30" required>
+
+      <label for="gender">Género:</label>
+      <select id="gender" required>
+        <option value="male">Hombre</option>
+        <option value="female">Mujer</option>
+      </select>
+
+      <label for="weight">Peso (kg):</label>
+      <input type="number" id="weight" placeholder="Ej. 70" required>
+
+      <label for="height">Altura (cm):</label>
+      <input type="number" id="height" placeholder="Ej. 170" required>
+
+      <label for="activityLevel">Nivel de Actividad Física:</label>
+      <select id="activityLevel" required>
+        <option value="1.2">Sedentario (poco o ningún ejercicio)</option>
+        <option value="1.375">Ligero (ejercicio ligero 1-3 días/semana)</option>
+        <option value="1.55">Moderado (ejercicio moderado 3-5 días/semana)</option>
+        <option value="1.725">Activo (ejercicio intenso 6-7 días/semana)</option>
+        <option value="1.9">Muy activo (ejercicio físico muy intenso, trabajo físico)</option>
+      </select>
+
+      <label for="goal">Meta:</label>
+      <select id="goal" required>
+        <option value="lose">Perder peso</option>
+        <option value="maintain">Mantener peso</option>
+        <option value="gain">Ganar peso</option>
+      </select>
+
+      <button type="button" onclick="calculateCalories()">Calcular Calorías</button>
+      <div id="errorMessage" class="error"></div>
+    </form>
+
+    <div class="results" id="results">
+      <!-- Aquí se mostrarán los resultados -->
+    </div>
+  </div>
+
+  <script>
+    function getRandomFoods(foodList, count) {
+      const shuffled = foodList.sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, count);
+    }
+
+    function calculateCalories() {
+      const name = document.getElementById('name').value.trim();
+      const age = parseInt(document.getElementById('age').value);
+      const gender = document.getElementById('gender').value;
+      const weight = parseFloat(document.getElementById('weight').value);
+      const height = parseInt(document.getElementById('height').value);
+      const activityLevel = parseFloat(document.getElementById('activityLevel').value);
+      const goal = document.getElementById('goal').value;
+      const errorMessage = document.getElementById('errorMessage');
+      const results = document.getElementById('results');
+
+      // Validar entradas
+      if (!name || isNaN(age) || isNaN(weight) || isNaN(height)) {
+        errorMessage.textContent = 'Por favor, complete todos los campos obligatorios con datos válidos.';
+        results.innerHTML = '';
+        return;
+      }
+
+      if (age <= 0 || weight <= 0 || height <= 0) {
+        errorMessage.textContent = 'La edad, el peso y la altura deben ser mayores a 0.';
+        results.innerHTML = '';
+        return;
+      }
+
+      errorMessage.textContent = '';
+
+      // Calcular TMB (Tasa Metabólica Basal)
+      let tmb;
+      if (gender === 'male') {
+        tmb = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+      } else {
+        tmb = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+      }
+
+      // Calcular calorías diarias según nivel de actividad
+      const maintenanceCalories = tmb * activityLevel;
+
+      // Ajustar calorías según meta
+      let adjustedCalories;
+      if (goal === 'lose') {
+        adjustedCalories = maintenanceCalories - 500; // Déficit calórico
+      } else if (goal === 'gain') {
+        adjustedCalories = maintenanceCalories + 500; // Excedente calórico
+      } else {
+        adjustedCalories = maintenanceCalories;
+      }
+
+      // Dividir calorías en comidas
+      const breakfastCalories = Math.round(adjustedCalories * 0.25);
+      const lunchCalories = Math.round(adjustedCalories * 0.35);
+      const dinnerCalories = Math.round(adjustedCalories * 0.3);
+      const snackCalories = Math.round(adjustedCalories * 0.1);
+
+      // Listas de alimentos
+      const breakfastFoods = ['Avena con frutas', 'Pan integral con palta', 'Huevos revueltos', 'Yogur con granola'];
+      const lunchFoods = ['Pollo con arroz integral', 'Pescado con ensalada', 'Lentejas guisadas', 'Tacos de vegetales'];
+      const dinnerFoods = ['Sopa de verduras', 'Ensalada de quinoa', 'Pescado al vapor', 'Tofu con vegetales'];
+      const snackFoods = ['Frutos secos', 'Manzana', 'Yogur natural', 'Barra de proteínas'];
+
+      // Seleccionar alimentos aleatorios
+      const breakfastPlan = getRandomFoods(breakfastFoods, 2);
+      const lunchPlan = getRandomFoods(lunchFoods, 2);
+      const dinnerPlan = getRandomFoods(dinnerFoods, 2);
+      const snackPlan = getRandomFoods(snackFoods, 2);
+
+      // Mostrar resultados
+      results.innerHTML = `
+        <h2>Plan Nutricional para ${name}</h2>
+        <p>Calorías Ajustadas para tu Meta: <strong>${Math.round(adjustedCalories)} calorías/día</strong></p>
+        <div class="meal-plan">
+          <h3>Desayuno (25% - ${breakfastCalories} cal):</h3>
+          <ul>
+            ${breakfastPlan.map(food => `<li>${food}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="meal-plan">
+          <h3>Almuerzo (35% - ${lunchCalories} cal):</h3>
+          <ul>
+            ${lunchPlan.map(food => `<li>${food}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="meal-plan">
+          <h3>Cena (30% - ${dinnerCalories} cal):</h3>
+          <ul>
+            ${dinnerPlan.map(food => `<li>${food}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="meal-plan">
+          <h3>Snacks (10% - ${snackCalories} cal):</h3>
+          <ul>
+            ${snackPlan.map(food => `<li>${food}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

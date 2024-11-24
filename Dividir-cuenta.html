@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor y Divisor de Gastos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #4caf50;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select, button, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .results {
+      margin-top: 20px;
+    }
+    .results p {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+    .gasto-item {
+      margin-bottom: 15px;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+    }
+    .gasto-list {
+      margin-top: 10px;
+      padding: 10px;
+      background: #e8f5e9;
+      border-radius: 5px;
+    }
+    .gasto-list h3 {
+      margin: 0;
+      color: #2e7d32;
+    }
+    .gasto-list ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gestor y Divisor de Gastos</h1>
+    <form id="billSplitterForm">
+      <div id="gastoList" class="gasto-list">
+        <h3>Gastos Agregados:</h3>
+        <ul id="gastos"></ul>
+      </div>
+
+      <label for="gastoName">Nombre del Gasto:</label>
+      <input type="text" id="gastoName" placeholder="Ej. Internet, Luz, Cena, etc.">
+
+      <label for="gastoAmount">Monto del Gasto ($CLP):</label>
+      <input type="number" id="gastoAmount" placeholder="Ej. 20000">
+
+      <button type="button" onclick="addGasto()">Agregar Gasto</button>
+
+      <label for="numberOfPeople">Número de Personas:</label>
+      <input type="number" id="numberOfPeople" placeholder="Ej. 4" required>
+
+      <label for="tipPercentage">Propina (% - Opcional):</label>
+      <input type="number" id="tipPercentage" placeholder="Ej. 10">
+
+      <label for="taxPercentage">Impuestos (% - Opcional):</label>
+      <input type="number" id="taxPercentage" placeholder="Ej. 19">
+
+      <button type="button" onclick="calculateBill()">Calcular</button>
+      <div id="errorMessage" class="error"></div>
+    </form>
+
+    <div class="results" id="results">
+      <!-- Aquí se mostrarán los resultados -->
+    </div>
+  </div>
+
+  <script>
+    const gastos = [];
+
+    function addGasto() {
+      const gastoName = document.getElementById('gastoName').value.trim();
+      const gastoAmount = parseFloat(document.getElementById('gastoAmount').value);
+      const errorMessage = document.getElementById('errorMessage');
+      const gastoList = document.getElementById('gastos');
+
+      // Validar entrada
+      if (!gastoName || isNaN(gastoAmount) || gastoAmount <= 0) {
+        errorMessage.textContent = 'Por favor, ingrese un nombre de gasto válido y un monto positivo.';
+        return;
+      }
+
+      errorMessage.textContent = '';
+
+      // Agregar gasto a la lista
+      gastos.push({ name: gastoName, amount: gastoAmount });
+
+      // Actualizar la lista en la interfaz
+      const listItem = document.createElement('li');
+      listItem.textContent = `${gastoName}: $${gastoAmount.toLocaleString('es-CL')}`;
+      gastoList.appendChild(listItem);
+
+      // Limpiar campos de entrada
+      document.getElementById('gastoName').value = '';
+      document.getElementById('gastoAmount').value = '';
+    }
+
+    function calculateBill() {
+      const numberOfPeople = parseInt(document.getElementById('numberOfPeople').value);
+      const tipPercentage = parseFloat(document.getElementById('tipPercentage').value) || 0;
+      const taxPercentage = parseFloat(document.getElementById('taxPercentage').value) || 0;
+      const errorMessage = document.getElementById('errorMessage');
+      const results = document.getElementById('results');
+
+      // Validar entradas
+      if (gastos.length === 0) {
+        errorMessage.textContent = 'Por favor, agregue al menos un gasto antes de calcular.';
+        return;
+      }
+
+      if (isNaN(numberOfPeople) || numberOfPeople <= 0) {
+        errorMessage.textContent = 'Por favor, ingrese un número válido de personas.';
+        return;
+      }
+
+      errorMessage.textContent = '';
+
+      // Calcular total de gastos
+      const totalGastos = gastos.reduce((sum, gasto) => sum + gasto.amount, 0);
+
+      // Calcular propina e impuestos
+      const tipAmount = (totalGastos * tipPercentage) / 100;
+      const taxAmount = (totalGastos * taxPercentage) / 100;
+
+      // Calcular total con propina e impuestos
+      const grandTotal = totalGastos + tipAmount + taxAmount;
+
+      // Calcular monto por persona
+      const perPersonAmount = grandTotal / numberOfPeople;
+
+      // Mostrar resultados
+      results.innerHTML = `
+        <h2>Resultados</h2>
+        <p>Total de Gastos: <strong>$${totalGastos.toLocaleString('es-CL')}</strong></p>
+        <p>Total con Propina e Impuestos: <strong>$${grandTotal.toLocaleString('es-CL')}</strong></p>
+        <p>Monto por Persona: <strong>$${Math.ceil(perPersonAmount).toLocaleString('es-CL')}</strong></p>
+        <p>Propina Total: <strong>$${tipAmount.toLocaleString('es-CL')}</strong></p>
+        <p>Impuestos Totales: <strong>$${taxAmount.toLocaleString('es-CL')}</strong></p>
+      `;
+    }
+  </script>
+</body>
+</html>

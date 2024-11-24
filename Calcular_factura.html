@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Facturas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #4caf50;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .results {
+      margin-top: 20px;
+    }
+    .results p {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+    .factura-item {
+      margin-bottom: 15px;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+    }
+    .factura-list {
+      margin-top: 10px;
+      padding: 10px;
+      background: #e8f5e9;
+      border-radius: 5px;
+    }
+    .factura-list h3 {
+      margin: 0;
+      color: #2e7d32;
+    }
+    .factura-list ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Facturas</h1>
+    <form id="invoiceForm">
+      <div id="facturaList" class="factura-list">
+        <h3>Facturas Registradas:</h3>
+        <ul id="facturas"></ul>
+      </div>
+
+      <label for="facturaName">Descripción de la Factura:</label>
+      <input type="text" id="facturaName" placeholder="Ej. Luz, Agua, Compras" required>
+
+      <label for="facturaAmount">Monto de la Factura ($CLP):</label>
+      <input type="number" id="facturaAmount" placeholder="Ej. 50000" required>
+
+      <label for="facturaCategory">Categoría:</label>
+      <select id="facturaCategory">
+        <option value="Servicios">Servicios</option>
+        <option value="Compras">Compras</option>
+        <option value="Impuestos">Impuestos</option>
+        <option value="Otros">Otros</option>
+      </select>
+
+      <label for="taxPercentage">Impuesto (%) - Opcional:</label>
+      <input type="number" id="taxPercentage" placeholder="Ej. 19">
+
+      <button type="button" onclick="addFactura()">Agregar Factura</button>
+    </form>
+
+    <button type="button" onclick="calculateInvoices()">Calcular Totales</button>
+    <div id="errorMessage" class="error"></div>
+
+    <div class="results" id="results">
+      <!-- Aquí se mostrarán los resultados -->
+    </div>
+  </div>
+
+  <script>
+    const facturas = [];
+
+    function addFactura() {
+      const facturaName = document.getElementById('facturaName').value.trim();
+      const facturaAmount = parseFloat(document.getElementById('facturaAmount').value);
+      const facturaCategory = document.getElementById('facturaCategory').value;
+      const taxPercentage = parseFloat(document.getElementById('taxPercentage').value) || 0;
+      const errorMessage = document.getElementById('errorMessage');
+      const facturaList = document.getElementById('facturas');
+
+      // Validar entrada
+      if (!facturaName || isNaN(facturaAmount) || facturaAmount <= 0) {
+        errorMessage.textContent = 'Por favor, ingrese una descripción válida y un monto positivo.';
+        return;
+      }
+
+      errorMessage.textContent = '';
+
+      // Calcular impuestos y total
+      const taxAmount = (facturaAmount * taxPercentage) / 100;
+      const totalWithTax = facturaAmount + taxAmount;
+
+      // Agregar factura a la lista
+      facturas.push({ name: facturaName, amount: facturaAmount, category: facturaCategory, tax: taxAmount, total: totalWithTax });
+
+      // Actualizar la lista en la interfaz
+      const listItem = document.createElement('li');
+      listItem.textContent = `${facturaName} (${facturaCategory}): $${totalWithTax.toLocaleString('es-CL')} (Impuestos: $${taxAmount.toLocaleString('es-CL')})`;
+      facturaList.appendChild(listItem);
+
+      // Limpiar campos de entrada
+      document.getElementById('facturaName').value = '';
+      document.getElementById('facturaAmount').value = '';
+      document.getElementById('taxPercentage').value = '';
+    }
+
+    function calculateInvoices() {
+      const results = document.getElementById('results');
+      const totalsByCategory = {};
+
+      // Calcular totales por categoría
+      facturas.forEach(factura => {
+        if (!totalsByCategory[factura.category]) {
+          totalsByCategory[factura.category] = { total: 0, tax: 0 };
+        }
+        totalsByCategory[factura.category].total += factura.total;
+        totalsByCategory[factura.category].tax += factura.tax;
+      });
+
+      // Calcular totales generales
+      const grandTotal = facturas.reduce((sum, factura) => sum + factura.total, 0);
+      const totalTaxes = facturas.reduce((sum, factura) => sum + factura.tax, 0);
+
+      // Mostrar resultados
+      results.innerHTML = `
+        <h2>Resumen de Facturas</h2>
+        ${Object.keys(totalsByCategory).map(category => `
+          <p><strong>${category}:</strong> $${totalsByCategory[category].total.toLocaleString('es-CL')} (Impuestos: $${totalsByCategory[category].tax.toLocaleString('es-CL')})</p>
+        `).join('')}
+        <p><strong>Total General:</strong> $${grandTotal.toLocaleString('es-CL')}</p>
+        <p><strong>Total de Impuestos:</strong> $${totalTaxes.toLocaleString('es-CL')}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
