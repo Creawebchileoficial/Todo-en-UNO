@@ -103,12 +103,12 @@
 
   <script>
     function calculateSavings() {
-      const initialAmount = parseInt(document.getElementById('initialAmount').value) || 0;
-      const goalAmount = parseInt(document.getElementById('goalAmount').value) || null;
+      const initialAmount = parseFloat(document.getElementById('initialAmount').value) || 0;
+      const goalAmount = parseFloat(document.getElementById('goalAmount').value) || null;
       const frequency = document.getElementById('frequency').value;
-      const contributionAmount = parseInt(document.getElementById('contributionAmount').value);
+      const contributionAmount = parseFloat(document.getElementById('contributionAmount').value);
       const timeUnit = document.getElementById('timeUnit').value;
-      const timePeriod = parseInt(document.getElementById('timePeriod').value);
+      const timePeriod = parseFloat(document.getElementById('timePeriod').value);
       const errorMessage = document.getElementById('errorMessage');
       const results = document.getElementById('results');
 
@@ -150,6 +150,13 @@
         case 'años':
           totalYears = timePeriod;
           break;
+      }
+
+      // Verificar que totalYears sea un valor válido
+      if (isNaN(totalYears) || totalYears <= 0) {
+        errorMessage.textContent = 'Por favor, ingrese un valor válido para la cantidad de tiempo.';
+        results.innerHTML = '';
+        return;
       }
 
       // Calcular el monto total ahorrado
