@@ -4,14 +4,15 @@
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo Universidad: Soluciones Prácticas para Todas Tus Necesidades Académicas</title>
+    <title>Todo Universidad: Soluciones Académicas y Diarias</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Mountains+of+Christmas&display=swap" rel="stylesheet">
     <style>
+        /* General Body Styles */
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to bottom right, #d32f2f, #388e3c);
+            background: linear-gradient(to bottom right, #1976d2, #388e3c);
             background-image: url('https://www.transparenttextures.com/patterns/snowflakes.png');
             margin: 0;
             padding: 0;
@@ -22,133 +23,167 @@
             color: #ffffff;
         }
 
+        /* Main Container */
         .container {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3);
-            padding: 50px;
-            max-width: 500px;
-            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            max-width: 1000px;
+            width: 90%;
             text-align: center;
-            backdrop-filter: blur(10px);
-            border: 2px solid #ffd700;
+            backdrop-filter: blur(5px);
+            border: 1px solid #ffd700;
+            margin-top: 20px;
         }
 
+        /* Logo */
         .logo {
             max-width: 150px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            border-radius: 50%; /* Si deseas que sea circular */
         }
 
+        /* Main Title */
         h1 {
             font-family: 'Mountains of Christmas', cursive;
             color: #ffd700;
-            margin-bottom: 25px;
-            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .page-title {
-            font-family: 'Roboto', sans-serif;
+        /* Subtitle */
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        /* Categories */
+        .category {
+            margin-bottom: 30px;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
             color: #ffd700;
-            margin-top: 20px;
-            font-size: 2rem;
+            margin-bottom: 15px;
+            text-decoration: underline;
         }
 
+        /* Buttons */
         .button {
-            display: block;
+            display: inline-block;
             background: linear-gradient(45deg, #e53935, #43a047);
             color: #ffffff;
             text-decoration: none;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 12px 20px;
+            border-radius: 8px;
             font-weight: bold;
-            margin: 15px 0;
+            margin: 10px;
             transition: transform 0.3s, box-shadow 0.3s;
             border: 2px solid #ffd700;
+            font-size: 0.9rem;
+            text-align: center;
+            width: calc(33% - 20px);
+            box-sizing: border-box;
+            min-width: 150px;
         }
 
         .button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 8px 15px rgba(255, 215, 0, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0px 6px 15px rgba(255, 215, 0, 0.5);
         }
 
+        /* Footer */
         footer {
             text-align: center;
             padding: 10px;
             background-color: #1b5e20;
             color: #ffffff;
-            font-size: 1rem;
-            margin-top: 20px;
+            font-size: 0.9rem;
             width: 100%;
-            position: relative;
         }
 
-        .snowflake {
-            color: #ffffff;
-            font-size: 1.5rem;
-            animation: fall 10s linear infinite;
-            position: absolute;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-100px); opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 25px;
-                max-width: 90%;
-            }
-
-            h1 {
-                font-size: 2.3rem;
-            }
-
+        /* Responsive Design */
+        @media (max-width: 768px) {
             .button {
-                padding: 12px;
-                font-size: 0.9rem;
+                width: calc(50% - 20px);
             }
+        }
 
-            footer {
-                font-size: 0.9rem;
+        @media (max-width: 480px) {
+            .button {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- Main Container -->
     <div class="container">
-        <!-- Logo agregado -->
-        <img src="images/images/logotodoenuno.png" alt="Logo de Todo en Uno" class="logo">
-        <h1>¡Feliz Navidad!</h1>
-        <!-- Botones que llevan a sus respectivas páginas -->
-        <a class="button" href="promedio.html">Calculadora de promedio con porcentaje</a>
-        <a class="button" href="Calculadora_de_ahorros.html">Calculadora de Ahorro</a>
-        <a class="button" href="selector.html">Selector aleatorio</a>
-        <a class="button" href="Calcular_factura.html">Calcular Facturas</a>
-        <a class="button" href="Dividir-cuenta.html">Gestor y Divisor de Gastos</a>
-        <a class="button" href="cientifica.html">Calculadora científica</a>
-        <a class="button" href="citas.html">Generador de citas</a>
-        <a class="button" href="Calculadora-de-Gastos-de-Combustible.html">Calculadora de Gastos de Combustible</a>
-        <a class="button" href="cronometro.html">Cronómetro de Estudio Multisesión</a>
-        <a class="button" href="calculadora_agua.html">Calculadora de Agua al Día</a>
-        <a class="button" href="Calculadora-nutricional.html">Calculadora Nutricional</a>
-        <a class="button" href="planeador-de_presupuesto.html">Planeador de presupuesto</a>
-        <a class="button" href="lectura.html">Calculadora de Tiempo de Lectura</a>
-        <a class="button" href="estadistica.html">Calculadora de Estadística Descriptiva</a>
-        <a class="button" href="curriculum.html">Generador de curriculum</a>
-        <a class="button" href="Calculadora-de-Calorías.html">Calculadora de Calorías</a>
-        <a class="button" href="juego_memoria.html">Juego para la memoria</a>
-        <a class="button" href="Calculadora_asistencia.html">Calcula tú asistencia</a>
+        <!-- Logo -->
+        <img src="images/Todo%20Universidad.png" alt="Logo de Todo Universidad" class="logo">
+
+
+
+        <!-- Main Title -->
+        <h1>Todo Universidad</h1>
+
+        <!-- Subtitle -->
+        <p class="subtitle">Explora nuestras herramientas para facilitar tu vida académica y personal</p>
+
+        <!-- Categories -->
+        
+        <!-- Category: Calculadoras -->
+        <div class="category">
+            <h2 class="category-title">Calculadoras</h2>
+            <a class="button" href="promedio.html">Calculadora de promedio con porcentaje</a>
+            <a class="button" href="Calculadora_de_ahorros.html">Calculadora de Ahorro</a>
+            <a class="button" href="Calculadora-de-Gastos-de-Combustible.html">Calculadora de Gastos de Combustible</a>
+            <a class="button" href="Calculadora-nutricional.html">Calculadora Nutricional</a>
+            <a class="button" href="Calculadora-de-Calorías.html">Calculadora de Calorías</a>
+            <a class="button" href="calculadora_agua.html">Calculadora de Agua al Día</a>
+        </div>
+
+        <!-- Category: Herramientas Académicas -->
+        <div class="category">
+            <h2 class="category-title">Herramientas Académicas</h2>
+            <a class="button" href="cientifica.html">Calculadora científica</a>
+            <a class="button" href="estadistica.html">Calculadora de Estadística Descriptiva</a>
+            <a class="button" href="lectura.html">Calculadora de Tiempo de Lectura</a>
+            <a class="button" href="curriculum.html">Generador de Curriculum</a>
+        </div>
+
+        <!-- Category: Utilidades -->
+        <div class="category">
+            <h2 class="category-title">Utilidades</h2>
+            <a class="button" href="Calcular_factura.html">Calcular Facturas</a>
+            <a class="button" href="Dividir-cuenta.html">Gestor y Divisor de Gastos</a>
+            <a class="button" href="cronometro.html">Cronómetro de Estudio Multisesión</a>
+            <a class="button" href="planeador-de_presupuesto.html">Planeador de presupuesto</a>
+        </div>
+
+        <!-- Category: Entretenimiento -->
+        <div class="category">
+            <h2 class="category-title">Entretenimiento</h2>
+            <a class="button" href="selector.html">Selector Aleatorio</a>
+            <a class="button" href="juego_memoria.html">Juego para la memoria</a>
+        </div>
+
+        <!-- Category: Otras Herramientas -->
+        <div class="category">
+            <h2 class="category-title">Otras Herramientas</h2>
+            <a class="button" href="citas.html">Generador de Citas</a>
+            <a class="button" href="Calculadora_asistencia.html">Calcula tu Asistencia</a>
+        </div>
     </div>
+
+    <!-- Footer -->
     <footer>
-        © 2024 Todo Universidad Todos los derechos reservados.
+        © 2024 Todo Universidad. Todos los derechos reservados.
     </footer>
-    <!-- Copos de nieve para el efecto navideño -->
-    <div class="snowflake" style="left: 10%; animation-delay: 0s;">❄</div>
-    <div class="snowflake" style="left: 30%; animation-delay: 2s;">❄</div>
-    <div class="snowflake" style="left: 50%; animation-delay: 4s;">❄</div>
-    <div class="snowflake" style="left: 70%; animation-delay: 6s;">❄</div>
-    <div class="snowflake" style="left: 90%; animation-delay: 8s;">❄</div>
 </body>
 </html>
