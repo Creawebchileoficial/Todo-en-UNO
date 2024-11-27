@@ -1,160 +1,306 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497"
-     crossorigin="anonymous"></script>
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clima Actual</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Pronóstico del Clima</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+        :root {
+            --primary-color: #1A73E8;
+            --secondary-color: #34A853;
+            --background-light: #F1F3F4;
+            --text-dark: #202124;
+            --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
             margin: 0;
-            background-color: #e0f7fa;
-            color: #333;
+            padding: 0;
+            box-sizing: border-box;
         }
-        h1 {
-            margin: 20px;
-            font-size: 2.5em;
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            padding: 1.5rem;
+        }
+
+        .header {
             text-align: center;
-            color: #00796b;
+            margin-bottom: 2rem;
         }
-        .weather {
-            text-align: center;
-            max-width: 600px;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1rem;
         }
-        .weather p {
-            font-size: 1.2em;
-            margin: 10px 0;
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
         }
-        .loading {
-            font-size: 1.2em;
-            color: #999;
+
+        .search-input {
+            padding: 0.75rem;
+            width: 300px;
+            border: 1px solid #dadce0;
+            border-radius: 6px;
+            margin-right: 0.5rem;
         }
-        .error {
-            font-size: 1.2em;
-            color: red;
-        }
-        .refresh-button {
-            margin-top: 20px;
-            background-color: #00796b;
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
             color: white;
-            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1em;
             transition: background-color 0.3s ease;
         }
-        .refresh-button:hover {
-            background-color: #004d40;
+
+        .btn:hover {
+            background-color: #1557b0;
         }
-        .search-container {
-            margin-bottom: 20px;
-        }
-        .search-container input {
-            padding: 10px;
-            width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-        footer {
-            margin-top: 40px;
+
+        .current-weather {
+            background-color: #f1f3f4;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
             text-align: center;
-            font-size: 0.9em;
-            color: #777;
+        }
+
+        .forecast-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .forecast-day {
+            flex: 1;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .forecast-day:hover {
+            transform: scale(1.05);
+        }
+
+        .forecast-day h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .error, .loading {
+            text-align: center;
+            color: red;
+            padding: 1rem;
+        }
+
+        .location-permission {
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .forecast-container {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Clima Actual</h1>
-    <div class="search-container">
-        <input type="text" id="city-input" placeholder="Ingrese ciudad o país">
-        <button class="refresh-button" onclick="fetchWeatherByCity()">Buscar Clima</button>
+    <div class="app-container">
+        <div class="header">
+            <h1>Pronóstico del Clima</h1>
+        </div>
+
+        <div id="location-permission" class="location-permission" style="display:none;">
+            <p>Para obtener el pronóstico de tu ubicación actual, por favor permite el acceso a la ubicación.</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="city-input" class="search-input" placeholder="Ingrese ciudad o país (opcional)">
+            <button class="btn" onclick="fetchWeatherData()">Buscar</button>
+        </div>
+
+        <div id="current-weather" class="current-weather">
+            <p class="loading">Cargando datos del clima...</p>
+        </div>
+
+        <div id="forecast-container" class="forecast-container">
+            <!-- Forecast days will be dynamically inserted here -->
+        </div>
     </div>
-    <div class="weather" id="weather">
-        <p class="loading">Cargando...</p>
-    </div>
-    <button class="refresh-button" onclick="fetchWeatherData()">Actualizar</button>
-    <footer>
-        &copy; 2024 Datos proporcionados por OpenWeatherMap
-    </footer>
+
     <script>
         const apiKey = 'bd645748de1066c9ad7e6a5f0148aca7';
-        const weatherElement = document.getElementById('weather');
+        const currentWeatherElement = document.getElementById('current-weather');
+        const forecastContainer = document.getElementById('forecast-container');
+        const locationPermissionElement = document.getElementById('location-permission');
+
+        // Helper function to get day name
+        function getDayName(dateString) {
+            const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            const date = new Date(dateString);
+            return days[date.getDay()];
+        }
+
+        async function fetchWeatherByCoordinates(lat, lon) {
+            try {
+                // Current weather
+                const currentResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`);
+                if (!currentResponse.ok) {
+                    throw new Error('Error en la solicitud de clima actual');
+                }
+                const currentData = await currentResponse.json();
+
+                // 5-day forecast
+                const forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`);
+                if (!forecastResponse.ok) {
+                    throw new Error('Error en la solicitud de pronóstico');
+                }
+                const forecastData = await forecastResponse.json();
+
+                displayWeatherData(currentData, forecastData);
+            } catch (error) {
+                currentWeatherElement.innerHTML = `
+                    <p class="error">Error al obtener datos del clima: ${error.message}</p>
+                `;
+                forecastContainer.innerHTML = '';
+                console.error('Error:', error);
+            }
+        }
 
         async function fetchWeatherData() {
-            try {
-                weatherElement.innerHTML = '<p class="loading">Cargando...</p>';
+            const cityInput = document.getElementById('city-input').value;
 
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(async (position) => {
+            if (cityInput) {
+                // If a city is specified, use city-based search
+                try {
+                    // Current weather
+                    const currentResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${apiKey}&units=metric&lang=es`);
+                    if (!currentResponse.ok) {
+                        throw new Error('Error en la solicitud de clima actual');
+                    }
+                    const currentData = await currentResponse.json();
+
+                    // 5-day forecast
+                    const forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=${apiKey}&units=metric&lang=es`);
+                    if (!forecastResponse.ok) {
+                        throw new Error('Error en la solicitud de pronóstico');
+                    }
+                    const forecastData = await forecastResponse.json();
+
+                    displayWeatherData(currentData, forecastData);
+                } catch (error) {
+                    currentWeatherElement.innerHTML = `
+                        <p class="error">Error al obtener datos del clima: ${error.message}</p>
+                    `;
+                    forecastContainer.innerHTML = '';
+                    console.error('Error:', error);
+                }
+            } else {
+                // If no city is specified, try to use geolocation
+                getCurrentLocationWeather();
+            }
+        }
+
+        function displayWeatherData(currentData, forecastData) {
+            // Display current weather
+            currentWeatherElement.innerHTML = `
+                <h2>Clima Actual en ${currentData.name}</h2>
+                <p><strong>Temperatura:</strong> ${currentData.main.temp.toFixed(1)} °C</p>
+                <p><strong>Condición:</strong> ${currentData.weather[0].description}</p>
+                <p><strong>Humedad:</strong> ${currentData.main.humidity}%</p>
+                <p><strong>Viento:</strong> ${currentData.wind.speed} m/s</p>
+            `;
+
+            // Process and display 5-day forecast
+            const dailyForecasts = {};
+            forecastData.list.forEach(forecast => {
+                const date = forecast.dt_txt.split(' ')[0];
+                if (!dailyForecasts[date]) {
+                    dailyForecasts[date] = forecast;
+                }
+            });
+
+            // Clear previous forecast
+            forecastContainer.innerHTML = '';
+
+            // Limit to 5 upcoming days
+            let daysDisplayed = 0;
+            for (const [date, forecast] of Object.entries(dailyForecasts)) {
+                if (daysDisplayed >= 5) break;
+
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('forecast-day');
+                dayElement.innerHTML = `
+                    <h3>${getDayName(date)}</h3>
+                    <p><strong>Temp:</strong> ${forecast.main.temp.toFixed(1)} °C</p>
+                    <p><strong>Clima:</strong> ${forecast.weather[0].description}</p>
+                    <p><strong>Humedad:</strong> ${forecast.main.humidity}%</p>
+                `;
+                forecastContainer.appendChild(dayElement);
+                daysDisplayed++;
+            }
+        }
+
+        function getCurrentLocationWeather() {
+            if ("geolocation" in navigator) {
+                locationPermissionElement.style.display = 'block';
+                
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        locationPermissionElement.style.display = 'none';
                         const lat = position.coords.latitude;
                         const lon = position.coords.longitude;
-                        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`);
-                        if (!response.ok) {
-                            throw new Error('Error en la solicitud: ' + response.statusText);
-                        }
-                        const data = await response.json();
-                        displayWeatherData(data);
-                    }, (error) => {
-                        weatherElement.innerHTML = '<p class="error">No se pudo obtener la ubicación. Por favor, permite el acceso a la ubicación.</p>';
-                        console.error('Error de Geolocalización:', error);
-                    });
-                } else {
-                    weatherElement.innerHTML = '<p class="error">La Geolocalización no es compatible con este navegador.</p>';
-                }
-            } catch (error) {
-                weatherElement.innerHTML = '<p class="error">Hubo un error al obtener los datos del clima. Error: ' + error.message + '</p>';
-                console.error('Error:', error);
+                        fetchWeatherByCoordinates(lat, lon);
+                    },
+                    (error) => {
+                        locationPermissionElement.style.display = 'block';
+                        locationPermissionElement.innerHTML = `
+                            <p class="error">No se pudo acceder a la ubicación: ${error.message}. 
+                            Por favor, ingrese una ciudad manualmente o revise los permisos de ubicación.</p>
+                        `;
+                        // Fallback to a default location (Santiago, Chile)
+                        fetchWeatherByCoordinates(-33.4489, -70.6693);
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 5000,
+                        maximumAge: 0
+                    }
+                );
+            } else {
+                // Fallback to a default location if geolocation is not supported
+                fetchWeatherByCoordinates(-33.4489, -70.6693);
             }
         }
 
-        async function fetchWeatherByCity() {
-            const city = document.getElementById('city-input').value;
-            if (!city) {
-                alert('Por favor, ingrese una ciudad o país.');
-                return;
-            }
-
-            try {
-                weatherElement.innerHTML = '<p class="loading">Cargando...</p>';
-                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=es`);
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud: ' + response.statusText);
-                }
-                const data = await response.json();
-                displayWeatherData(data);
-            } catch (error) {
-                weatherElement.innerHTML = '<p class="error">Hubo un error al obtener los datos del clima. Error: ' + error.message + '</p>';
-                console.error('Error:', error);
-            }
-        }
-
-        function displayWeatherData(data) {
-            weatherElement.innerHTML = `
-                <h2>Clima en ${data.name}</h2>
-                <p><strong>Temperatura:</strong> ${data.main.temp} °C</p>
-                <p><strong>Clima:</strong> ${data.weather[0].description}</p>
-                <p><strong>Humedad:</strong> ${data.main.humidity}%</p>
-                <p><strong>Viento:</strong> ${data.wind.speed} m/s</p>
-            `;
-        }
-
-        // Llama a la función para cargar los datos al inicio
-        fetchWeatherData();
+        // Initial load using geolocation
+        getCurrentLocationWeather();
     </script>
 </body>
 </html>
