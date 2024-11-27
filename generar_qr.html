@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+</script>
+<link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de QR Avanzado</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #e0f2fe, #93c5fd);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+    <div class="bg-white shadow-2xl rounded-xl p-8 w-full max-w-md">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Generador de Códigos QR</h1>
+        
+        <div class="space-y-4">
+            <div>
+                <label for="url" class="block text-sm font-medium text-gray-700">URL o Texto</label>
+                <input 
+                    type="text" 
+                    id="url" 
+                    placeholder="https://www.ejemplo.com" 
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                >
+            </div>
+
+            <div>
+                <label for="color" class="block text-sm font-medium text-gray-700">Color del QR</label>
+                <input 
+                    type="color" 
+                    id="color" 
+                    value="#000000" 
+                    class="mt-1 block w-full h-10 border-gray-300 rounded-md"
+                >
+            </div>
+
+            <div>
+                <label for="background" class="block text-sm font-medium text-gray-700">Color de Fondo</label>
+                <input 
+                    type="color" 
+                    id="background" 
+                    value="#ffffff" 
+                    class="mt-1 block w-full h-10 border-gray-300 rounded-md"
+                >
+            </div>
+
+            <div class="flex space-x-4">
+                <button 
+                    onclick="generarQR()" 
+                    class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
+                >
+                    Generar QR
+                </button>
+            </div>
+
+            <div id="qrcode" class="flex justify-center mt-6"></div>
+
+            <div class="flex justify-between mt-4">
+                <a 
+                    id="download-link" 
+                    href="#" 
+                    download="codigo_qr.png" 
+                    class="text-blue-500 hover:text-blue-700 hidden"
+                >
+                    Descargar QR
+                </a>
+                <button 
+                    id="copy-link" 
+                    onclick="copiarImagen()" 
+                    class="text-green-500 hover:text-green-700 hidden"
+                >
+                    Copiar Imagen
+                </button>
+            </div>
+        </div>
+
+        <footer class="text-center text-gray-500 mt-6 text-sm">
+            © 2024 Todo Universidad
+        </footer>
+    </div>
+
+    <script>
+        function generarQR() {
+            var url = document.getElementById("url").value;
+            var colorQR = document.getElementById("color").value;
+            var colorFondo = document.getElementById("background").value;
+
+            if (url) {
+                var qrcodeContainer = document.getElementById("qrcode");
+                qrcodeContainer.innerHTML = ""; // Limpiar QR previo
+
+                var qrcode = new QRCode(qrcodeContainer, {
+                    text: url,
+                    width: 256,
+                    height: 256,
+                    colorDark: colorQR,
+                    colorLight: colorFondo
+                });
+
+                // Generar el canvas para la descarga
+                setTimeout(() => {
+                    var qrCanvas = qrcodeContainer.querySelector('canvas');
+                    var downloadLink = document.getElementById("download-link");
+                    var copyLink = document.getElementById("copy-link");
+                    
+                    downloadLink.href = qrCanvas.toDataURL("image/png");
+                    downloadLink.style.display = 'block';
+                    copyLink.style.display = 'block';
+                }, 100);
+            } else {
+                alert("Por favor, introduce una URL o texto.");
+            }
+        }
+
+        function copiarImagen() {
+            var qrCanvas = document.querySelector('#qrcode canvas');
+            
+            qrCanvas.toBlob(function(blob) {
+                const item = new ClipboardItem({ "image/png": blob });
+                navigator.clipboard.write([item]).then(
+                    function() {
+                        alert("Imagen copiada al portapapeles");
+                    }, 
+                    function(error) {
+                        alert("Error al copiar: " + error);
+                    }
+                );
+            });
+        }
+    </script>
+</body>
+</html>
