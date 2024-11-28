@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Académico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin: 20px 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        #formulario {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        #formulario h2 {
+            color: #34495e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        input[type="text"], 
+        textarea, 
+        input[type="date"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, 
+        textarea:focus, 
+        input[type="date"]:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .btn-agregar {
+            background: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-agregar:hover {
+            background: #2980b9;
+        }
+
+        .evento {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .evento:hover {
+            transform: translateY(-5px);
+        }
+
+        .evento h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .evento img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .btn-eliminar {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-eliminar:hover {
+            background: #c0392b;
+        }
+
+        .preview-imagen {
+            max-width: 200px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .fecha-evento {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+
+        .drop-zone {
+            border: 2px dashed #3498db;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .drop-zone:hover {
+            border-color: #2980b9;
+        }
+
+        .drop-zone.dragover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>📚 Calendario Académico</h1>
+    
+    <div id="formulario">
+        <h2>Agregar Nuevo Evento</h2>
+        <input type="text" id="titulo" placeholder="Título del evento" required>
+        <textarea id="descripcion" placeholder="Descripción del evento" required></textarea>
+        <input type="date" id="fecha" required>
+        
+        <div class="drop-zone" id="dropZone">
+            <p>Arrastra una imagen aquí o haz clic para seleccionar o tomar una foto</p>
+            <input type="file" id="imagen" accept="image/*" capture="environment" style="display: none">
+        </div>
+        <img id="preview" class="preview-imagen">
+        
+        <button class="btn-agregar" onclick="agregarEvento()">Agregar Evento</button>
+    </div>
+
+    <div id="eventos"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarEventos();
+            configurarDropZone();
+        });
+
+        function configurarDropZone() {
+            const dropZone = document.getElementById('dropZone');
+            const inputImagen = document.getElementById('imagen');
+            const preview = document.getElementById('preview');
+
+            dropZone.addEventListener('click', () => inputImagen.click());
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('dragover');
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length) {
+                    inputImagen.files = files;
+                    mostrarPreview(files[0]);
+                }
+            });
+
+            inputImagen.addEventListener('change', (e) => {
+                if (e.target.files.length) {
+                    mostrarPreview(e.target.files[0]);
+                }
+            });
+        }
+
+        function mostrarPreview(file) {
+            const preview = document.getElementById('preview');
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        function agregarEvento() {
+            const titulo = document.getElementById('titulo').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const fecha = document.getElementById('fecha').value;
+            const imagen = document.getElementById('imagen').files[0];
+
+            if (!titulo || !descripcion || !fecha) {
+                alert('Por favor complete todos los campos obligatorios');
+                return;
+            }
+
+            const evento = {
+                titulo: titulo,
+                descripcion: descripcion,
+                fecha: fecha,
+                imagen: null,
+                timestamp: new Date().getTime()
+            };
+
+            if (imagen) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    evento.imagen = e.target.result;
+                    guardarEvento(evento);
+                };
+                reader.readAsDataURL(imagen);
+            } else {
+                guardarEvento(evento);
+            }
+        }
+
+        function guardarEvento(evento) {
+            let eventos = JSON.parse(localStorage.getItem('eventos') || '[]');
+            eventos.push(evento);
+            localStorage.setItem('eventos', JSON.stringify(eventos));
+            cargarEventos();
+            limpiarFormulario();
+        }
+
+        function cargarEventos() {
+            const eventosDiv = document.getElementById('eventos');
+            const eventos = JSON.parse(localStorage.getItem('eventos') || '[]');
+            
+            eventosDiv.innerHTML = '';
+            eventos.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+            eventos.forEach((evento, index) => {
+                const eventoElement = document.createElement('div');
+                eventoElement.className = 'evento';
+                eventoElement.innerHTML = `
+                    <h3>${evento.titulo}</h3>
+                    <div class="fecha-evento">📅 ${new Date(evento.fecha).toLocaleDateString('es-ES', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    })}</div>
+                    <p>${evento.descripcion}</p>
+                    ${evento.imagen ? `<img src="${evento.imagen}" alt="Imagen del evento">` : ''}
+                    <button class="btn-eliminar" onclick="eliminarEvento(${index})">Eliminar Evento</button>
+                `;
+                eventosDiv.appendChild(eventoElement);
+            });
+        }
+
+        function eliminarEvento(index) {
+            if (confirm('¿Estás seguro de que deseas eliminar este evento?')) {
+                let eventos = JSON.parse(localStorage.getItem('eventos') || '[]');
+                eventos.splice(index, 1);
+                localStorage.setItem('eventos', JSON.stringify(eventos));
+                cargarEventos();
+            }
+        }
+
+        function limpiarFormulario() {
+            document.getElementById('titulo').value = '';
+            document.getElementById('descripcion').value = '';
+            document.getElementById('fecha').value = '';
+            document.getElementById('imagen').value = '';
+            document.getElementById('preview').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
