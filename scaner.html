@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escáner de Documentos - Todo Universidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-secondary: #0f172a;
+            --color-accent: #22c55e;
+            --color-warning: #f59e0b;
+            --color-background: #f8fafc;
+            --gradient-primary: linear-gradient(135deg, #2563eb, #1e40af);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--color-background);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .scanner-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .input-section {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .btn i {
+            font-size: 1.2rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--color-secondary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .preview-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .preview-container {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+        }
+
+        #imagePreview, #processedPreview {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            cursor: pointer;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #camera {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            display: none;
+            transform: scaleX(1);
+        }
+
+        @media (max-width: 768px) {
+            .scanner-card {
+                padding: 20px;
+            }
+
+            .input-section {
+                flex-direction: column;
+            }
+
+            .preview-section {
+                grid-template-columns: 1fr;
+            }
+
+            .camera-container {
+                height: 70vh;
+            }
+            
+            #camera {
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .ocr-results {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .text-content {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .ocr-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .ocr-controls .btn {
+            flex: 1;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid var(--color-primary);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--color-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .camera-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            background: #000;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .camera-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85%;
+            height: 85%;
+            border: 2px solid var(--color-primary);
+            border-radius: 8px;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        .camera-frame::before,
+        .camera-frame::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: var(--color-primary);
+            border-style: solid;
+        }
+
+        .camera-frame::before {
+            top: -2px;
+            left: -2px;
+            border-width: 2px 0 0 2px;
+        }
+
+        .camera-frame::after {
+            bottom: -2px;
+            right: -2px;
+            border-width: 0 2px 2px 0;
+        }
+
+        .camera-guide-text {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .document-types {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .doc-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--color-primary);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--color-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .doc-btn.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .camera-frame {
+            position: absolute;
+            border: 2px solid var(--color-primary);
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+            cursor: move;
+            resize: both;
+            overflow: auto;
+        }
+
+        .camera-frame.custom {
+            resize: both;
+            overflow: auto;
+            min-width: 100px;
+            min-height: 100px;
+        }
+
+        .resize-handle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--color-primary);
+            border-radius: 50%;
+        }
+
+        .resize-handle.top-left { top: -10px; left: -10px; cursor: nw-resize; }
+        .resize-handle.top-right { top: -10px; right: -10px; cursor: ne-resize; }
+        .resize-handle.bottom-left { bottom: -10px; left: -10px; cursor: sw-resize; }
+        .resize-handle.bottom-right { bottom: -10px; right: -10px; cursor: se-resize; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="scanner-card">
+            <div class="header">
+                <h1>Escáner de Documentos</h1>
+                <p>Escanea documentos usando tu cámara o carga una imagen</p>
+            </div>
+
+            <div class="input-section">
+                <button class="btn btn-primary" onclick="openCamera()">
+                    <i class="ri-camera-line"></i>
+                    Tomar Foto
+                </button>
+                <button class="btn btn-secondary" onclick="document.getElementById('fileInput').click()">
+                    <i class="ri-image-line"></i>
+                    Cargar Imagen
+                </button>
+                <input type="file" id="fileInput" accept="image/*" style="display: none" onchange="handleImageUpload(event)">
+            </div>
+
+            <video id="camera" autoplay playsinline></video>
+
+            <div class="filter-options">
+                <button class="filter-btn active" onclick="applyFilter('original')">Original</button>
+                <button class="filter-btn" onclick="applyFilter('scan-color')">Escanear a Color</button>
+                <button class="filter-btn" onclick="applyFilter('scan-bw')">Escanear B/N</button>
+                <button class="filter-btn" onclick="applyFilter('enhance')">Mejorado</button>
+            </div>
+
+            <div class="preview-section">
+                <div class="preview-container">
+                    <div class="preview-title">Imagen Original</div>
+                    <img id="imagePreview" alt="Vista previa">
+                </div>
+                <div class="preview-container">
+                    <div class="preview-title">Imagen Procesada</div>
+                    <canvas id="processedPreview"></canvas>
+                </div>
+            </div>
+
+            <div class="controls" id="imageControls">
+                <div class="control-group">
+                    <label>Brillo</label>
+                    <input type="range" class="slider" min="-100" max="100" value="0" id="brightness" oninput="adjustImage()">
+                </div>
+                <div class="control-group">
+                    <label>Contraste</label>
+                    <input type="range" class="slider" min="-100" max="100" value="0" id="contrast" oninput="adjustImage()">
+                </div>
+                <div class="control-group">
+                    <label>Nitidez</label>
+                    <input type="range" class="slider" min="0" max="10" value="0" id="sharpness" oninput="adjustImage()">
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="downloadImage()">
+                <i class="ri-download-line"></i>
+                Descargar Imagen
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentFilter = 'original';
+        let originalImage = null;
+        let processedCanvas = document.getElementById('processedPreview');
+        let stream = null;
+
+        function applyFilter(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            processImage();
+        }
+
+        async function openCamera() {
+            try {
+                // Primero intentar liberar cualquier stream existente
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+
+                // Intentar primero con la cámara trasera
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        video: {
+                            facingMode: 'environment',
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 }
+                        }
+                    });
+                } catch (e) {
+                    // Si falla la cámara trasera, intentar con cualquier cámara
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        video: true
+                    });
+                }
+
+                const video = document.getElementById('camera');
+                
+                // Crear contenedor para la cámara
+                const cameraContainer = document.createElement('div');
+                cameraContainer.className = 'camera-container';
+                
+                // Agregar marco guía
+                const frame = document.createElement('div');
+                frame.className = 'camera-frame';
+                
+                // Agregar texto guía
+                const guideText = document.createElement('div');
+                guideText.className = 'camera-guide-text';
+                guideText.textContent = 'Alinea el documento dentro del marco';
+                
+                // Reorganizar elementos
+                video.parentNode.insertBefore(cameraContainer, video);
+                cameraContainer.appendChild(video);
+                cameraContainer.appendChild(frame);
+                cameraContainer.appendChild(guideText);
+                
+                // Asignar el stream al video
+                video.srcObject = stream;
+                video.onloadedmetadata = () => {
+                    video.play();
+                    video.style.display = 'block';
+                };
+                
+                const captureBtn = document.createElement('button');
+                captureBtn.className = 'btn btn-primary';
+                captureBtn.style.marginTop = '50px';
+                captureBtn.innerHTML = '<i class="ri-camera-line"></i>Capturar';
+                captureBtn.onclick = capturePhoto;
+                cameraContainer.appendChild(captureBtn);
+
+            } catch (err) {
+                console.error('Error detallado:', err);
+                let errorMessage = 'Error al acceder a la cámara. ';
+                
+                if (err.name === 'NotAllowedError') {
+                    errorMessage += 'Por favor, permite el acceso a la cámara en tu navegador y recarga la página.';
+                } else if (err.name === 'NotFoundError') {
+                    errorMessage += 'No se encontró ninguna cámara en el dispositivo.';
+                } else if (err.name === 'NotReadableError' || err.name === 'AbortError') {
+                    errorMessage += 'Por favor, cierra otras aplicaciones que puedan estar usando la cámara y recarga la página.';
+                } else {
+                    errorMessage += err.message;
+                }
+                
+                alert(errorMessage);
+                
+                // Limpiar cualquier stream existente
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+                
+                // Limpiar elementos de la cámara
+                const cameraContainer = document.querySelector('.camera-container');
+                if (cameraContainer) {
+                    cameraContainer.remove();
+                }
+            }
+        }
+
+        function capturePhoto() {
+            const video = document.getElementById('camera');
+            const canvas = document.createElement('canvas');
+            const frame = document.querySelector('.camera-frame');
+            
+            // Obtener las dimensiones del marco en relación con el video
+            const videoRect = video.getBoundingClientRect();
+            const frameRect = frame.getBoundingClientRect();
+            
+            // Calcular las proporciones
+            const scaleX = video.videoWidth / videoRect.width;
+            const scaleY = video.videoHeight / videoRect.height;
+            
+            // Calcular el área de recorte
+            const cropX = (frameRect.left - videoRect.left) * scaleX;
+            const cropY = (frameRect.top - videoRect.top) * scaleY;
+            const cropWidth = frameRect.width * scaleX;
+            const cropHeight = frameRect.height * scaleY;
+            
+            // Configurar el canvas con las dimensiones del recorte
+            canvas.width = cropWidth;
+            canvas.height = cropHeight;
+            
+            // Dibujar solo el área dentro del marco
+            canvas.getContext('2d').drawImage(
+                video,
+                cropX, cropY, cropWidth, cropHeight,
+                0, 0, cropWidth, cropHeight
+            );
+            
+            const img = new Image();
+            img.src = canvas.toDataURL('image/png');
+            img.onload = () => {
+                originalImage = img;
+                document.getElementById('imagePreview').src = img.src;
+                processImage();
+            };
+
+            // Detener la cámara y limpiar
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+            const cameraContainer = document.querySelector('.camera-container');
+            if (cameraContainer) {
+                cameraContainer.remove();
+            }
+        }
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        originalImage = img;
+                        document.getElementById('imagePreview').src = img.src;
+                        processImage();
+                    }
+                    img.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function processImage() {
+            if (!originalImage) return;
+
+            processedCanvas.width = originalImage.width;
+            processedCanvas.height = originalImage.height;
+            const ctx = processedCanvas.getContext('2d');
+
+            switch(currentFilter) {
+                case 'scan-color':
+                    applyScanEffect(ctx, true);
+                    break;
+                case 'scan-bw':
+                    applyScanEffect(ctx, false);
+                    break;
+                case 'enhance':
+                    applyEnhancement(ctx);
+                    break;
+                default:
+                    ctx.drawImage(originalImage, 0, 0);
+            }
+
+            const croppedCanvas = autoCrop(ctx, processedCanvas.width, processedCanvas.height);
+            
+            processedCanvas.width = croppedCanvas.width;
+            processedCanvas.height = croppedCanvas.height;
+            ctx.drawImage(croppedCanvas, 0, 0);
+        }
+
+        function applyScanEffect(ctx, keepColor) {
+            // Dibujar imagen original
+            ctx.drawImage(originalImage, 0, 0);
+            
+            // Obtener datos de la imagen
+            const imageData = ctx.getImageData(0, 0, processedCanvas.width, processedCanvas.height);
+            const data = imageData.data;
+            
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                
+                // Calcular luminancia
+                const luminance = (r * 0.299 + g * 0.587 + b * 0.114);
+                
+                if (keepColor) {
+                    // Modo color: Mantener colores pero mejorar contraste
+                    const factor = luminance > 128 ? 1.2 : 0.8;
+                    
+                    data[i] = Math.min(255, r * factor);     // Rojo
+                    data[i + 1] = Math.min(255, g * factor); // Verde
+                    data[i + 2] = Math.min(255, b * factor); // Azul
+                    
+                    // Hacer el fondo más blanco si todos los canales son claros
+                    if (r > 200 && g > 200 && b > 200) {
+                        data[i] = data[i + 1] = data[i + 2] = 255;
+                    }
+                } else {
+                    // Modo blanco y negro
+                    const value = luminance > 128 ? 255 : 0;
+                    data[i] = data[i + 1] = data[i + 2] = value;
+                }
+            }
+            
+            // Aplicar los cambios
+            ctx.putImageData(imageData, 0, 0);
+            
+            // Aplicar filtros finales según el modo
+            if (keepColor) {
+                ctx.filter = 'contrast(120%) brightness(105%) saturate(110%)';
+            } else {
+                ctx.filter = 'contrast(150%) brightness(110%) saturate(0%)';
+            }
+            ctx.drawImage(processedCanvas, 0, 0);
+        }
+
+        function applyEnhancement(ctx) {
+            // Dibujar imagen original
+            ctx.drawImage(originalImage, 0, 0);
+            
+            // Obtener datos de la imagen
+            const imageData = ctx.getImageData(0, 0, processedCanvas.width, processedCanvas.height);
+            const data = imageData.data;
+            
+            // Mejorar contraste y nitidez
+            for (let i = 0; i < data.length; i += 4) {
+                // Aumentar contraste
+                for (let j = 0; j < 3; j++) {
+                    const value = data[i + j];
+                    data[i + j] = value < 128 ? 
+                        Math.max(0, value - 20) : 
+                        Math.min(255, value + 20);
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            
+            // Aplicar filtros finales
+            ctx.filter = 'contrast(120%) brightness(105%) saturate(110%) sharpen(1)';
+            ctx.drawImage(processedCanvas, 0, 0);
+        }
+
+        function adjustImage() {
+            if (!originalImage) return;
+
+            const ctx = processedCanvas.getContext('2d');
+            ctx.filter = `
+                brightness(${100 + parseInt(document.getElementById('brightness').value)}%) 
+                contrast(${100 + parseInt(document.getElementById('contrast').value)}%)
+                blur(${document.getElementById('sharpness').value === '0' ? '0px' : '0.5px'})
+            `;
+            
+            ctx.drawImage(originalImage, 0, 0);
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'documento_escaneado.png';
+            link.href = processedCanvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function autoCrop(ctx, width, height) {
+            const imageData = ctx.getImageData(0, 0, width, height);
+            const data = imageData.data;
+            
+            // Encontrar los bordes del documento
+            let minX = width;
+            let maxX = 0;
+            let minY = height;
+            let maxY = 0;
+            
+            // Reducir el umbral para detectar mejor los bordes
+            const threshold = 200; // Valor más bajo para detectar mejor el contenido
+            
+            // Escanear la imagen para encontrar los bordes
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const i = (y * width + x) * 4;
+                    // Usar un promedio ponderado para la luminosidad
+                    const brightness = (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114);
+                    
+                    // Si el pixel no es casi blanco, considerarlo como contenido
+                    if (brightness < threshold) {
+                        minX = Math.min(minX, x);
+                        maxX = Math.max(maxX, x);
+                        minY = Math.min(minY, y);
+                        maxY = Math.max(maxY, y);
+                    }
+                }
+            }
+            
+            // Verificar si se encontraron bordes válidos
+            if (minX >= maxX || minY >= maxY) {
+                return processedCanvas; // Retornar canvas original si no se detectan bordes
+            }
+            
+            // Agregar un margen proporcional al tamaño de la imagen
+            const marginX = Math.floor(width * 0.02);  // 2% del ancho
+            const marginY = Math.floor(height * 0.02); // 2% del alto
+            
+            minX = Math.max(0, minX - marginX);
+            maxX = Math.min(width, maxX + marginX);
+            minY = Math.max(0, minY - marginY);
+            maxY = Math.min(height, maxY + marginY);
+            
+            // Obtener las dimensiones del área recortada
+            const cropWidth = maxX - minX;
+            const cropHeight = maxY - minY;
+            
+            // Verificar que el área recortada sea significativa
+            if (cropWidth < width * 0.1 || cropHeight < height * 0.1) {
+                return processedCanvas; // Retornar canvas original si el área es muy pequeña
+            }
+            
+            // Crear un nuevo canvas para la imagen recortada
+            const croppedCanvas = document.createElement('canvas');
+            croppedCanvas.width = cropWidth;
+            croppedCanvas.height = cropHeight;
+            
+            // Copiar solo el área relevante
+            const croppedCtx = croppedCanvas.getContext('2d');
+            croppedCtx.drawImage(
+                processedCanvas,
+                minX, minY, cropWidth, cropHeight,
+                0, 0, cropWidth, cropHeight
+            );
+            
+            console.log('Recorte realizado:', {
+                original: { width, height },
+                recortado: { width: cropWidth, height: cropHeight },
+                bordes: { minX, maxX, minY, maxY }
+            });
+            
+            return croppedCanvas;
+        }
+
+        function detectEdges(ctx, width, height) {
+            const imageData = ctx.getImageData(0, 0, width, height);
+            const data = imageData.data;
+            const edges = new Uint8ClampedArray(data.length);
+            
+            for (let y = 1; y < height - 1; y++) {
+                for (let x = 1; x < width - 1; x++) {
+                    const i = (y * width + x) * 4;
+                    
+                    // Calcular gradiente usando operador Sobel
+                    const gx = 
+                        -data[i - width * 4 - 4] + data[i - width * 4 + 4] +
+                        -2 * data[i - 4] + 2 * data[i + 4] +
+                        -data[i + width * 4 - 4] + data[i + width * 4 + 4];
+                        
+                    const gy = 
+                        -data[i - width * 4 - 4] - 2 * data[i - width * 4] - data[i - width * 4 + 4] +
+                        data[i + width * 4 - 4] + 2 * data[i + width * 4] + data[i + width * 4 + 4];
+                        
+                    const magnitude = Math.sqrt(gx * gx + gy * gy);
+                        
+                    edges[i] = edges[i + 1] = edges[i + 2] = magnitude > 50 ? 255 : 0;
+                    edges[i + 3] = 255;
+                }
+            }
+            
+            return new ImageData(edges, width, height);
+        }
+
+        function setDocumentType(type) {
+            const frame = document.querySelector('.camera-frame');
+            const container = document.querySelector('.camera-container');
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
+
+            document.querySelectorAll('.doc-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-ratio="${type}"]`).classList.add('active');
+
+            if (type === 'custom') {
+                frame.className = 'camera-frame custom';
+                frame.style.width = '70%';
+                frame.style.height = '70%';
+                addResizeHandles(frame);
+            } else {
+                frame.className = 'camera-frame';
+                const ratio = parseFloat(type);
+                const width = containerWidth * 0.8;
+                const height = width * ratio;
+                frame.style.width = `${width}px`;
+                frame.style.height = `${height}px`;
+            }
+
+            centerFrame(frame);
+        }
+
+        function addResizeHandles(frame) {
+            const positions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+            positions.forEach(pos => {
+                const handle = document.createElement('div');
+                handle.className = `resize-handle ${pos}`;
+                frame.appendChild(handle);
+            });
+
+            // Hacer el marco arrastrable
+            makeDraggable(frame);
+        }
+
+        function makeDraggable(frame) {
+            let isDragging = false;
+            let currentX;
+            let currentY;
+            let initialX;
+            let initialY;
+
+            frame.addEventListener('mousedown', dragStart);
+            frame.addEventListener('mousemove', drag);
+            frame.addEventListener('mouseup', dragEnd);
+            frame.addEventListener('mouseleave', dragEnd);
+
+            function dragStart(e) {
+                initialX = e.clientX - frame.offsetLeft;
+                initialY = e.clientY - frame.offsetTop;
+                isDragging = true;
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                frame.style.left = `${currentX}px`;
+                frame.style.top = `${currentY}px`;
+            }
+
+            function dragEnd() {
+                isDragging = false;
+            }
+        }
+
+        function centerFrame(frame) {
+            const container = frame.parentElement;
+            frame.style.left = `${(container.offsetWidth - frame.offsetWidth) / 2}px`;
+            frame.style.top = `${(container.offsetHeight - frame.offsetHeight) / 2}px`;
+        }
+    </script>
+</body>
+</html>
