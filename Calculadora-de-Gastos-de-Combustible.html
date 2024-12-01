@@ -1,143 +1,409 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497"
-     crossorigin="anonymous"></script>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2WG7Q3YRT0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2WG7Q3YRT0');
-</script>
   <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora de Gastos de Combustible</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      max-width: 700px;
-      margin: 0 auto;
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-      text-align: center;
-      color: #4caf50;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 15px;
-    }
-    input, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      background-color: #4caf50;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    .results {
-      margin-top: 20px;
-    }
-    .results p {
-      font-size: 18px;
-      font-weight: bold;
-      color: #333;
-    }
-    .error {
-      color: red;
-      font-size: 14px;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Gastos de Combustible - Todo Universidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-secondary: #0f172a;
+            --color-accent: #22c55e;
+            --color-background: #f8fafc;
+            --color-text-dark: #1e293b;
+            --color-white: #ffffff;
+            --shadow-subtle: 0 4px 6px rgba(0,0,0,0.1);
+            --gradient-primary: linear-gradient(135deg, #2563eb, #1e40af);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--color-background);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--color-text-dark);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .calculator-card {
+            background: var(--color-white);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-primary);
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .header h1 {
+            color: var(--color-secondary);
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 45px;
+            color: #64748b;
+            font-size: 1.2rem;
+        }
+
+        label {
+            display: block;
+            color: var(--color-text-dark);
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 12px 12px 45px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        input:focus {
+            border-color: var(--color-primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+            background: white;
+        }
+
+        .btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255,255,255,0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .btn:hover::after {
+            opacity: 1;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .result-card {
+            background: var(--color-white);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: none;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .result-card.visible {
+            display: block;
+            animation: slideUp 0.4s ease;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 2px solid #f1f5f9;
+            position: relative;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 40%;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .result-item:hover::before {
+            opacity: 1;
+        }
+
+        .result-label {
+            color: #64748b;
+            font-weight: 500;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-value {
+            color: var(--color-secondary);
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .calculator-card, .result-card {
+                padding: 25px;
+                border-radius: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .result-label {
+                font-size: 1rem;
+            }
+
+            .result-value {
+                font-size: 1.1rem;
+            }
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #64748b, #475569);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-reset:hover {
+            background: linear-gradient(135deg, #475569, #334155);
+        }
+
+        .btn-reset i {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-reset:hover i {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .button-container {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Calculadora de Gastos de Combustible</h1>
-    <form id="fuelCalculatorForm">
-      <label for="distance">Distancia del Viaje (en km):</label>
-      <input type="number" id="distance" placeholder="Ej. 300" required>
+    <div class="container">
+        <div class="calculator-card">
+            <div class="header">
+                <h1>Calculadora de Gastos de Combustible</h1>
+                <p>Calcula de manera precisa tus gastos en combustible</p>
+            </div>
 
-      <label for="fuelEfficiency">Rendimiento del Vehículo (km/l):</label>
-      <input type="number" id="fuelEfficiency" placeholder="Ej. 12" required>
+            <div class="input-group">
+                <label for="distancia">Distancia del viaje</label>
+                <i class="ri-route-line"></i>
+                <input type="number" id="distancia" placeholder="Ingresa la distancia en kilómetros">
+            </div>
 
-      <label for="fuelPrice">Precio del Combustible ($CLP/l):</label>
-      <input type="number" id="fuelPrice" placeholder="Ej. 1200" required>
+            <div class="input-group">
+                <label for="consumo">Rendimiento del vehículo</label>
+                <i class="ri-gas-station-line"></i>
+                <input type="number" id="consumo" placeholder="Ingresa el rendimiento en km/l">
+            </div>
 
-      <button type="button" onclick="calculateFuelCost()">Calcular Costo del Viaje</button>
-      <div id="errorMessage" class="error"></div>
-    </form>
+            <div class="input-group">
+                <label for="precio">Precio del combustible</label>
+                <i class="ri-money-dollar-circle-line"></i>
+                <input type="number" id="precio" placeholder="Ingresa el precio por litro">
+            </div>
 
-    <div class="results" id="results">
-      <!-- Aquí se mostrarán los resultados -->
+            <div class="button-container">
+                <button class="btn" onclick="calcularGasto()">Calcular Gasto</button>
+                <button class="btn btn-reset" onclick="resetearCalculadora()">
+                    <i class="ri-refresh-line"></i> Resetear
+                </button>
+            </div>
+        </div>
+
+        <div class="result-card" id="resultCard">
+            <div class="result-item">
+                <span class="result-label">
+                    <i class="ri-gas-station-fill"></i>
+                    Combustible necesario
+                </span>
+                <span class="result-value" id="litros">0 L</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">
+                    <i class="ri-money-dollar-circle-fill"></i>
+                    Costo total
+                </span>
+                <span class="result-value" id="costo">$0</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">
+                    <i class="ri-road-map-fill"></i>
+                    Costo por kilómetro
+                </span>
+                <span class="result-value" id="costoPorKm">$0/km</span>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    function calculateFuelCost() {
-      const distance = parseInt(document.getElementById('distance').value);
-      const fuelEfficiency = parseFloat(document.getElementById('fuelEfficiency').value);
-      const fuelPrice = parseInt(document.getElementById('fuelPrice').value);
-      const errorMessage = document.getElementById('errorMessage');
-      const results = document.getElementById('results');
+    <script>
+        function calcularGasto() {
+            const distancia = parseFloat(document.getElementById('distancia').value);
+            const consumo = parseFloat(document.getElementById('consumo').value);
+            const precio = parseFloat(document.getElementById('precio').value);
 
-      // Validar entradas
-      if (isNaN(distance) || distance <= 0) {
-        errorMessage.textContent = 'Por favor, ingrese una distancia válida.';
-        results.innerHTML = '';
-        return;
-      }
+            if (!distancia || !consumo || !precio) {
+                alert('Por favor, completa todos los campos');
+                return;
+            }
 
-      if (isNaN(fuelEfficiency) || fuelEfficiency <= 0) {
-        errorMessage.textContent = 'Por favor, ingrese un rendimiento válido.';
-        results.innerHTML = '';
-        return;
-      }
+            const litros = Math.round(distancia / consumo);
+            const costoTotal = litros * precio;
+            const costoPorKm = costoTotal / distancia;
 
-      if (isNaN(fuelPrice) || fuelPrice <= 0) {
-        errorMessage.textContent = 'Por favor, ingrese un precio válido.';
-        results.innerHTML = '';
-        return;
-      }
+            // Formatear números con separadores de miles
+            const formatearNumero = (numero) => {
+                return new Intl.NumberFormat('es-CL', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(numero);
+            };
 
-      errorMessage.textContent = '';
+            document.getElementById('litros').textContent = `${formatearNumero(litros)} L`;
+            document.getElementById('costo').textContent = `$${formatearNumero(costoTotal)}`;
+            document.getElementById('costoPorKm').textContent = `$${formatearNumero(Math.round(costoPorKm))}/km`;
 
-      // Calcular el costo del viaje
-      const fuelNeeded = distance / fuelEfficiency; // Litros necesarios
-      const totalCost = fuelNeeded * fuelPrice; // Costo total
+            const resultCard = document.getElementById('resultCard');
+            resultCard.classList.add('visible');
+        }
 
-      // Mostrar resultados
-      results.innerHTML = `
-        <h2>Resultados</h2>
-        <p>Distancia Total: <strong>${distance.toLocaleString('es-CL')} km</strong></p>
-        <p>Rendimiento del Vehículo: <strong>${fuelEfficiency.toLocaleString('es-CL')} km/l</strong></p>
-        <p>Precio del Combustible: <strong>$${fuelPrice.toLocaleString('es-CL')} por litro</strong></p>
-        <p>Combustible Necesario: <strong>${Math.ceil(fuelNeeded).toLocaleString('es-CL')} litros</strong></p>
-        <p>Costo Total del Viaje: <strong>$${Math.ceil(totalCost).toLocaleString('es-CL')}</strong></p>
-      `;
-    }
-  </script>
+        // Validación de entrada
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.value < 0) this.value = 0;
+            });
+        });
+
+        function resetearCalculadora() {
+            // Limpiar todos los campos
+            document.getElementById('distancia').value = '';
+            document.getElementById('consumo').value = '';
+            document.getElementById('precio').value = '';
+
+            // Ocultar resultados con animación
+            const resultCard = document.getElementById('resultCard');
+            resultCard.style.opacity = '0';
+            resultCard.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                resultCard.classList.remove('visible');
+                resultCard.style.opacity = '';
+                resultCard.style.transform = '';
+                
+                // Resetear valores de resultados
+                document.getElementById('litros').textContent = '0 L';
+                document.getElementById('costo').textContent = '$0';
+                document.getElementById('costoPorKm').textContent = '$0/km';
+            }, 300);
+
+            // Enfocar el primer campo
+            document.getElementById('distancia').focus();
+        }
+    </script>
 </body>
 </html>

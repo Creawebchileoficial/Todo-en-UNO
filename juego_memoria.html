@@ -1,393 +1,489 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497"
-     crossorigin="anonymous"></script>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2WG7Q3YRT0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2WG7Q3YRT0');
-</script>
   <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juego de Memoria Futurista</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background: linear-gradient(135deg, #1e3c72, #2a5298, #0f0c29);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      min-height: 100vh;
-      color: white;
-      font-family: 'Roboto', sans-serif;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-    #mainContainer {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      max-width: 1200px;
-      justify-content: center;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-    #gameContainer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      max-width: 500px;
-      padding: 20px;
-    }
-    #header {
-      text-align: center;
-      margin-bottom: 20px;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.7);
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
-      width: 100%;
-    }
-    #gameBoard {
-      display: grid;
-      gap: 10px;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 20px;
-      box-shadow: 0 0 25px rgba(0, 255, 204, 0.8);
-      width: 100%;
-      max-width: 500px;
-    }
-    #recordBoard {
-      margin-top: 30px;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.85);
-      border-radius: 20px;
-      box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
-      max-height: 600px;
-      overflow-y: auto;
-      width: 100%;
-      max-width: 300px;
-      color: #ffd700;
-    }
-    #recordBoard h3 {
-      text-align: center;
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-      color: #ffdf00;
-    }
-    .card {
-      width: 100%;
-      height: 80px;
-      background: linear-gradient(135deg, #00ffcc, #007bff);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 2rem;
-      cursor: pointer;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-      border-radius: 20px;
-      transition: transform 0.4s, background 0.4s, box-shadow 0.4s;
-      color: transparent;
-    }
-    .card:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
-    }
-    .flipped, .matched {
-      background: #ffffff;
-      color: #000;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 1);
-      transform: scale(1.1);
-    }
-    #timer, #level, #completionTime {
-      font-size: 2rem;
-      margin: 10px;
-      font-family: 'Orbitron', sans-serif;
-    }
-    #completionTime {
-      display: none;
-      margin-top: 20px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      font-size: 1.2rem;
-      padding: 5px 0;
-      border-bottom: 1px solid #ffd700;
-    }
-    #levelSelector {
-      margin-top: 20px;
-      text-align: center;
-    }
-    #levelSelector button {
-      margin: 5px;
-      padding: 10px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background: #00ffcc;
-      color: #000;
-      transition: background 0.3s;
-    }
-    #levelSelector button:hover {
-      background: #007bff;
-      color: #fff;
-    }
-    @media (max-width: 768px) {
-      body {
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-      }
-      #mainContainer {
-        flex-direction: column;
-        align-items: center;
-      }
-      #gameContainer {
-        width: 100%;
-        max-width: 100%;
-      }
-      #recordBoard {
-        margin-left: 0;
-        margin-top: 20px;
-        width: 90%;
-        align-self: center;
-      }
-      .card {
-        height: 60px;
-        font-size: 1.5rem;
-      }
-      #gameBoard {
-        gap: 5px;
-        padding: 10px;
-      }
-      #header {
-        width: 95%;
-      }
-      #levelSelector button {
-        padding: 8px;
-        font-size: 0.9rem;
-      }
-    }
-    @media (max-width: 480px) {
-      body {
-        padding: 5px;
-      }
-      #mainContainer {
-        flex-direction: column;
-        align-items: center;
-      }
-      #gameContainer {
-        max-width: 100%;
-      }
-      .card {
-        height: 50px;
-        font-size: 1.2rem;
-      }
-      #header, #recordBoard {
-        width: 95%;
-        padding: 10px;
-      }
-      #timer, #level, #completionTime {
-        font-size: 1.5rem;
-      }
-      #levelSelector button {
-        padding: 6px;
-        font-size: 0.8rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Memoria - Todo Universidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-secondary: #0f172a;
+            --color-accent: #22c55e;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --color-background: #f8fafc;
+            --gradient-primary: linear-gradient(135deg, #2563eb, #1e40af);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--color-background);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 
+                0 10px 25px rgba(0,0,0,0.1),
+                inset 2px 2px 5px rgba(255,255,255,0.5),
+                inset -3px -3px 7px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-secondary);
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+            max-height: 70vh;
+        }
+
+        .card {
+            aspect-ratio: 2/3;
+            background: var(--gradient-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-front {
+            background: var(--gradient-primary);
+        }
+
+        .card-back {
+            background: white;
+            transform: rotateY(180deg);
+            border: 2px solid #e2e8f0;
+        }
+
+        .card-back i {
+            font-size: 1.8rem;
+            color: var(--color-secondary);
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn i {
+            font-size: 1.2rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--color-secondary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .difficulty-selector {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .difficulty-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--color-primary);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--color-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .difficulty-btn.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 15px;
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+
+            .card-back i {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .memory-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 5px;
+            }
+
+            .card-back i {
+                font-size: 1.2rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .stat-value {
+                font-size: 1rem;
+            }
+        }
+
+        .victory-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .victory-modal.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--color-primary);
+            animation: confetti 5s ease-in-out infinite;
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(720deg); }
+        }
+    </style>
 </head>
 <body>
-  <div id="mainContainer">
-    <div id="gameContainer">
-      <div id="header">
-        <div id="level">Nivel: 1</div>
-        <div id="timer">Tiempo: 0s</div>
-        <div id="completionTime">Tiempo de finalización: </div>
-      </div>
-      <div id="gameBoard"></div>
-      <div id="levelSelector">
-        <button id="prevLevel" onclick="goToPreviousLevel()">Nivel Anterior</button>
-        <button id="nextLevel" onclick="goToNextLevel()">Nivel Siguiente</button>
-        <button id="currentLevel" onclick="goToCurrentLevel()">Ir al Nivel Actual</button>
-      </div>
+    <div class="game-container">
+        <div class="header">
+            <h1>Juego de Memoria</h1>
+            <p>Encuentra todos los pares de iconos</p>
+        </div>
+
+        <div class="difficulty-selector">
+            <button class="difficulty-btn active" data-pairs="6">Fácil</button>
+            <button class="difficulty-btn" data-pairs="8">Medio</button>
+            <button class="difficulty-btn" data-pairs="10">Difícil</button>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-label">Movimientos</div>
+                <div class="stat-value" id="moves">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Tiempo</div>
+                <div class="stat-value" id="time">00:00</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Mejor Tiempo</div>
+                <div class="stat-value" id="bestTime">--:--</div>
+            </div>
+        </div>
+
+        <div class="memory-grid" id="gameGrid"></div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="startNewGame()">
+                <i class="ri-restart-line"></i>
+                Nuevo Juego
+            </button>
+            <button class="btn btn-secondary" onclick="showHighScores()">
+                <i class="ri-trophy-line"></i>
+                Mejores Puntuaciones
+            </button>
+        </div>
     </div>
-    <div id="recordBoard">
-      <h3>Historial de Niveles</h3>
-      <ul id="recordList"></ul>
+
+    <div class="victory-modal" id="victoryModal">
+        <h2>¡Felicitaciones!</h2>
+        <p>Has completado el juego en <span id="finalTime">00:00</span></p>
+        <p>Movimientos: <span id="finalMoves">0</span></p>
+        <button class="btn btn-primary" onclick="startNewGame()">Jugar de nuevo</button>
     </div>
-  </div>
-  <script>
-    const symbols = ['🍔', '🍕', '🍗', '🍟', '🍱', '🍲', '🍳', '🍿', '🍦', '🍩', '🍰', '🍫', '🍬', '🍭'];
-    let cards = [...symbols, ...symbols];
-    let gameBoard = document.getElementById('gameBoard');
-    let flippedCards = [];
-    let matchedCards = [];
-    let level = JSON.parse(localStorage.getItem('memoryLevel')) || 1;
-    let timeElapsed = 0;
-    let timerInterval;
-    let records = JSON.parse(localStorage.getItem('memoryRecords')) || [];
-    let maxLevelReached = Math.max(level, ...records.map(record => record.level));
 
-    document.getElementById('level').textContent = `Nivel: ${level}`;
-    displayRecords();
-    updateLevelButtonState();
+    <script>
+        const icons = [
+            'ri-heart-fill', 'ri-star-fill', 'ri-shield-fill', 'ri-leaf-fill',
+            'ri-rocket-fill', 'ri-fire-fill', 'ri-cloud-fill', 'ri-drop-fill',
+            'ri-flash-fill', 'ri-sun-fill', 'ri-moon-fill', 'ri-earth-fill'
+        ];
 
-    // Barajar las cartas
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-    }
+        let cards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let moves = 0;
+        let gameTimer;
+        let seconds = 0;
+        let isPlaying = false;
+        let currentPairs = 6;
 
-    function createBoard() {
-      clearInterval(timerInterval);
-      timeElapsed = 0;
-      document.getElementById('timer').textContent = `Tiempo: ${timeElapsed}s`;
-      document.getElementById('completionTime').style.display = 'none';
-      startTimer();
-      const numSymbols = Math.min(level + 3, symbols.length);
-      cards = [...symbols.slice(0, numSymbols), ...symbols.slice(0, numSymbols)];
-      shuffle(cards);
-      gameBoard.innerHTML = '';
-      const gridSize = Math.ceil(Math.sqrt(cards.length));
-      gameBoard.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-      gameBoard.style.gridTemplateRows = `repeat(${gridSize}, 100px)`;
-      cards.forEach((symbol, index) => {
-        const card = document.createElement('div');
-        card.classList.add('card');
-        card.dataset.symbol = symbol;
-        card.dataset.index = index;
-        card.addEventListener('click', flipCard);
-        gameBoard.appendChild(card);
-      });
-    }
-
-    function flipCard() {
-      if (flippedCards.length < 2 && !this.classList.contains('flipped') && !this.classList.contains('matched')) {
-        this.classList.add('flipped');
-        this.textContent = this.dataset.symbol;
-        flippedCards.push(this);
-
-        if (flippedCards.length === 2) {
-          checkForMatch();
+        function createCard(icon) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="card-front">
+                    <i class="ri-question-mark"></i>
+                </div>
+                <div class="card-back">
+                    <i class="${icon}"></i>
+                </div>
+            `;
+            return card;
         }
-      }
-    }
 
-    function checkForMatch() {
-      const [card1, card2] = flippedCards;
-      if (card1.dataset.symbol === card2.dataset.symbol) {
-        card1.classList.add('matched');
-        card2.classList.add('matched');
-        matchedCards.push(card1, card2);
-        flippedCards = [];
-        checkForWin();
-      } else {
-        setTimeout(() => {
-          card1.classList.remove('flipped');
-          card2.classList.remove('flipped');
-          card1.textContent = '';
-          card2.textContent = '';
-          flippedCards = [];
-        }, 1000);
-      }
-    }
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
-    function checkForWin() {
-      if (matchedCards.length === cards.length) {
-        clearInterval(timerInterval);
-        setTimeout(() => {
-          alert(`¡Felicidades! ¡Has emparejado todas las cartas! Completaste el nivel en ${timeElapsed} segundos.`);
-          records.push({ level: level, time: timeElapsed });
-          localStorage.setItem('memoryRecords', JSON.stringify(records));
-          level++;
-          maxLevelReached = Math.max(maxLevelReached, level);
-          localStorage.setItem('memoryLevel', JSON.stringify(level));
-          document.getElementById('level').textContent = `Nivel: ${level}`;
-          document.getElementById('completionTime').textContent = `Tiempo de finalización: ${timeElapsed}s`;
-          document.getElementById('completionTime').style.display = 'block';
-          displayRecords();
-          updateLevelButtonState();
-          createBoard();
-        }, 500);
-      }
-    }
+        function startNewGame() {
+            // Reset game state
+            document.getElementById('gameGrid').innerHTML = '';
+            flippedCards = [];
+            matchedPairs = 0;
+            moves = 0;
+            seconds = 0;
+            document.getElementById('moves').textContent = '0';
+            document.getElementById('time').textContent = '00:00';
+            document.getElementById('victoryModal').classList.remove('active');
 
-    function startTimer() {
-      timerInterval = setInterval(() => {
-        timeElapsed++;
-        document.getElementById('timer').textContent = `Tiempo: ${timeElapsed}s`;
-      }, 1000);
-    }
+            // Clear previous timer
+            if (gameTimer) clearInterval(gameTimer);
 
-    function displayRecords() {
-      const recordList = document.getElementById('recordList');
-      recordList.innerHTML = '';
-      records.forEach(record => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `Nivel ${record.level}: ${record.time} segundos`;
-        recordList.appendChild(listItem);
-      });
-    }
+            // Create and shuffle cards
+            const selectedIcons = icons.slice(0, currentPairs);
+            cards = [...selectedIcons, ...selectedIcons];
+            shuffle(cards);
 
-    function goToPreviousLevel() {
-      if (level > 1) {
-        level--;
-        localStorage.setItem('memoryLevel', JSON.stringify(level));
-        document.getElementById('level').textContent = `Nivel: ${level}`;
-        updateLevelButtonState();
-        createBoard();
-      }
-    }
+            // Create grid
+            const grid = document.getElementById('gameGrid');
+            cards.forEach((icon, index) => {
+                const card = createCard(icon);
+                card.dataset.index = index;
+                card.addEventListener('click', () => flipCard(card));
+                grid.appendChild(card);
+            });
 
-    function goToNextLevel() {
-      if (level < maxLevelReached) {
-        level++;
-        localStorage.setItem('memoryLevel', JSON.stringify(level));
-        document.getElementById('level').textContent = `Nivel: ${level}`;
-        updateLevelButtonState();
-        createBoard();
-      }
-    }
+            // Start timer
+            isPlaying = true;
+            gameTimer = setInterval(updateTimer, 1000);
+        }
 
-    function goToCurrentLevel() {
-      level = maxLevelReached;
-      localStorage.setItem('memoryLevel', JSON.stringify(level));
-      document.getElementById('level').textContent = `Nivel: ${level}`;
-      updateLevelButtonState();
-      createBoard();
-    }
+        function flipCard(card) {
+            if (!isPlaying || flippedCards.length >= 2 || card.classList.contains('flipped') || 
+                flippedCards.includes(card)) return;
 
-    function updateLevelButtonState() {
-      const prevButton = document.getElementById('prevLevel');
-      const nextButton = document.getElementById('nextLevel');
-      const currentButton = document.getElementById('currentLevel');
-      
-      prevButton.disabled = level <= 1;
-      nextButton.disabled = level >= maxLevelReached;
-      currentButton.disabled = level === maxLevelReached;
-    }
+            card.classList.add('flipped');
+            flippedCards.push(card);
 
-    createBoard();
-  </script>
+            if (flippedCards.length === 2) {
+                moves++;
+                document.getElementById('moves').textContent = moves;
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const icon1 = card1.querySelector('.card-back i').className;
+            const icon2 = card2.querySelector('.card-back i').className;
+
+            if (icon1 === icon2) {
+                matchedPairs++;
+                flippedCards = [];
+                if (matchedPairs === currentPairs) {
+                    gameComplete();
+                }
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        function updateTimer() {
+            seconds++;
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            document.getElementById('time').textContent = 
+                `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+        }
+
+        function gameComplete() {
+            isPlaying = false;
+            clearInterval(gameTimer);
+            
+            const finalTime = document.getElementById('time').textContent;
+            document.getElementById('finalTime').textContent = finalTime;
+            document.getElementById('finalMoves').textContent = moves;
+            
+            // Update best time
+            const currentBestTime = localStorage.getItem('bestTime') || '99:99';
+            if (finalTime < currentBestTime) {
+                localStorage.setItem('bestTime', finalTime);
+                document.getElementById('bestTime').textContent = finalTime;
+            }
+
+            setTimeout(() => {
+                document.getElementById('victoryModal').classList.add('active');
+                createConfetti();
+            }, 500);
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 50%, 50%)`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 5000);
+            }
+        }
+
+        // Difficulty selector
+        document.querySelectorAll('.difficulty-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentPairs = parseInt(btn.dataset.pairs);
+                startNewGame();
+            });
+        });
+
+        // Load best time
+        document.getElementById('bestTime').textContent = localStorage.getItem('bestTime') || '--:--';
+
+        // Start first game
+        startNewGame();
+    </script>
 </body>
 </html>
 

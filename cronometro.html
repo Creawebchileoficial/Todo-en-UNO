@@ -1,87 +1,431 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497"
-     crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2WG7Q3YRT0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2WG7Q3YRT0');
-</script>
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cronómetro de Estudio Multisesión</title>
+    <title>Cronómetro de Estudio - Todo Universidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; text-align: center; }
-        h1 { color: #4CAF50; margin-top: 10px; }
-        label { display: block; margin-top: 10px; font-weight: bold; }
-        input { width: 100%; padding: 8px; margin-top: 5px; }
-        button { margin-top: 15px; padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; width: 100%; }
-        button:hover { background-color: #45a049; }
-        #timer { font-size: 2em; margin-top: 20px; font-weight: bold; color: #333; }
-        footer { height: 200px; background-color: white; }
+        :root {
+            --color-primary: #2563eb;
+            --color-secondary: #0f172a;
+            --color-accent: #22c55e;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --color-background: #f8fafc;
+            --gradient-primary: linear-gradient(135deg, #2563eb, #1e40af);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--color-background);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .timer-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 
+                0 10px 25px rgba(0,0,0,0.1),
+                inset 2px 2px 5px rgba(255,255,255,0.5),
+                inset -3px -3px 7px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--color-secondary);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .time-display {
+            font-size: 4rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--color-secondary);
+            margin: 30px 0;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 2px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn i {
+            font-size: 1.2rem;
+        }
+
+        .btn-start {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-reset {
+            background: #f1f5f9;
+            color: var(--color-secondary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .presets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .preset-btn {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background: white;
+            color: var(--color-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .preset-btn:hover {
+            border-color: var(--color-primary);
+            background: #f8fafc;
+        }
+
+        .custom-time {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .time-input {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .time-input:focus {
+            border-color: var(--color-primary);
+            outline: none;
+        }
+
+        .notification-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--color-primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        @media (max-width: 480px) {
+            .timer-container {
+                padding: 20px;
+            }
+
+            .time-display {
+                font-size: 3rem;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+            }
+
+            .presets {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Cronómetro de Estudio Multisesión</h1>
+    <div class="timer-container">
+        <div class="header">
+            <h1>Cronómetro de Estudio</h1>
+            <p>Gestiona tu tiempo de estudio eficientemente</p>
+        </div>
 
-    <label for="studyTime">Tiempo de Estudio (minutos):</label>
-    <input type="number" id="studyTime" placeholder="Ej: 25" min="1" value="25">
+        <div class="presets">
+            <button class="preset-btn" onclick="setPresetTime(25)">25 min</button>
+            <button class="preset-btn" onclick="setPresetTime(45)">45 min</button>
+            <button class="preset-btn" onclick="setPresetTime(60)">60 min</button>
+        </div>
 
-    <label for="breakTime">Tiempo de Descanso (minutos):</label>
-    <input type="number" id="breakTime" placeholder="Ej: 5" min="1" value="5">
+        <div class="custom-time">
+            <input type="number" class="time-input" id="hours" placeholder="Horas" min="0" max="23">
+            <input type="number" class="time-input" id="minutes" placeholder="Minutos" min="0" max="59">
+            <input type="number" class="time-input" id="seconds" placeholder="Segundos" min="0" max="59">
+        </div>
 
-    <div id="timer">00:00</div>
+        <div class="time-display" id="display">00:00:00</div>
 
-    <button onclick="startTimer()">Iniciar Cronómetro</button>
-    <button onclick="resetTimer()">Restablecer Cronómetro</button>
+        <div class="controls">
+            <button class="btn btn-start" id="startBtn" onclick="toggleTimer()">
+                <i class="ri-play-fill"></i>
+                Iniciar
+            </button>
+            <button class="btn btn-reset" onclick="resetTimer()">
+                <i class="ri-refresh-line"></i>
+                Reiniciar
+            </button>
+        </div>
 
-    <footer></footer>
+        <div class="notification-toggle">
+            <label class="switch">
+                <input type="checkbox" id="notificationToggle" checked>
+                <span class="slider"></span>
+            </label>
+            <span>Activar notificaciones</span>
+        </div>
+    </div>
+
+    <audio id="alarmSound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
 
     <script>
-        let studyTime, breakTime, currentMode, timerInterval;
-        const timerDisplay = document.getElementById("timer");
+        let timeLeft = 0;
+        let timerId = null;
+        let originalTime = 0;
+        let isRunning = false;
 
-        function startTimer() {
-            if (timerInterval) clearInterval(timerInterval); // Limpia cualquier cronómetro en marcha
-            studyTime = parseInt(document.getElementById("studyTime").value) * 60;
-            breakTime = parseInt(document.getElementById("breakTime").value) * 60;
-            currentMode = "study"; // Comienza en modo de estudio
-            startCountdown(studyTime);
+        // Solicitar permisos de notificación al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            if (Notification.permission !== 'granted') {
+                Notification.requestPermission();
+            }
+        });
+
+        function setPresetTime(minutes) {
+            document.getElementById('hours').value = '';
+            document.getElementById('minutes').value = minutes;
+            document.getElementById('seconds').value = '';
+            updateTimeFromInputs();
         }
 
-        function startCountdown(time) {
-            timerInterval = setInterval(() => {
-                const minutes = Math.floor(time / 60);
-                const seconds = time % 60;
-                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        function updateTimeFromInputs() {
+            const hours = parseInt(document.getElementById('hours').value) || 0;
+            const minutes = parseInt(document.getElementById('minutes').value) || 0;
+            const seconds = parseInt(document.getElementById('seconds').value) || 0;
 
-                if (time > 0) {
-                    time--;
-                } else {
-                    clearInterval(timerInterval);
-                    if (currentMode === "study") {
-                        alert("¡Tiempo de descanso!");
-                        currentMode = "break";
-                        startCountdown(breakTime);
-                    } else {
-                        alert("¡Fin del descanso! Vuelve al estudio.");
-                        currentMode = "study";
-                        startCountdown(studyTime);
-                    }
+            timeLeft = hours * 3600 + minutes * 60 + seconds;
+            originalTime = timeLeft;
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
+
+            document.getElementById('display').textContent = 
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            if (!isRunning) {
+                if (timeLeft === 0) {
+                    updateTimeFromInputs();
+                }
+                if (timeLeft > 0) {
+                    startTimer();
+                }
+            } else {
+                pauseTimer();
+            }
+        }
+
+        function startTimer() {
+            isRunning = true;
+            document.getElementById('startBtn').innerHTML = '<i class="ri-pause-fill"></i>Pausar';
+            document.getElementById('startBtn').style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+
+            timerId = setInterval(() => {
+                timeLeft--;
+                updateDisplay();
+
+                if (timeLeft === 0) {
+                    timerComplete();
                 }
             }, 1000);
+
+            // Registrar el tiempo de finalización para las notificaciones en segundo plano
+            const endTime = new Date().getTime() + (timeLeft * 1000);
+            localStorage.setItem('timerEndTime', endTime);
+        }
+
+        function pauseTimer() {
+            isRunning = false;
+            document.getElementById('startBtn').innerHTML = '<i class="ri-play-fill"></i>Continuar';
+            document.getElementById('startBtn').style.background = 'var(--gradient-primary)';
+            clearInterval(timerId);
+            localStorage.removeItem('timerEndTime');
         }
 
         function resetTimer() {
-            clearInterval(timerInterval);
-            timerDisplay.textContent = "00:00";
-            currentMode = "study";
+            pauseTimer();
+            timeLeft = originalTime;
+            updateDisplay();
+            document.getElementById('startBtn').innerHTML = '<i class="ri-play-fill"></i>Iniciar';
+        }
+
+        function timerComplete() {
+            pauseTimer();
+            playAlarm();
+            showNotification();
+            resetTimer();
+        }
+
+        function playAlarm() {
+            const alarm = document.getElementById('alarmSound');
+            alarm.play();
+            // Detener el sonido después de 3 segundos
+            setTimeout(() => alarm.pause(), 3000);
+        }
+
+        function showNotification() {
+            if (document.getElementById('notificationToggle').checked) {
+                if (Notification.permission === "granted") {
+                    new Notification("¡Tiempo completado!", {
+                        body: "Tu sesión de estudio ha terminado",
+                        icon: "https://example.com/icon.png" // Añade el URL de tu ícono
+                    });
+                }
+            }
+        }
+
+        // Manejar notificaciones en segundo plano
+        window.addEventListener('visibilitychange', () => {
+            const endTime = localStorage.getItem('timerEndTime');
+            if (document.visibilityState === 'hidden' && endTime) {
+                const timeRemaining = Math.floor((endTime - new Date().getTime()) / 1000);
+                if (timeRemaining > 0) {
+                    navigator.serviceWorker?.ready.then(registration => {
+                        registration.showNotification("Temporizador en curso", {
+                            body: `Tiempo restante: ${Math.floor(timeRemaining / 60)} minutos`,
+                            icon: "https://example.com/icon.png",
+                            tag: "timer"
+                        });
+                    });
+                }
+            }
+        });
+
+        // Validación de inputs
+        document.querySelectorAll('.time-input').forEach(input => {
+            input.addEventListener('input', function() {
+                let value = parseInt(this.value) || 0;
+                const max = parseInt(this.max);
+                if (value > max) {
+                    this.value = max;
+                }
+                if (value < 0) {
+                    this.value = 0;
+                }
+                updateTimeFromInputs();
+            });
+        });
+
+        // Service Worker para notificaciones en segundo plano
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('timer-sw.js').then(registration => {
+                console.log('Service Worker registrado');
+            }).catch(error => {
+                console.log('Error al registrar Service Worker:', error);
+            });
         }
     </script>
 </body>
