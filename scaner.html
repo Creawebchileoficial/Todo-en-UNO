@@ -370,6 +370,44 @@
         .resize-handle.top-right { top: -10px; right: -10px; cursor: ne-resize; }
         .resize-handle.bottom-left { bottom: -10px; left: -10px; cursor: sw-resize; }
         .resize-handle.bottom-right { bottom: -10px; right: -10px; cursor: se-resize; }
+
+        .capture-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: var(--color-primary);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .capture-btn:active {
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        @media (max-width: 768px) {
+            .capture-btn {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .capture-btn i {
+                font-size: 2rem;
+            }
+
+            .capture-btn .btn-text {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -501,10 +539,17 @@
                 };
                 
                 const captureBtn = document.createElement('button');
-                captureBtn.className = 'btn btn-primary';
+                captureBtn.className = 'btn btn-primary capture-btn';
                 captureBtn.style.marginTop = '50px';
+                captureBtn.style.zIndex = '20';
                 captureBtn.innerHTML = '<i class="ri-camera-line"></i>Capturar';
-                captureBtn.onclick = capturePhoto;
+                
+                captureBtn.addEventListener('click', capturePhoto);
+                captureBtn.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    capturePhoto();
+                });
+
                 cameraContainer.appendChild(captureBtn);
 
             } catch (err) {
@@ -541,7 +586,12 @@
             const canvas = document.createElement('canvas');
             const frame = document.querySelector('.camera-frame');
             
-            // Obtener las dimensiones del marco en relación con el video
+            // Asegurarse de que el video está listo
+            if (video.readyState !== video.HAVE_ENOUGH_DATA) {
+                return;
+            }
+
+            // Obtener las dimensiones correctas
             const videoRect = video.getBoundingClientRect();
             const frameRect = frame.getBoundingClientRect();
             
@@ -550,37 +600,46 @@
             const scaleY = video.videoHeight / videoRect.height;
             
             // Calcular el área de recorte
-            const cropX = (frameRect.left - videoRect.left) * scaleX;
-            const cropY = (frameRect.top - videoRect.top) * scaleY;
-            const cropWidth = frameRect.width * scaleX;
-            const cropHeight = frameRect.height * scaleY;
+            const cropX = Math.max(0, (frameRect.left - videoRect.left) * scaleX);
+            const cropY = Math.max(0, (frameRect.top - videoRect.top) * scaleY);
+            const cropWidth = Math.min(video.videoWidth - cropX, frameRect.width * scaleX);
+            const cropHeight = Math.min(video.videoHeight - cropY, frameRect.height * scaleY);
             
-            // Configurar el canvas con las dimensiones del recorte
+            // Configurar el canvas
             canvas.width = cropWidth;
             canvas.height = cropHeight;
             
-            // Dibujar solo el área dentro del marco
-            canvas.getContext('2d').drawImage(
-                video,
-                cropX, cropY, cropWidth, cropHeight,
-                0, 0, cropWidth, cropHeight
-            );
-            
-            const img = new Image();
-            img.src = canvas.toDataURL('image/png');
-            img.onload = () => {
-                originalImage = img;
-                document.getElementById('imagePreview').src = img.src;
-                processImage();
-            };
+            try {
+                // Dibujar el área recortada
+                canvas.getContext('2d').drawImage(
+                    video,
+                    cropX, cropY, cropWidth, cropHeight,
+                    0, 0, cropWidth, cropHeight
+                );
+                
+                // Convertir a imagen
+                const img = new Image();
+                img.onload = () => {
+                    originalImage = img;
+                    document.getElementById('imagePreview').src = img.src;
+                    processImage();
+                };
+                img.src = canvas.toDataURL('image/png');
 
-            // Detener la cámara y limpiar
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-            }
-            const cameraContainer = document.querySelector('.camera-container');
-            if (cameraContainer) {
-                cameraContainer.remove();
+                // Detener la cámara
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+
+                // Limpiar la interfaz de la cámara
+                const cameraContainer = document.querySelector('.camera-container');
+                if (cameraContainer) {
+                    cameraContainer.remove();
+                }
+                video.style.display = 'none';
+            } catch (error) {
+                console.error('Error al capturar foto:', error);
+                alert('Error al capturar la foto. Por favor, intente nuevamente.');
             }
         }
 

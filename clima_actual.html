@@ -197,6 +197,35 @@
             margin-bottom: 20px;
             text-align: center;
         }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #1557b0;
+        }
+
+        .location-permission {
+            text-align: center;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .error {
+            color: #ef4444;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -464,58 +493,128 @@
         // Initial load using geolocation
         getCurrentLocationWeather();
 
-        // Agregar esta función al inicio del script
-        function requestLocation() {
-            if ("geolocation" in navigator) {
-                // Mostrar mensaje de solicitud de ubicación
-                document.getElementById('location-permission').style.display = 'block';
-                
-                navigator.geolocation.getCurrentPosition(
-                    // Éxito al obtener ubicación
-                    function(position) {
-                        document.getElementById('location-permission').style.display = 'none';
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        fetchWeatherByCoordinates(lat, lon);
-                    },
-                    // Error al obtener ubicación
-                    function(error) {
-                        let errorMessage = '';
-                        switch(error.code) {
-                            case error.PERMISSION_DENIED:
-                                errorMessage = "No se otorgó permiso para acceder a la ubicación.";
-                                break;
-                            case error.POSITION_UNAVAILABLE:
-                                errorMessage = "La información de ubicación no está disponible.";
-                                break;
-                            case error.TIMEOUT:
-                                errorMessage = "Se agotó el tiempo para obtener la ubicación.";
-                                break;
-                            default:
-                                errorMessage = "Ocurrió un error desconocido al obtener la ubicación.";
-                        }
-                        document.getElementById('location-permission').innerHTML = `
-                            <p class="error">${errorMessage}</p>
-                            <p>Por favor ingrese una ciudad manualmente o intente nuevamente.</p>
+        // Modificar la función requestLocation
+        async function requestLocation() {
+            const locationPermissionElement = document.getElementById('location-permission');
+            
+            try {
+                // Primero verificar si el navegador soporta geolocalización
+                if (!("geolocation" in navigator)) {
+                    locationPermissionElement.innerHTML = `
+                        <p class="error">Su navegador no soporta geolocalización.</p>
+                        <p>Por favor ingrese una ciudad manualmente.</p>
+                    `;
+                    return;
+                }
+
+                // Verificar el estado actual de los permisos si el navegador lo soporta
+                if ('permissions' in navigator) {
+                    const permission = await navigator.permissions.query({ name: 'geolocation' });
+                    
+                    if (permission.state === 'denied') {
+                        locationPermissionElement.innerHTML = `
+                            <p class="error">El acceso a la ubicación está bloqueado.</p>
+                            <p>Por favor, habilite el acceso a la ubicación en la configuración de su navegador y recargue la página.</p>
+                            <button class="btn btn-primary" onclick="showLocationInstructions()">
+                                Ver instrucciones
+                            </button>
                         `;
-                    },
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 5000,
-                        maximumAge: 0
+                        return;
                     }
-                );
-            } else {
-                document.getElementById('location-permission').innerHTML = `
-                    <p class="error">Su navegador no soporta geolocalización.</p>
+                }
+
+                // Mostrar mensaje de solicitud de ubicación
+                locationPermissionElement.style.display = 'block';
+                locationPermissionElement.innerHTML = `
+                    <p>Para mostrar el clima de su ubicación actual, necesitamos acceder a su ubicación.</p>
+                    <button class="btn btn-primary" onclick="getLocationWithPrompt()">
+                        Permitir acceso a ubicación
+                    </button>
+                    <div class="loading-spinner" style="display: none;"></div>
+                `;
+
+            } catch (error) {
+                console.error('Error al solicitar ubicación:', error);
+                locationPermissionElement.innerHTML = `
+                    <p class="error">Error al acceder a la ubicación: ${error.message}</p>
                     <p>Por favor ingrese una ciudad manualmente.</p>
                 `;
             }
         }
 
+        // Función para solicitar ubicación con prompt
+        function getLocationWithPrompt() {
+            const locationPermissionElement = document.getElementById('location-permission');
+            const spinner = locationPermissionElement.querySelector('.loading-spinner');
+            
+            spinner.style.display = 'block';
+            
+            navigator.geolocation.getCurrentPosition(
+                // Éxito
+                (position) => {
+                    spinner.style.display = 'none';
+                    locationPermissionElement.style.display = 'none';
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    fetchWeatherByCoordinates(lat, lon);
+                },
+                // Error
+                (error) => {
+                    spinner.style.display = 'none';
+                    let errorMessage = '';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage = "No se otorgó permiso para acceder a la ubicación.";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage = "La información de ubicación no está disponible.";
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage = "Se agotó el tiempo para obtener la ubicación.";
+                            break;
+                        default:
+                            errorMessage = "Ocurrió un error desconocido.";
+                    }
+                    locationPermissionElement.innerHTML = `
+                        <p class="error">${errorMessage}</p>
+                        <p>Por favor ingrese una ciudad manualmente o intente nuevamente.</p>
+                        <button class="btn btn-primary" onclick="requestLocation()">
+                            Intentar nuevamente
+                        </button>
+                    `;
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        }
+
+        // Función para mostrar instrucciones de cómo habilitar la ubicación
+        function showLocationInstructions() {
+            const instructions = `
+                Para habilitar el acceso a la ubicación:
+                
+                En Android:
+                1. Abra Configuración
+                2. Busque Permisos o Privacidad
+                3. Seleccione Ubicación
+                4. Active el permiso para su navegador
+
+                En iOS:
+                1. Abra Configuración
+                2. Busque Privacidad
+                3. Seleccione Servicios de Localización
+                4. Active el permiso para su navegador
+
+                Después de habilitar la ubicación, recargue esta página.
+            `;
+            alert(instructions);
+        }
+
         // Modificar la carga inicial
         window.onload = function() {
-            // Solicitar ubicación al cargar la página
             requestLocation();
         };
     </script>
