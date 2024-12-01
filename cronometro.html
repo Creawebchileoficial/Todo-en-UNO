@@ -231,13 +231,35 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
+        @media (hover: none) {
+            /* Estilos para dispositivos táctiles */
+            .btn {
+                -webkit-tap-highlight-color: transparent;
+                min-height: 44px; /* Altura mínima recomendada para botones táctiles */
+            }
+
+            .btn:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* Prevenir zoom en iOS al tocar inputs */
+        @media screen and (-webkit-min-device-pixel-ratio: 0) {
+            select,
+            textarea,
+            input {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="timer-container">
         <div class="header">
+            <img src="assets/Todo_Universidad.png" alt="Logo Todo Universidad" class="logo">
             <h1>Cronómetro de Estudio</h1>
-            <p>Gestiona tu tiempo de estudio eficientemente</p>
+            <p>Gestiona tu tiempo de estudio de manera eficiente</p>
         </div>
 
         <div class="presets">
@@ -274,7 +296,11 @@
         </div>
     </div>
 
-    <audio id="alarmSound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
+    <audio id="alarmSound" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869.wav" type="audio/wav">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869.mp3" type="audio/mpeg">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869.ogg" type="audio/ogg">
+    </audio>
 
     <script>
         let timeLeft = 0;
@@ -370,10 +396,37 @@
         }
 
         function playAlarm() {
-            const alarm = document.getElementById('alarmSound');
-            alarm.play();
-            // Detener el sonido después de 3 segundos
-            setTimeout(() => alarm.pause(), 3000);
+            try {
+                const alarm = document.getElementById('alarmSound');
+                
+                // Promesa para intentar reproducir el sonido
+                const playPromise = alarm.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // Reproducción exitosa
+                        setTimeout(() => {
+                            alarm.pause();
+                            alarm.currentTime = 0;
+                        }, 3000);
+                    })
+                    .catch(error => {
+                        console.log("Error reproduciendo el sonido:", error);
+                        // Intentar reproducir después de interacción del usuario
+                        document.body.addEventListener('click', function playOnClick() {
+                            alarm.play();
+                            document.body.removeEventListener('click', playOnClick);
+                        }, { once: true });
+                    });
+                }
+
+                // Intentar vibración en dispositivos móviles
+                if ('vibrate' in navigator) {
+                    navigator.vibrate([200, 100, 200]); // Patrón de vibración: vibrar, pausa, vibrar
+                }
+            } catch (error) {
+                console.log("Error con el audio:", error);
+            }
         }
 
         function showNotification() {
@@ -404,7 +457,7 @@
             }
         });
 
-        // Validación de inputs
+        // Validaci��n de inputs
         document.querySelectorAll('.time-input').forEach(input => {
             input.addEventListener('input', function() {
                 let value = parseInt(this.value) || 0;
@@ -427,6 +480,27 @@
                 console.log('Error al registrar Service Worker:', error);
             });
         }
+
+        // Agregar esta función para inicializar el audio
+        function initAudio() {
+            const alarm = document.getElementById('alarmSound');
+            alarm.load(); // Precargar el audio
+            
+            // Intentar reproducir (silenciado) para habilitar el audio en iOS
+            document.addEventListener('click', function initAudioOnClick() {
+                alarm.volume = 0;
+                alarm.play().then(() => {
+                    alarm.pause();
+                    alarm.volume = 1;
+                }).catch(console.log);
+                document.removeEventListener('click', initAudioOnClick);
+            }, { once: true });
+        }
+
+        // Llamar a initAudio cuando la página carga
+        window.onload = function() {
+            initAudio();
+        };
     </script>
 </body>
 </html>

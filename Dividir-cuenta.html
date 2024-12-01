@@ -1,202 +1,664 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497"
-     crossorigin="anonymous"></script>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2WG7Q3YRT0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dividir Cuenta - Todo Universidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-secondary: #0f172a;
+            --color-accent: #22c55e;
+            --color-warning: #f59e0b;
+            --color-background: #f8fafc;
+            --gradient-primary: linear-gradient(135deg, #2563eb, #1e40af);
+        }
 
-  gtag('config', 'G-2WG7Q3YRT0');
-</script>
-  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestor y Divisor de Gastos</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-      text-align: center;
-      color: #4caf50;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 15px;
-    }
-    input, select, button, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      background-color: #4caf50;
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    .results {
-      margin-top: 20px;
-    }
-    .results p {
-      font-size: 18px;
-      font-weight: bold;
-      color: #333;
-    }
-    .gasto-item {
-      margin-bottom: 15px;
-    }
-    .error {
-      color: red;
-      font-size: 14px;
-      text-align: center;
-    }
-    .gasto-list {
-      margin-top: 10px;
-      padding: 10px;
-      background: #e8f5e9;
-      border-radius: 5px;
-    }
-    .gasto-list h3 {
-      margin: 0;
-      color: #2e7d32;
-    }
-    .gasto-list ul {
-      padding-left: 20px;
-    }
-  </style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: var(--color-background);
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 
+                0 10px 25px rgba(0,0,0,0.1),
+                inset 2px 2px 5px rgba(255,255,255,0.5),
+                inset -3px -3px 7px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-hint {
+            display: block;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 6px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+            margin-bottom: 10px;
+        }
+
+        .btn i {
+            font-size: 1.2rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--color-secondary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .result-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 30px;
+        }
+
+        .result-title {
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .tip-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .tip-btn {
+            padding: 8px;
+            border: 2px solid var(--color-primary);
+            border-radius: 6px;
+            background: transparent;
+            color: var(--color-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tip-btn.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-card {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .tip-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .error-message {
+            color: var(--color-warning);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .expenses-list {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .expenses-header {
+            margin-bottom: 15px;
+        }
+
+        .expenses-header h3 {
+            color: var(--color-primary);
+            font-size: 1.2rem;
+        }
+
+        .expense-items {
+            margin-bottom: 15px;
+        }
+
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .expense-item:hover {
+            transform: translateX(5px);
+        }
+
+        .expense-details {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .expense-description {
+            font-weight: 500;
+        }
+
+        .expense-amount {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .expense-input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-add {
+            background: var(--color-accent);
+            color: white;
+            padding: 12px 20px;
+            height: 100%;
+        }
+
+        .delete-expense {
+            background: none;
+            border: none;
+            color: var(--color-warning);
+            cursor: pointer;
+            padding: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .delete-expense:hover {
+            color: var(--color-error);
+        }
+
+        @media (max-width: 768px) {
+            .expense-input-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-method-selector,
+        .tip-method-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .method-btn,
+        .tip-method-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid var(--color-primary);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--color-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .method-btn.active,
+        .tip-method-btn.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .expenses-total {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Gestor y Divisor de Gastos</h1>
-    <form id="billSplitterForm">
-      <div id="gastoList" class="gasto-list">
-        <h3>Gastos Agregados:</h3>
-        <ul id="gastos"></ul>
-      </div>
+    <div class="container">
+        <div class="calculator-card">
+            <div class="header">
+                <h1>Dividir Cuenta</h1>
+                <p>Calcula fácilmente cómo dividir la cuenta entre amigos</p>
+            </div>
 
-      <label for="gastoName">Nombre del Gasto:</label>
-      <input type="text" id="gastoName" placeholder="Ej. Internet, Luz, Cena, etc.">
+            <div class="input-method-selector">
+                <button class="method-btn active" onclick="switchMethod('total')">Monto Total</button>
+                <button class="method-btn" onclick="switchMethod('items')">Desglose de Gastos</button>
+            </div>
 
-      <label for="gastoAmount">Monto del Gasto ($CLP):</label>
-      <input type="number" id="gastoAmount" placeholder="Ej. 20000">
+            <div id="totalAmountSection" class="form-group">
+                <label>Monto Total de la Cuenta</label>
+                <input type="number" id="billAmount" class="form-control" 
+                       placeholder="Ejemplo: 45000 (sin puntos ni comas)"
+                       oninput="updateResults()">
+                <small class="form-hint">Ingrese el monto sin puntos ni comas</small>
+                <div class="error-message" id="billError">Por favor ingrese un monto válido</div>
+            </div>
 
-      <button type="button" onclick="addGasto()">Agregar Gasto</button>
+            <div id="expensesSection" class="expenses-list" style="display: none;">
+                <div class="expenses-header">
+                    <h3>Lista de Gastos</h3>
+                </div>
+                <div class="expense-items" id="expenseItems">
+                    <!-- Los gastos se agregarán aquí dinámicamente -->
+                </div>
+                <div class="form-group expense-input">
+                    <div class="expense-input-group">
+                        <input type="text" id="expenseDescription" class="form-control" placeholder="Descripción (ej: Restaurante)">
+                        <input type="number" id="expenseAmount" class="form-control" placeholder="Monto">
+                        <button class="btn btn-add" onclick="addExpense()">
+                            <i class="ri-add-line"></i>
+                            Agregar
+                        </button>
+                    </div>
+                </div>
+                <div class="expenses-total">
+                    Total acumulado: <span id="expensesTotal">$0</span>
+                </div>
+            </div>
 
-      <label for="numberOfPeople">Número de Personas:</label>
-      <input type="number" id="numberOfPeople" placeholder="Ej. 4" required>
+            <div class="form-group">
+                <label>Número de Personas</label>
+                <input type="number" id="numPeople" class="form-control" 
+                       placeholder="Ejemplo: 4" min="1">
+                <div class="error-message" id="peopleError">Debe ser al menos 1 persona</div>
+            </div>
 
-      <label for="tipPercentage">Propina (% - Opcional):</label>
-      <input type="number" id="tipPercentage" placeholder="Ej. 10">
+            <div class="form-group">
+                <label>Propina</label>
+                <div class="tip-method-selector">
+                    <button class="tip-method-btn active" onclick="switchTipMethod('percentage')">Porcentaje</button>
+                    <button class="tip-method-btn" onclick="switchTipMethod('amount')">Monto Fijo</button>
+                </div>
+                
+                <div id="tipPercentageSection">
+                    <div class="tip-options">
+                        <button class="tip-btn" onclick="setTip(0)">Sin propina</button>
+                        <button class="tip-btn" onclick="setTip(10)">10%</button>
+                        <button class="tip-btn" onclick="setTip(15)">15%</button>
+                        <button class="tip-btn" onclick="setTip(20)">20%</button>
+                    </div>
+                    <input type="number" id="tipPercentage" class="form-control" 
+                           placeholder="O ingrese otro porcentaje">
+                </div>
 
-      <label for="taxPercentage">Impuestos (% - Opcional):</label>
-      <input type="number" id="taxPercentage" placeholder="Ej. 19">
+                <div id="tipAmountSection" style="display: none;">
+                    <input type="number" id="tipAmount" class="form-control" 
+                           placeholder="Ingrese monto de propina">
+                </div>
+            </div>
 
-      <button type="button" onclick="calculateBill()">Calcular</button>
-      <div id="errorMessage" class="error"></div>
-    </form>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="calculateSplit()">
+                    <i class="ri-calculator-line"></i>
+                    Calcular División
+                </button>
+                <button class="btn btn-danger" onclick="resetAll()">
+                    <i class="ri-refresh-line"></i>
+                    Resetear Todo
+                </button>
+            </div>
 
-    <div class="results" id="results">
-      <!-- Aquí se mostrarán los resultados -->
+            <div class="result-card" id="results" style="display: none;">
+                <div class="result-title">Resultados</div>
+                <div class="result-item">
+                    <span class="result-label">Subtotal por persona:</span>
+                    <span class="result-value" id="perPersonAmount">$0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Propina por persona:</span>
+                    <span class="result-value" id="perPersonTip">$0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Total por persona:</span>
+                    <span class="result-value" id="perPersonTotal">$0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Total general:</span>
+                    <span class="result-value" id="totalWithTip">$0</span>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    const gastos = [];
+    <script>
+        // Mantener todas las funciones existentes y agregar estas mejoras
 
-    function addGasto() {
-      const gastoName = document.getElementById('gastoName').value.trim();
-      const gastoAmount = parseFloat(document.getElementById('gastoAmount').value);
-      const errorMessage = document.getElementById('errorMessage');
-      const gastoList = document.getElementById('gastos');
+        function setTip(percentage) {
+            document.getElementById('tipPercentage').value = percentage;
+            document.querySelectorAll('.tip-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
 
-      // Validar entrada
-      if (!gastoName || isNaN(gastoAmount) || gastoAmount <= 0) {
-        errorMessage.textContent = 'Por favor, ingrese un nombre de gasto válido y un monto positivo.';
-        return;
-      }
+        function showError(elementId) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.parentElement.classList.add('shake');
+            setTimeout(() => {
+                element.parentElement.classList.remove('shake');
+            }, 500);
+        }
 
-      errorMessage.textContent = '';
+        function hideError(elementId) {
+            document.getElementById(elementId).style.display = 'none';
+        }
 
-      // Agregar gasto a la lista
-      gastos.push({ name: gastoName, amount: gastoAmount });
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('es-CL', {
+                style: 'currency',
+                currency: 'CLP',
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
 
-      // Actualizar la lista en la interfaz
-      const listItem = document.createElement('li');
-      listItem.textContent = `${gastoName}: $${gastoAmount.toLocaleString('es-CL')}`;
-      gastoList.appendChild(listItem);
+        let expenses = [];
 
-      // Limpiar campos de entrada
-      document.getElementById('gastoName').value = '';
-      document.getElementById('gastoAmount').value = '';
-    }
+        function addExpense() {
+            const description = document.getElementById('expenseDescription').value;
+            const amount = parseFloat(document.getElementById('expenseAmount').value);
 
-    function calculateBill() {
-      const numberOfPeople = parseInt(document.getElementById('numberOfPeople').value);
-      const tipPercentage = parseFloat(document.getElementById('tipPercentage').value) || 0;
-      const taxPercentage = parseFloat(document.getElementById('taxPercentage').value) || 0;
-      const errorMessage = document.getElementById('errorMessage');
-      const results = document.getElementById('results');
+            if (!description || !amount || amount <= 0) {
+                alert('Por favor ingrese una descripción y un monto válido');
+                return;
+            }
 
-      // Validar entradas
-      if (gastos.length === 0) {
-        errorMessage.textContent = 'Por favor, agregue al menos un gasto antes de calcular.';
-        return;
-      }
+            expenses.push({ description, amount });
+            updateExpensesList();
+            resetExpenseInputs();
+            updateTotalAmount();
+        }
 
-      if (isNaN(numberOfPeople) || numberOfPeople <= 0) {
-        errorMessage.textContent = 'Por favor, ingrese un número válido de personas.';
-        return;
-      }
+        function updateExpensesList() {
+            const container = document.getElementById('expenseItems');
+            container.innerHTML = '';
 
-      errorMessage.textContent = '';
+            expenses.forEach((expense, index) => {
+                const item = document.createElement('div');
+                item.className = 'expense-item';
+                item.innerHTML = `
+                    <div class="expense-details">
+                        <span class="expense-description">${expense.description}</span>
+                        <span class="expense-amount">${formatCurrency(expense.amount)}</span>
+                    </div>
+                    <button class="delete-expense" onclick="deleteExpense(${index})">
+                        <i class="ri-delete-bin-line"></i>
+                    </button>
+                `;
+                container.appendChild(item);
+            });
+        }
 
-      // Calcular total de gastos
-      const totalGastos = gastos.reduce((sum, gasto) => sum + gasto.amount, 0);
+        function deleteExpense(index) {
+            expenses.splice(index, 1);
+            updateExpensesList();
+            updateTotalAmount();
+        }
 
-      // Calcular propina e impuestos
-      const tipAmount = (totalGastos * tipPercentage) / 100;
-      const taxAmount = (totalGastos * taxPercentage) / 100;
+        function resetExpenseInputs() {
+            document.getElementById('expenseDescription').value = '';
+            document.getElementById('expenseAmount').value = '';
+        }
 
-      // Calcular total con propina e impuestos
-      const grandTotal = totalGastos + tipAmount + taxAmount;
+        function updateTotalAmount() {
+            const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+            document.getElementById('expensesTotal').textContent = formatCurrency(total);
+            document.getElementById('billAmount').value = total;
+        }
 
-      // Calcular monto por persona
-      const perPersonAmount = grandTotal / numberOfPeople;
+        let currentMethod = 'total';
+        let currentTipMethod = 'percentage';
 
-      // Mostrar resultados
-      results.innerHTML = `
-        <h2>Resultados</h2>
-        <p>Total de Gastos: <strong>$${totalGastos.toLocaleString('es-CL')}</strong></p>
-        <p>Total con Propina e Impuestos: <strong>$${grandTotal.toLocaleString('es-CL')}</strong></p>
-        <p>Monto por Persona: <strong>$${Math.ceil(perPersonAmount).toLocaleString('es-CL')}</strong></p>
-        <p>Propina Total: <strong>$${tipAmount.toLocaleString('es-CL')}</strong></p>
-        <p>Impuestos Totales: <strong>$${taxAmount.toLocaleString('es-CL')}</strong></p>
-      `;
-    }
-  </script>
+        function switchMethod(method) {
+            currentMethod = method;
+            document.querySelectorAll('.method-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            document.getElementById('totalAmountSection').style.display = 
+                method === 'total' ? 'block' : 'none';
+            document.getElementById('expensesSection').style.display = 
+                method === 'items' ? 'block' : 'none';
+        }
+
+        function switchTipMethod(method) {
+            currentTipMethod = method;
+            document.querySelectorAll('.tip-method-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            document.getElementById('tipPercentageSection').style.display = 
+                method === 'percentage' ? 'block' : 'none';
+            document.getElementById('tipAmountSection').style.display = 
+                method === 'amount' ? 'block' : 'none';
+        }
+
+        function calculateSplit() {
+            hideError('billError');
+            hideError('peopleError');
+
+            const numPeople = parseInt(document.getElementById('numPeople').value);
+            let totalAmount = 0;
+            let tipAmount = 0;
+
+            // Obtener el monto total según el método seleccionado
+            if (currentMethod === 'total') {
+                totalAmount = parseFloat(document.getElementById('billAmount').value) || 0;
+            } else {
+                totalAmount = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+            }
+
+            // Validar monto total
+            if (totalAmount <= 0) {
+                showError('billError');
+                return;
+            }
+
+            // Validar número de personas
+            if (!numPeople || numPeople < 1) {
+                showError('peopleError');
+                return;
+            }
+
+            // Calcular propina según el método seleccionado
+            if (currentTipMethod === 'percentage') {
+                const tipPercentage = parseFloat(document.getElementById('tipPercentage').value) || 0;
+                tipAmount = totalAmount * (tipPercentage / 100);
+            } else {
+                tipAmount = parseFloat(document.getElementById('tipAmount').value) || 0;
+            }
+
+            const finalTotal = totalAmount + tipAmount;
+            const perPersonAmount = totalAmount / numPeople;
+            const perPersonTip = tipAmount / numPeople;
+            const perPersonTotal = finalTotal / numPeople;
+
+            // Mostrar resultados
+            document.getElementById('perPersonAmount').textContent = formatCurrency(perPersonAmount);
+            document.getElementById('perPersonTip').textContent = formatCurrency(perPersonTip);
+            document.getElementById('perPersonTotal').textContent = formatCurrency(perPersonTotal);
+            document.getElementById('totalWithTip').textContent = formatCurrency(finalTotal);
+            
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function resetAll() {
+            if (confirm('¿Estás seguro de que quieres resetear todos los valores?')) {
+                // Resetear inputs
+                document.getElementById('billAmount').value = '';
+                document.getElementById('numPeople').value = '';
+                document.getElementById('tipPercentage').value = '';
+                document.getElementById('tipAmount').value = '';
+                document.getElementById('expenseDescription').value = '';
+                document.getElementById('expenseAmount').value = '';
+                
+                // Resetear gastos
+                expenses = [];
+                updateExpensesList();
+                updateTotalAmount();
+                
+                // Ocultar resultados
+                document.getElementById('results').style.display = 'none';
+                
+                // Resetear botones de propina
+                document.querySelectorAll('.tip-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Volver al método de monto total
+                switchMethod('total');
+                
+                // Volver al método de propina por porcentaje
+                switchTipMethod('percentage');
+                
+                // Ocultar errores
+                hideError('billError');
+                hideError('peopleError');
+            }
+        }
+    </script>
 </body>
 </html>

@@ -1,198 +1,590 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497"
-     crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2WG7Q3YRT0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2WG7Q3YRT0');
-</script>
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Nutricional</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Calculadora Nutricional - Todo Universidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-secondary: #0f172a;
+            --color-accent: #22c55e;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --color-background: #f8fafc;
+            --gradient-primary: linear-gradient(135deg, #2563eb, #1e40af);
+            --gradient-healthy: linear-gradient(135deg, #22c55e, #16a34a);
+            --gradient-warning: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
         body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to right, #f8f9fa, #e9ecef);
-            color: #333;
-            max-width: 600px;
-            margin: 5% auto;
+            background-color: var(--color-background);
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
             padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 
+                0 10px 25px rgba(0,0,0,0.1),
+                inset 2px 2px 5px rgba(255,255,255,0.5),
+                inset -3px -3px 7px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            gap: 8px;
         }
-        h1 {
-            text-align: center;
-            color: #007bff;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+
+        .form-group label {
+            font-weight: 600;
+            color: #1e293b;
         }
-        label {
-            font-weight: bold;
-            margin-top: 15px;
-            width: 100%;
-        }
-        input[type="number"], select {
-            width: 100%;
+
+        .form-control {
             padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #007bff;
+            border: 2px solid #e2e8f0;
             border-radius: 8px;
-            box-sizing: border-box;
             font-size: 1rem;
+            transition: all 0.3s ease;
         }
-        button {
-            width: 100%;
-            padding: 15px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2rem;
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .gender-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .gender-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--color-primary);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--color-primary);
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            margin-top: 20px;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
-        button:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
+
+        .gender-btn.active {
+            background: var(--color-primary);
+            color: white;
         }
-        .resultados, .explicacion {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-top: 25px;
+
+        .activity-level {
+            margin: 20px 0;
+        }
+
+        .activity-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .activity-btn {
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .activity-btn.active {
+            border-color: var(--color-primary);
+            background: #f8fafc;
+        }
+
+        .activity-btn h4 {
+            color: var(--color-primary);
+            margin-bottom: 5px;
+        }
+
+        .activity-btn p {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             width: 100%;
-            text-align: center;
+            margin-bottom: 10px;
         }
-        .resultados h2, .explicacion h3 {
-            color: #007bff;
+
+        .btn i {
+            font-size: 1.2rem;
+        }
+
+        .btn-calculate {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .results-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .result-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .result-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .result-label {
+            color: #64748b;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 5px;
+        }
+
+        .result-unit {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .nutrition-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .nutrition-title {
+            font-weight: 600;
+            color: var(--color-primary);
             margin-bottom: 15px;
         }
-        .resultados p, .explicacion p {
-            font-size: 1.1rem;
-            margin: 10px 0;
+
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .nutrition-item {
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .nutrition-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .nutrition-value {
+            font-weight: 600;
+            color: var(--color-secondary);
+        }
+
+        .bmi-status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .status-healthy {
+            background: var(--gradient-healthy);
+        }
+
+        .status-warning {
+            background: var(--gradient-warning);
+        }
+
+        .status-danger {
+            background: var(--gradient-danger);
+        }
+
+        @media (max-width: 768px) {
+            .calculator-card {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .activity-options {
+                grid-template-columns: 1fr;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tips-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .tips-title {
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+        }
+
+        .tips-list {
+            list-style: none;
+        }
+
+        .tips-list li {
+            margin-bottom: 10px;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .tips-list li:before {
+            content: "•";
+            color: var(--color-primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
         }
     </style>
 </head>
 <body>
-    <h1>Calculadora Nutricional</h1>
-    <div>
-        <label for="peso">Peso (kg):</label>
-        <input type="number" id="peso" step="0.1">
+    <div class="container">
+        <div class="calculator-card">
+            <div class="header">
+                <h1>Calculadora Nutricional</h1>
+                <p>Calcula tus necesidades calóricas y obtén recomendaciones personalizadas</p>
+            </div>
 
-        <label for="altura">Altura (cm):</label>
-        <input type="number" id="altura" step="0.1">
+            <form id="calculatorForm" onsubmit="calculateNutrition(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Edad</label>
+                        <input type="number" class="form-control" id="age" required min="15" max="80" 
+                               placeholder="Entre 15 y 80 años">
+                    </div>
 
-        <label for="edad">Edad (años):</label>
-        <input type="number" id="edad">
+                    <div class="form-group">
+                        <label>Altura (cm)</label>
+                        <input type="number" class="form-control" id="height" required min="140" max="220"
+                               placeholder="Entre 140 y 220 cm">
+                    </div>
 
-        <label for="sexo">Sexo:</label>
-        <select id="sexo">
-            <option value="hombre">Hombre</option>
-            <option value="mujer">Mujer</option>
-        </select>
+                    <div class="form-group">
+                        <label>Peso (kg)</label>
+                        <input type="number" class="form-control" id="weight" required min="40" max="200"
+                               placeholder="Entre 40 y 200 kg">
+                    </div>
+                </div>
 
-        <label for="actividad">Nivel de actividad:</label>
-        <select id="actividad">
-            <option value="sedentario">Sedentario</option>
-            <option value="ligero">Actividad ligera</option>
-            <option value="moderado">Actividad moderada</option>
-            <option value="intenso">Actividad intensa</option>
-        </select>
+                <div class="form-group">
+                    <label>Género</label>
+                    <div class="gender-options">
+                        <button type="button" class="gender-btn active" onclick="selectGender('male')">
+                            <i class="ri-men-line"></i> Masculino
+                        </button>
+                        <button type="button" class="gender-btn" onclick="selectGender('female')">
+                            <i class="ri-women-line"></i> Femenino
+                        </button>
+                    </div>
+                </div>
 
-        <button onclick="calcularIndicadores()">Calcular</button>
-    </div>
+                <div class="activity-level">
+                    <label>Nivel de Actividad</label>
+                    <div class="activity-options">
+                        <button type="button" class="activity-btn active" onclick="selectActivity(1.2)">
+                            <h4>Sedentario</h4>
+                            <p>Poco o ningún ejercicio</p>
+                        </button>
+                        <button type="button" class="activity-btn" onclick="selectActivity(1.375)">
+                            <h4>Ligero</h4>
+                            <p>Ejercicio 1-3 veces/semana</p>
+                        </button>
+                        <button type="button" class="activity-btn" onclick="selectActivity(1.55)">
+                            <h4>Moderado</h4>
+                            <p>Ejercicio 3-5 veces/semana</p>
+                        </button>
+                        <button type="button" class="activity-btn" onclick="selectActivity(1.725)">
+                            <h4>Activo</h4>
+                            <p>Ejercicio 6-7 veces/semana</p>
+                        </button>
+                        <button type="button" class="activity-btn" onclick="selectActivity(1.9)">
+                            <h4>Muy Activo</h4>
+                            <p>Ejercicio intenso diario</p>
+                        </button>
+                    </div>
+                </div>
 
-    <div class="resultados">
-        <h2>Resultados:</h2>
-        <p id="resultado-imc"></p>
-        <p id="resultado-tmb"></p>
-        <p id="resultado-get"></p>
-    </div>
+                <button type="submit" class="btn btn-calculate">
+                    <i class="ri-calculator-line"></i>
+                    Calcular
+                </button>
+            </form>
 
-    <div class="explicacion">
-        <h3>Explicación de Resultados:</h3>
-        <p id="explicacion-imc"></p>
-        <p id="explicacion-tmb"></p>
-        <p id="explicacion-get"></p>
+            <div class="results-card" id="results">
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-label">Calorías Diarias</div>
+                        <div class="result-value" id="calories">0</div>
+                        <div class="result-unit">kcal/día</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">IMC</div>
+                        <div class="result-value" id="bmi">0</div>
+                        <div class="result-unit">kg/m²</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Peso Ideal</div>
+                        <div class="result-value" id="idealWeight">0</div>
+                        <div class="result-unit">kg</div>
+                    </div>
+                </div>
+
+                <div class="bmi-status" id="bmiStatus">
+                    Estado: Calculando...
+                </div>
+
+                <div class="nutrition-info">
+                    <div class="nutrition-title">Distribución de Macronutrientes Recomendada</div>
+                    <div class="nutrition-grid">
+                        <div class="nutrition-item">
+                            <div class="nutrition-label">Proteínas (30%)</div>
+                            <div class="nutrition-value" id="protein">0g</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-label">Carbohidratos (45%)</div>
+                            <div class="nutrition-value" id="carbs">0g</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-label">Grasas (25%)</div>
+                            <div class="nutrition-value" id="fats">0g</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tips-section">
+                    <div class="tips-title">Recomendaciones Personalizadas</div>
+                    <ul class="tips-list" id="nutritionTips">
+                        <!-- Tips se agregarán dinámicamente -->
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        function calcularIndicadores() {
-            const peso = parseFloat(document.getElementById("peso").value);
-            const altura = parseFloat(document.getElementById("altura").value) / 100; // Convertir a metros
-            const edad = parseInt(document.getElementById("edad").value);
-            const sexo = document.getElementById("sexo").value;
-            const actividad = document.getElementById("actividad").value;
+        let selectedGender = 'male';
+        let selectedActivity = 1.2;
 
-            // Validar que los campos no estén vacíos
-            if (isNaN(peso) || isNaN(altura) || isNaN(edad)) {
-                alert("Por favor, complete todos los campos");
-                return;
-            }
+        function selectGender(gender) {
+            selectedGender = gender;
+            document.querySelectorAll('.gender-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.gender-btn').classList.add('active');
+        }
 
-            // Cálculo del IMC
-            const imc = peso / (altura * altura);
-            document.getElementById("resultado-imc").innerText = `IMC: ${imc.toFixed(2)}`;
+        function selectActivity(level) {
+            selectedActivity = level;
+            document.querySelectorAll('.activity-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.activity-btn').classList.add('active');
+        }
 
-            // Explicación del IMC
-            let estadoImc;
-            if (imc < 18.5) {
-                estadoImc = "Bajo peso";
-            } else if (imc >= 18.5 && imc < 24.9) {
-                estadoImc = "Peso normal";
-            } else if (imc >= 25 && imc < 29.9) {
-                estadoImc = "Sobrepeso";
+        function calculateNutrition(event) {
+            event.preventDefault();
+
+            const age = parseInt(document.getElementById('age').value);
+            const height = parseInt(document.getElementById('height').value);
+            const weight = parseInt(document.getElementById('weight').value);
+
+            // Calcular BMR (Basal Metabolic Rate) usando la fórmula de Mifflin-St Jeor
+            let bmr;
+            if (selectedGender === 'male') {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
             } else {
-                estadoImc = "Obesidad";
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
             }
-            document.getElementById("explicacion-imc").innerText = `Su IMC indica que usted tiene: ${estadoImc}`;
 
-            // Cálculo de la Tasa Metabólica Basal (TMB)
-            let tmb;
-            if (sexo === "hombre") {
-                tmb = 10 * peso + 6.25 * (altura * 100) - 5 * edad + 5;
+            // Calcular calorías diarias totales
+            const calories = Math.round(bmr * selectedActivity);
+
+            // Calcular IMC
+            const bmi = weight / ((height / 100) * (height / 100));
+
+            // Calcular peso ideal usando la fórmula de Hamwi
+            let idealWeight;
+            if (selectedGender === 'male') {
+                idealWeight = 48 + 2.7 * ((height - 152.4) / 2.54);
             } else {
-                tmb = 10 * peso + 6.25 * (altura * 100) - 5 * edad - 161;
+                idealWeight = 45.5 + 2.2 * ((height - 152.4) / 2.54);
             }
-            document.getElementById("resultado-tmb").innerText = `TMB: ${tmb.toFixed(2)} kcal/día`;
 
-            // Explicación de la TMB
-            document.getElementById("explicacion-tmb").innerText = "La Tasa Metabólica Basal (TMB) es la cantidad de energía que su cuerpo necesita para realizar funciones básicas en reposo, como respirar y mantener la temperatura corporal.";
+            // Calcular macronutrientes
+            const protein = Math.round((calories * 0.3) / 4); // 4 kcal por gramo de proteína
+            const carbs = Math.round((calories * 0.45) / 4); // 4 kcal por gramo de carbohidratos
+            const fats = Math.round((calories * 0.25) / 9); // 9 kcal por gramo de grasa
 
-            // Cálculo del Gasto Energético Total (GET)
-            let factorActividad;
-            switch (actividad) {
-                case "sedentario":
-                    factorActividad = 1.2;
-                    break;
-                case "ligero":
-                    factorActividad = 1.375;
-                    break;
-                case "moderado":
-                    factorActividad = 1.55;
-                    break;
-                case "intenso":
-                    factorActividad = 1.725;
-                    break;
+            // Mostrar resultados
+            document.getElementById('calories').textContent = calories;
+            document.getElementById('bmi').textContent = bmi.toFixed(1);
+            document.getElementById('idealWeight').textContent = Math.round(idealWeight);
+            document.getElementById('protein').textContent = protein + 'g';
+            document.getElementById('carbs').textContent = carbs + 'g';
+            document.getElementById('fats').textContent = fats + 'g';
+
+            // Determinar estado del IMC y mostrar recomendaciones
+            const bmiStatus = document.getElementById('bmiStatus');
+            const tips = document.getElementById('nutritionTips');
+            tips.innerHTML = '';
+
+            if (bmi < 18.5) {
+                bmiStatus.textContent = 'Estado: Bajo peso';
+                bmiStatus.className = 'bmi-status status-warning';
+                addTips([
+                    'Aumenta gradualmente tu ingesta calórica',
+                    'Consume proteínas de alta calidad en cada comida',
+                    'Incluye grasas saludables en tu dieta',
+                    'Realiza ejercicios de fuerza para ganar masa muscular'
+                ]);
+            } else if (bmi < 25) {
+                bmiStatus.textContent = 'Estado: Peso saludable';
+                bmiStatus.className = 'bmi-status status-healthy';
+                addTips([
+                    'Mantén una dieta equilibrada y variada',
+                    'Realiza actividad física regular',
+                    'Mantén una buena hidratación',
+                    'Prioriza alimentos integrales'
+                ]);
+            } else if (bmi < 30) {
+                bmiStatus.textContent = 'Estado: Sobrepeso';
+                bmiStatus.className = 'bmi-status status-warning';
+                addTips([
+                    'Crea un déficit calórico moderado',
+                    'Aumenta el consumo de vegetales y fibra',
+                    'Realiza ejercicio cardiovascular regular',
+                    'Controla el tamaño de las porciones'
+                ]);
+            } else {
+                bmiStatus.textContent = 'Estado: Obesidad';
+                bmiStatus.className = 'bmi-status status-danger';
+                addTips([
+                    'Consulta con un profesional de la salud',
+                    'Establece metas realistas de pérdida de peso',
+                    'Incorpora actividad física gradualmente',
+                    'Evita alimentos procesados y azúcares refinados'
+                ]);
             }
-            const get = tmb * factorActividad;
-            document.getElementById("resultado-get").innerText = `GET: ${get.toFixed(2)} kcal/día`;
 
-            // Explicación del GET
-            document.getElementById("explicacion-get").innerText = "El Gasto Energético Total (GET) es la cantidad de calorías que necesita diariamente, teniendo en cuenta su nivel de actividad física. Esto incluye la energía para sus actividades diarias además de la TMB.";
+            // Mostrar sección de resultados
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function addTips(tipsList) {
+            const tipsContainer = document.getElementById('nutritionTips');
+            tipsList.forEach(tip => {
+                const li = document.createElement('li');
+                li.textContent = tip;
+                tipsContainer.appendChild(li);
+            });
         }
     </script>
 </body>

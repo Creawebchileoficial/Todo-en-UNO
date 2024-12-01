@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pronóstico del Clima</title>
@@ -91,17 +92,16 @@
         }
 
         .forecast-day {
-            flex: 1;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
         }
 
         .forecast-day:hover {
-            transform: scale(1.05);
+            transform: translateY(-5px);
         }
 
         .forecast-day h3 {
@@ -128,6 +128,75 @@
                 flex-direction: column;
             }
         }
+
+        .location-permission {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 15px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            color: var(--color-error);
+            margin-bottom: 10px;
+        }
+
+        .simple-recommendation {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .simple-recommendation h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .simple-recommendation p {
+            margin-bottom: 8px;
+        }
+
+        .simple-recommendation strong {
+            color: var(--primary-color);
+        }
+
+        .forecast-date {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .forecast-recommendation {
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .forecast-container h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -137,7 +206,8 @@
         </div>
 
         <div id="location-permission" class="location-permission" style="display:none;">
-            <p>Para obtener el pronóstico de tu ubicación actual, por favor permite el acceso a la ubicación.</p>
+            <p>Para mostrar el clima de su ubicación actual, por favor permita el acceso a la ubicación.</p>
+            <div class="loading-spinner"></div>
         </div>
 
         <div class="search-container">
@@ -227,44 +297,136 @@
             }
         }
 
+        // Agregar esta función para obtener recomendaciones simples
+        function getWeatherRecommendation(temp, weatherDesc) {
+            let recommendation = {
+                feeling: '',
+                clothing: '',
+                advice: ''
+            };
+
+            // Determinar sensación térmica y recomendaciones
+            if (temp < 10) {
+                recommendation.feeling = 'Hará mucho frío';
+                recommendation.clothing = 'Muy abrigado';
+                recommendation.advice = 'Usa varias capas de ropa, abrigo grueso, guantes y gorro';
+            } else if (temp < 15) {
+                recommendation.feeling = 'Hará frío';
+                recommendation.clothing = 'Abrigado';
+                recommendation.advice = 'Usa chaqueta o abrigo, y ropa de manga larga';
+            } else if (temp < 20) {
+                recommendation.feeling = 'Temperatura fresca';
+                recommendation.clothing = 'Semi abrigado';
+                recommendation.advice = 'Una chaqueta ligera será suficiente';
+            } else if (temp < 25) {
+                recommendation.feeling = 'Temperatura agradable';
+                recommendation.clothing = 'Ropa ligera';
+                recommendation.advice = 'Ropa normal, quizás una capa extra para la tarde';
+            } else if (temp < 30) {
+                recommendation.feeling = 'Hará calor';
+                recommendation.clothing = 'Ropa muy ligera';
+                recommendation.advice = 'Usa ropa fresca y protector solar';
+            } else {
+                recommendation.feeling = 'Hará mucho calor';
+                recommendation.clothing = 'Lo más ligero posible';
+                recommendation.advice = 'Usa ropa muy ligera, protector solar y mantente hidratado';
+            }
+
+            // Ajustar según condición climática
+            if (weatherDesc.includes('lluvia')) {
+                recommendation.advice += '. Lleva paraguas o impermeable';
+            } else if (weatherDesc.includes('nube')) {
+                recommendation.advice += '. Puede que el sol salga y entre durante el día';
+            } else if (weatherDesc.includes('sol')) {
+                recommendation.advice += '. No olvides el protector solar';
+            }
+
+            return recommendation;
+        }
+
+        // Modificar la función displayWeatherData
         function displayWeatherData(currentData, forecastData) {
-            // Display current weather
+            const temp = currentData.main.temp;
+            const weatherDesc = currentData.weather[0].description;
+            const recommendation = getWeatherRecommendation(temp, weatherDesc);
+
             currentWeatherElement.innerHTML = `
                 <h2>Clima Actual en ${currentData.name}</h2>
-                <p><strong>Temperatura:</strong> ${currentData.main.temp.toFixed(1)} °C</p>
-                <p><strong>Condición:</strong> ${currentData.weather[0].description}</p>
+                <p><strong>Temperatura:</strong> ${temp.toFixed(1)}°C</p>
+                <p><strong>Condición:</strong> ${weatherDesc}</p>
                 <p><strong>Humedad:</strong> ${currentData.main.humidity}%</p>
                 <p><strong>Viento:</strong> ${currentData.wind.speed} m/s</p>
+                
+                <div class="simple-recommendation">
+                    <h3>Recomendación Simple</h3>
+                    <p><strong>${recommendation.feeling}</strong></p>
+                    <p>Vestimenta recomendada: <strong>${recommendation.clothing}</strong></p>
+                    <p>${recommendation.advice}</p>
+                </div>
             `;
 
-            // Process and display 5-day forecast
+            // Procesar pronóstico de 5 días
             const dailyForecasts = {};
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Obtener fecha actual sin hora
+            
+            // Crear un mapa de fechas ya procesadas
+            const processedDates = new Set();
+            
             forecastData.list.forEach(forecast => {
-                const date = forecast.dt_txt.split(' ')[0];
-                if (!dailyForecasts[date]) {
-                    dailyForecasts[date] = forecast;
+                const date = new Date(forecast.dt * 1000);
+                date.setHours(0, 0, 0, 0); // Normalizar la hora a medianoche
+                const dateString = date.toISOString().split('T')[0];
+                
+                // Solo procesar si es un día futuro y no ha sido procesado aún
+                if (date > today && !processedDates.has(dateString)) {
+                    processedDates.add(dateString);
+                    dailyForecasts[dateString] = {
+                        ...forecast,
+                        dayName: getDayName(date),
+                        fullDate: formatDate(date)
+                    };
                 }
             });
 
-            // Clear previous forecast
-            forecastContainer.innerHTML = '';
+            // Limpiar pronóstico anterior
+            forecastContainer.innerHTML = '<h3>Pronóstico para los próximos días</h3>';
 
-            // Limit to 5 upcoming days
-            let daysDisplayed = 0;
-            for (const [date, forecast] of Object.entries(dailyForecasts)) {
-                if (daysDisplayed >= 5) break;
+            // Mostrar solo los próximos 5 días únicos
+            Object.values(dailyForecasts)
+                .slice(0, 5)
+                .forEach(forecast => {
+                    const recommendation = getWeatherRecommendation(forecast.main.temp, forecast.weather[0].description);
+                    const dayElement = document.createElement('div');
+                    dayElement.classList.add('forecast-day');
+                    dayElement.innerHTML = `
+                        <h3>${forecast.dayName}</h3>
+                        <p class="forecast-date">${forecast.fullDate}</p>
+                        <p><strong>Temperatura:</strong> ${forecast.main.temp.toFixed(1)}°C</p>
+                        <p><strong>Clima:</strong> ${forecast.weather[0].description}</p>
+                        <p><strong>Humedad:</strong> ${forecast.main.humidity}%</p>
+                        <div class="forecast-recommendation">
+                            <p><strong>${recommendation.feeling}</strong></p>
+                            <p>${recommendation.clothing}</p>
+                        </div>
+                    `;
+                    forecastContainer.appendChild(dayElement);
+                });
+        }
 
-                const dayElement = document.createElement('div');
-                dayElement.classList.add('forecast-day');
-                dayElement.innerHTML = `
-                    <h3>${getDayName(date)}</h3>
-                    <p><strong>Temp:</strong> ${forecast.main.temp.toFixed(1)} °C</p>
-                    <p><strong>Clima:</strong> ${forecast.weather[0].description}</p>
-                    <p><strong>Humedad:</strong> ${forecast.main.humidity}%</p>
-                `;
-                forecastContainer.appendChild(dayElement);
-                daysDisplayed++;
-            }
+        // Función para obtener el nombre del día
+        function getDayName(date) {
+            const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            return days[date.getDay()];
+        }
+
+        // Función para formatear la fecha
+        function formatDate(date) {
+            const options = { 
+                day: 'numeric', 
+                month: 'long'
+            };
+            return date.toLocaleDateString('es-ES', options);
         }
 
         function getCurrentLocationWeather() {
@@ -301,6 +463,61 @@
 
         // Initial load using geolocation
         getCurrentLocationWeather();
+
+        // Agregar esta función al inicio del script
+        function requestLocation() {
+            if ("geolocation" in navigator) {
+                // Mostrar mensaje de solicitud de ubicación
+                document.getElementById('location-permission').style.display = 'block';
+                
+                navigator.geolocation.getCurrentPosition(
+                    // Éxito al obtener ubicación
+                    function(position) {
+                        document.getElementById('location-permission').style.display = 'none';
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        fetchWeatherByCoordinates(lat, lon);
+                    },
+                    // Error al obtener ubicación
+                    function(error) {
+                        let errorMessage = '';
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage = "No se otorgó permiso para acceder a la ubicación.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage = "La información de ubicación no está disponible.";
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage = "Se agotó el tiempo para obtener la ubicación.";
+                                break;
+                            default:
+                                errorMessage = "Ocurrió un error desconocido al obtener la ubicación.";
+                        }
+                        document.getElementById('location-permission').innerHTML = `
+                            <p class="error">${errorMessage}</p>
+                            <p>Por favor ingrese una ciudad manualmente o intente nuevamente.</p>
+                        `;
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 5000,
+                        maximumAge: 0
+                    }
+                );
+            } else {
+                document.getElementById('location-permission').innerHTML = `
+                    <p class="error">Su navegador no soporta geolocalización.</p>
+                    <p>Por favor ingrese una ciudad manualmente.</p>
+                `;
+            }
+        }
+
+        // Modificar la carga inicial
+        window.onload = function() {
+            // Solicitar ubicación al cargar la página
+            requestLocation();
+        };
     </script>
 </body>
 </html>
