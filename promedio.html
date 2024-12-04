@@ -102,6 +102,7 @@
             align-items: center;
             position: relative;
             transition: all 0.3s ease;
+            margin-bottom: 15px;
         }
 
         .grade-item:hover {
@@ -113,13 +114,11 @@
             font-size: 1.2rem;
             padding: 15px;
             border: 2px solid transparent;
-            box-shadow: 
-                inset 2px 2px 5px rgba(0,0,0,0.05),
-                inset -3px -3px 7px rgba(255,255,255,0.6);
             border-radius: 12px;
             text-align: center;
             font-weight: 600;
-            transition: all 0.3s ease;
+            width: 100%;
+            background: #f8fafc;
         }
 
         .grade-input:focus {
@@ -141,11 +140,9 @@
             width: 80px;
             padding: 12px;
             border: 2px solid transparent;
-            box-shadow: 
-                inset 2px 2px 5px rgba(0,0,0,0.05),
-                inset -3px -3px 7px rgba(255,255,255,0.6);
             border-radius: 8px;
             text-align: center;
+            background: #f8fafc;
         }
 
         .weight-input:focus {
@@ -643,7 +640,7 @@
             </div>
 
             <div id="gradesContainer" class="grades-container">
-                <!-- Las notas se agregarán aquí dinámicamente -->
+                <!-- Las notas se agregarán aquí dinmicamente -->
             </div>
 
             <div class="button-container">
@@ -668,14 +665,14 @@
                     <i class="ri-number-1"></i>
                     Promedio Ponderado
                 </span>
-                <span class="result-value" id="promedioPonderado">0.0</span>
+                <span class="result-value" id="promedioPonderado">1.0</span>
             </div>
             <div class="result-item">
                 <span class="result-label">
                     <i class="ri-number-2"></i>
                     Promedio Redondeado
                 </span>
-                <span class="result-value" id="promedioRedondeado">0.0</span>
+                <span class="result-value" id="promedioRedondeado">1.0</span>
             </div>
             <div class="result-item">
                 <span class="result-label">
@@ -696,20 +693,65 @@
                 <input type="text" class="grade-input" placeholder="Ejemplo: 40" 
                     oninput="validarNota(this)" maxlength="3">
                 <span class="nota-decimal"></span>
-                <input type="number" class="weight-input" placeholder="%">
+                <input type="number" class="weight-input" placeholder="20" 
+                    oninput="validarPeso(this)" min="0" max="100">
                 <button class="delete-btn" onclick="eliminarNota(this)">×</button>
             `;
             container.appendChild(gradeItem);
-            actualizarAutomaticamente();
+            
+            // Solo resetear valores
+            document.getElementById('promedioPonderado').textContent = '0.0';
+            document.getElementById('promedioRedondeado').textContent = '0.0';
+            document.getElementById('estado').textContent = 'Pendiente';
+            document.getElementById('estado').className = 'status-badge';
+        }
+
+        function validarPeso(input) {
+            let valor = parseInt(input.value) || 0;
+            if (valor > 100) {
+                input.value = '100';
+            }
+            if (valor < 0) {
+                input.value = '0';
+            }
+        }
+
+        function actualizarAutomaticamente() {
+            // No hacer nada aquí, solo calcular cuando se presione el botón calcular
+        }
+
+        function validarPorcentajeTotal() {
+            const pesos = document.querySelectorAll('.weight-input');
+            let sumaPesos = 0;
+            let hayPesosIngresados = false;
+            
+            pesos.forEach(peso => {
+                const valorPeso = parseInt(peso.value) || 0;
+                if (valorPeso > 0) {
+                    sumaPesos += valorPeso;
+                    hayPesosIngresados = true;
+                }
+            });
+
+            if (sumaPesos > 100) {
+                alert('La suma de los porcentajes no puede superar el 100%');
+                return false;
+            }
+            
+            if (hayPesosIngresados && sumaPesos < 100) {
+                const faltante = 100 - sumaPesos;
+                const confirmar = confirm(`Los porcentajes suman ${sumaPesos}%. Falta asignar ${faltante}%. ¿Deseas continuar?`);
+                return confirmar;
+            }
+            
+            return true;
         }
 
         function eliminarNota(btn) {
             btn.parentElement.remove();
-            actualizarAutomaticamente();
         }
 
         function validarNota(input) {
-            input.value = input.value.replace(/[.,]/g, '');
             input.value = input.value.replace(/[^\d]/g, '');
             
             let valor = parseInt(input.value || '0');
@@ -725,23 +767,6 @@
             } else {
                 input.parentElement.querySelector('.nota-decimal').textContent = '';
             }
-            
-            actualizarAutomaticamente();
-        }
-
-        function validarPorcentajeTotal() {
-            const pesos = document.querySelectorAll('.weight-input');
-            let sumaPesos = 0;
-            
-            pesos.forEach(peso => {
-                sumaPesos += parseInt(peso.value) || 0;
-            });
-
-            if (sumaPesos > 100) {
-                alert('La suma de los porcentajes no puede superar el 100%');
-                return false;
-            }
-            return true;
         }
 
         function calcularPromedio() {
@@ -763,7 +788,6 @@
                 const valorNota = parseInt(nota.value) || 0;
                 const peso = parseFloat(pesos[index].value) || 0;
                 
-                // Solo considerar en el cálculo si ambos valores están presentes
                 if (valorNota && peso) {
                     sumaPonderada += valorNota * peso;
                     sumaPesos += peso;
@@ -771,10 +795,9 @@
                 }
             });
 
-            // Si no hay valores válidos, mostrar 0
             if (!hayValoresValidos || sumaPesos === 0) {
-                document.getElementById('promedioPonderado').textContent = '0.0';
-                document.getElementById('promedioRedondeado').textContent = '0.0';
+                document.getElementById('promedioPonderado').textContent = '00.00';
+                document.getElementById('promedioRedondeado').textContent = '1';
                 document.getElementById('estado').textContent = 'Pendiente';
                 document.getElementById('estado').className = 'status-badge';
                 return;
@@ -783,7 +806,7 @@
             const promedioPonderado = sumaPonderada / sumaPesos;
             const promedioRedondeado = Math.round(promedioPonderado);
 
-            document.getElementById('promedioPonderado').textContent = promedioPonderado.toFixed(1);
+            document.getElementById('promedioPonderado').textContent = promedioPonderado.toFixed(2);
             document.getElementById('promedioRedondeado').textContent = (promedioRedondeado / 10).toFixed(1);
 
             const estado = document.getElementById('estado');
@@ -812,7 +835,6 @@
             }
 
             const resultCard = document.getElementById('resultCard');
-            
             const mensajeExistente = resultCard.querySelector('.mensaje-item');
             if (mensajeExistente) {
                 mensajeExistente.remove();
@@ -828,41 +850,25 @@
                 <span class="result-value" style="font-size: 1rem; font-style: italic;">${mensaje}</span>
             `;
             resultCard.appendChild(mensajeItem);
-
             resultCard.classList.add('visible');
         }
 
         function resetearCalculadora() {
             document.getElementById('gradesContainer').innerHTML = '';
             
-            const resultCard = document.getElementById('resultCard');
-            resultCard.style.opacity = '0';
-            resultCard.style.transform = 'translateY(20px)';
+            // Valores iniciales con el formato correcto
+            document.getElementById('promedioPonderado').textContent = '00.00';
+            document.getElementById('promedioRedondeado').textContent = '1';
+            document.getElementById('estado').textContent = 'Pendiente';
+            document.getElementById('estado').className = 'status-badge';
             
-            setTimeout(() => {
-                resultCard.classList.remove('visible');
-                resultCard.style.opacity = '';
-                resultCard.style.transform = '';
-            }, 300);
-
-            agregarNota();
-        }
-
-        function actualizarAutomaticamente() {
-            const notas = document.querySelectorAll('.grade-input');
-            const pesos = document.querySelectorAll('.weight-input');
-            
-            // Solo calcular si hay al menos una nota y peso válidos
-            let hayValoresCompletos = false;
-            for (let i = 0; i < notas.length; i++) {
-                if (notas[i].value && pesos[i].value) {
-                    hayValoresCompletos = true;
-                    break;
-                }
+            const mensajeExistente = document.querySelector('.mensaje-item');
+            if (mensajeExistente) {
+                mensajeExistente.remove();
             }
-            
-            if (hayValoresCompletos) {
-                calcularPromedio();
+
+            for (let i = 0; i < 4; i++) {
+                agregarNota();
             }
         }
 
