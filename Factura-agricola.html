@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Facturas Agrícolas</title>
+    <style>
+        :root {
+            --primary-color: #8b5cf6;
+            --secondary-color: #ec4899;
+            --background-color: #f3f4f6;
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+        }
+
+        .table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .totales {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+        }
+
+        .total-general {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .subtotales, .extras-total {
+            background-color: #f0f0f0;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: var(--border-radius);
+        }
+        
+        .total-parcial {
+            color: #8b5cf6;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            input, select {
+                font-size: 16px;
+            }
+        }
+
+        /* Estilos responsivos mejorados */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+                margin: 0 auto;
+                border-radius: 10px;
+                width: 95%;
+            }
+
+            /* Centrar títulos */
+            h1, h2, h3 {
+                text-align: center;
+            }
+
+            /* Ajustar inputs y labels */
+            .form-group {
+                text-align: center;
+            }
+
+            .form-group label {
+                text-align: center;
+                margin-bottom: 8px;
+            }
+
+            .form-group input {
+                max-width: 300px;
+                margin: 0 auto;
+                display: block;
+            }
+
+            /* Ajustar tablas y sus contenidos */
+            table {
+                margin: 0 auto;
+            }
+
+            td {
+                text-align: center;
+            }
+
+            td input {
+                margin: 5px auto;
+            }
+
+            /* Centrar los botones y darles mejor espaciado */
+            .btn {
+                display: block;
+                width: 90%;
+                max-width: 300px;
+                margin: 10px auto;
+                padding: 12px;
+            }
+
+            /* Mejorar visualización de totales */
+            .totales {
+                text-align: center;
+                max-width: 400px;
+                margin: 20px auto;
+            }
+
+            .subtotales, .extras-total {
+                padding: 15px;
+                margin: 10px auto;
+            }
+
+            /* Ajustar campos de entrada en las filas */
+            #recorridos-body td, #internos-body td, #extras-body td {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px;
+            }
+
+            td input[type="number"],
+            td input[type="text"],
+            td input[type="date"] {
+                margin: 5px auto;
+                width: 90% !important;
+                max-width: 250px;
+            }
+
+            /* Ajustar secciones */
+            .recorridos-section,
+            .internos-section,
+            .extras-section {
+                padding: 15px 10px;
+                margin: 15px auto;
+                max-width: 95%;
+            }
+
+            /* Mejorar espaciado entre elementos */
+            span {
+                display: block;
+                margin: 5px 0;
+                text-align: center;
+            }
+
+            /* Ajustar botones de eliminar */
+            .btn-danger {
+                width: auto;
+                min-width: 40px;
+                margin: 5px auto;
+            }
+        }
+
+        /* Ajustes adicionales para pantallas muy pequeñas */
+        @media screen and (max-width: 480px) {
+            .container {
+                width: 98%;
+                padding: 10px;
+            }
+
+            td input[type="text"] {
+                width: 95% !important;
+            }
+
+            .totales {
+                width: 95%;
+            }
+        }
+
+        /* Ajustes para orientación horizontal en móviles */
+        @media screen and (max-height: 480px) {
+            .container {
+                padding: 5px;
+            }
+
+            h1, h2 {
+                margin: 10px 0;
+            }
+        }
+
+        /* Colores para las diferentes secciones */
+        .recorridos-section {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            border: 1px solid #cce3ff;
+        }
+
+        .internos-section {
+            background-color: #fff0f7;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            border: 1px solid #ffcce6;
+        }
+
+        .extras-section {
+            background-color: #f3f0ff;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            border: 1px solid #e6ccff;
+        }
+
+        /* Colores para los encabezados de tabla */
+        #tabla-recorridos th {
+            background-color: #0066cc;
+        }
+
+        #tabla-internos th {
+            background-color: #cc0066;
+        }
+
+        #tabla-extras th {
+            background-color: #6600cc;
+        }
+
+        /* Colores para los totales */
+        .subtotales {
+            background-color: #e6f0ff;
+            border: 1px solid #cce0ff;
+        }
+
+        .extras-total {
+            background-color: #f0e6ff;
+            border: 1px solid #e0ccff;
+        }
+
+        /* Botones específicos para cada sección */
+        .btn-recorridos {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        .btn-internos {
+            background-color: #cc0066;
+            color: white;
+        }
+
+        .btn-extras {
+            background-color: #6600cc;
+            color: white;
+        }
+
+        /* Ajustar el título principal para que destaque más */
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Facturas Agrícolas</h1>
+        
+        <!-- Información del Cliente -->
+        <div class="form-group">
+            <label for="identificador">Patente del Vehículo:</label>
+            <input type="text" 
+                   id="identificador" 
+                   placeholder="Ej: JZ TP 13" 
+                   pattern="^[A-Z]{2,4}\s?[A-Z0-9]{2}\s?[0-9]{2}$"
+                   title="Formato de patente chilena. Ej: JZ TP 13"
+                   style="text-transform: uppercase;"
+                   maxlength="10"
+                   required>
+        </div>
+
+        <!-- Sección de Recorridos -->
+        <div class="recorridos-section">
+            <h2>Recorridos</h2>
+            <div id="recorridos-container">
+                <table id="tabla-recorridos">
+                    <thead>
+                        <tr>
+                            <th>Detalle</th>
+                            <th>Costo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recorridos-body">
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-recorridos" onclick="agregarRecorrido()">Agregar Recorrido</button>
+        </div>
+
+        <!-- Sección de Viajes Internos -->
+        <div class="internos-section">
+            <h2>Viajes Internos</h2>
+            <div id="internos-container">
+                <table id="tabla-internos">
+                    <thead>
+                        <tr>
+                            <th>Detalle</th>
+                            <th>Costo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="internos-body">
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-internos" onclick="agregarViajeInterno()">Agregar Viaje Interno</button>
+        </div>
+
+        <!-- Sección de Extras -->
+        <div class="extras-section">
+            <h2>Extras</h2>
+            <div id="extras-container">
+                <table id="tabla-extras">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Ruta</th>
+                            <th>Tipo de Servicio</th>
+                            <th>Costo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="extras-body">
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-extras" onclick="agregarExtra()">Agregar Extra</button>
+        </div>
+
+        <!-- Resumen y Totales -->
+        <div class="totales">
+            <h3>Resumen</h3>
+            <div class="subtotales">
+                <p>Total Recorridos: <span id="subtotal-recorridos">$0</span></p>
+                <p>Total Viajes Internos: <span id="subtotal-internos">$0</span></p>
+                <p class="total-parcial">Total: <span id="total-viajes">$0</span></p>
+            </div>
+            <div class="extras-total">
+                <p>Total Extras: <span id="subtotal-extras">$0</span></p>
+                <p class="total-parcial">Total: <span id="total-extras">$0</span></p>
+            </div>
+            <p class="total-general">Total General: <span id="total-general">$0</span></p>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="form-group">
+            <button class="btn btn-primary" onclick="calcularTotales()">Calcular Totales</button>
+            <button class="btn btn-primary" onclick="exportarFactura()">Descargar Factura</button>
+            <button class="btn btn-danger" onclick="resetearFormulario()">Resetear Todo</button>
+        </div>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        // Funciones para manejar recorridos
+        function agregarRecorrido() {
+            const tbody = document.getElementById('recorridos-body');
+            const newRow = tbody.insertRow();
+            newRow.innerHTML = `
+                <td>
+                    <input type="number" class="cantidad" min="1" placeholder="22" style="width: 60px;" onchange="actualizarDetalle(this)">
+                    <span>viajes:</span>
+                    <input type="text" class="ruta" placeholder="La Esperanza, El Toco - Fdo Rapel" style="width: 300px;">
+                    <input type="number" class="costo" min="0" placeholder="$58000" style="width: 100px;" onchange="actualizarDetalle(this)">
+                </td>
+                <td><span class="subtotal">$0</span></td>
+                <td><button class="btn btn-danger" onclick="eliminarFila(this)">×</button></td>
+            `;
+            actualizarDetalle(newRow.querySelector('.cantidad'));
+        }
+
+        function actualizarDetalle(input) {
+            const row = input.closest('tr');
+            const cantidad = parseFloat(row.querySelector('.cantidad').value) || 0;
+            const costo = parseFloat(row.querySelector('.costo').value) || 0;
+            const ruta = row.querySelector('.ruta').value;
+            
+            // Calcular subtotal
+            const subtotal = cantidad * costo;
+            
+            // Actualizar el texto del detalle y subtotal
+            row.querySelector('.subtotal').textContent = formatearNumero(subtotal);
+            
+            calcularTotales();
+        }
+
+        // Funciones para manejar extras
+        function agregarExtra() {
+            const tbody = document.getElementById('extras-body');
+            const newRow = tbody.insertRow();
+            
+            newRow.innerHTML = `
+                <td>
+                    <input type="date" class="fecha" required onchange="formatearFecha(this)">
+                    <span class="fecha-formateada"></span>
+                    <input type="text" class="ruta" placeholder="Fdo Rapel, Pichidegua - La Esperanza" style="width: 300px;">
+                    <span>(</span>
+                    <input type="text" class="tipo-servicio" placeholder="aplicaciones" style="width: 150px;">
+                    <span>): </span>
+                    <input type="number" class="costo-extra" min="0" placeholder="$74000" style="width: 100px;" onchange="calcularTotales()">
+                </td>
+                <td><button class="btn btn-danger" onclick="eliminarFila(this)">×</button></td>
+            `;
+        }
+
+        function eliminarFila(button) {
+            const row = button.closest('tr');
+            row.remove();
+            calcularTotales();
+        }
+
+        // Función para calcular todos los totales
+        function calcularTotales() {
+            // Calcular subtotal de recorridos
+            let subtotalRecorridos = 0;
+            document.querySelectorAll('#recorridos-body tr').forEach(row => {
+                subtotalRecorridos += parseFloat(row.querySelector('.subtotal').textContent.replace('$', '').replace(/\./g, '')) || 0;
+            });
+
+            // Calcular subtotal de viajes internos
+            let subtotalInternos = 0;
+            document.querySelectorAll('#internos-body tr').forEach(row => {
+                subtotalInternos += parseFloat(row.querySelector('.subtotal-interno').textContent.replace('$', '').replace(/\./g, '')) || 0;
+            });
+
+            // Calcular total de viajes (recorridos + internos)
+            const totalViajes = subtotalRecorridos + subtotalInternos;
+
+            // Calcular subtotal de extras
+            let subtotalExtras = 0;
+            document.querySelectorAll('.costo-extra').forEach(input => {
+                subtotalExtras += parseFloat(input.value) || 0;
+            });
+
+            // Actualizar valores en el DOM
+            document.getElementById('subtotal-recorridos').textContent = formatearNumero(subtotalRecorridos);
+            document.getElementById('subtotal-internos').textContent = formatearNumero(subtotalInternos);
+            document.getElementById('total-viajes').textContent = formatearNumero(totalViajes);
+            document.getElementById('subtotal-extras').textContent = formatearNumero(subtotalExtras);
+            document.getElementById('total-extras').textContent = formatearNumero(subtotalExtras);
+
+            // Calcular y mostrar el total general
+            const totalGeneral = totalViajes + subtotalExtras;
+            document.getElementById('total-general').textContent = formatearNumero(totalGeneral);
+        }
+
+        // Función para exportar la factura
+        function exportarFactura() {
+            // Crear un nuevo div para el resumen
+            const resumen = document.createElement('div');
+            resumen.style.cssText = `
+                position: fixed;
+                top: -9999px;
+                background: white;
+                padding: 40px;
+                width: 800px;
+                font-family: Arial, sans-serif;
+            `;
+
+            // Obtener la patente
+            const patente = document.getElementById('identificador').value.toUpperCase();
+            
+            // Construir el contenido del resumen
+            let contenido = `
+                <h1 style="text-align: center; color: #333; margin-bottom: 30px;">${patente}</h1>
+                
+                <div style="margin-bottom: 30px;">
+                    <h2 style="color: #0066cc; border-bottom: 2px solid #0066cc; padding-bottom: 5px;">Recorridos</h2>
+            `;
+
+            // Agregar recorridos
+            document.querySelectorAll('#recorridos-body tr').forEach(row => {
+                const cantidad = row.querySelector('.cantidad').value;
+                const ruta = row.querySelector('.ruta').value;
+                const costo = row.querySelector('.costo').value;
+                const subtotal = row.querySelector('.subtotal').textContent;
+                if (cantidad && ruta && costo) {
+                    contenido += `
+                        <p style="margin: 10px 0;">${cantidad} viajes: ${ruta}: ${formatearNumero(costo)} : ${subtotal}</p>
+                    `;
+                }
+            });
+
+            // Agregar viajes internos
+            contenido += `
+                <h2 style="color: #cc0066; border-bottom: 2px solid #cc0066; padding-bottom: 5px; margin-top: 20px;">Viajes Internos</h2>
+            `;
+            
+            document.querySelectorAll('#internos-body tr').forEach(row => {
+                const cantidad = row.querySelector('.cantidad-interno').value;
+                const costo = row.querySelector('.costo-interno').value;
+                const subtotal = row.querySelector('.subtotal-interno').textContent;
+                if (cantidad && costo) {
+                    contenido += `
+                        <p style="margin: 10px 0;">${cantidad} viajes internos: ${formatearNumero(costo)} : ${subtotal}</p>
+                    `;
+                }
+            });
+
+            // Agregar el total de viajes
+            const totalViajes = document.getElementById('total-viajes').textContent;
+            contenido += `
+                <p style="color: #0066cc; font-weight: bold; margin: 15px 0;">Total: ${totalViajes}</p>
+            `;
+
+            // Agregar extras
+            contenido += `
+                <h2 style="color: #6600cc; border-bottom: 2px solid #6600cc; padding-bottom: 5px; margin-top: 30px;">Extras:</h2>
+            `;
+            
+            document.querySelectorAll('#extras-body tr').forEach(row => {
+                const fecha = row.querySelector('.fecha-formateada').textContent;
+                const ruta = row.querySelector('.ruta').value;
+                const tipo = row.querySelector('.tipo-servicio').value;
+                const costo = row.querySelector('.costo-extra').value;
+                if (fecha && ruta && tipo && costo) {
+                    contenido += `
+                        <p style="margin: 10px 0;">${fecha} ${ruta} (${tipo}): ${formatearNumero(costo)}</p>
+                    `;
+                }
+            });
+
+            // Agregar el total de extras
+            const totalExtras = document.getElementById('total-extras').textContent;
+            contenido += `
+                <p style="color: #6600cc; font-weight: bold; margin: 15px 0;">Total: ${totalExtras}</p>
+            `;
+
+            // Agregar el total general
+            const totalGeneral = document.getElementById('total-general').textContent;
+            contenido += `
+                <p style="color: #333; font-weight: bold; font-size: 1.2em; margin-top: 30px; text-align: right;">
+                    Total: ${totalGeneral}
+                </p>
+            `;
+
+            // Agregar el contenido al div
+            resumen.innerHTML = contenido;
+            document.body.appendChild(resumen);
+
+            // Generar la imagen
+            html2canvas(resumen).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `factura-${patente}-${new Date().toISOString().split('T')[0]}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+                
+                // Limpiar
+                document.body.removeChild(resumen);
+            });
+        }
+
+        // Agregar listeners para actualización en tiempo real
+        document.getElementById('cantidad-internos').addEventListener('input', calcularTotales);
+        document.getElementById('costo-interno').addEventListener('input', calcularTotales);
+
+        // Agregar primera fila de recorrido al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            agregarRecorrido();
+        });
+
+        // Función para formatear números con separador de miles
+        function formatearNumero(numero) {
+            return new Intl.NumberFormat('es-CL', {
+                style: 'currency',
+                currency: 'CLP',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(numero).replace('CLP', '$');
+        }
+
+        // Función para formatear la fecha al estilo DD-MM-YY
+        function formatearFecha(input) {
+            const fecha = new Date(input.value);
+            const dia = fecha.getDate().toString().padStart(2, '0');
+            const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+            const año = fecha.getFullYear().toString().slice(-2);
+            
+            const fechaFormateada = `${dia}-${mes}-${año}`;
+            input.closest('td').querySelector('.fecha-formateada').textContent = fechaFormateada + ': ';
+        }
+
+        // Función para agregar viajes internos
+        function agregarViajeInterno() {
+            const tbody = document.getElementById('internos-body');
+            const newRow = tbody.insertRow();
+            newRow.innerHTML = `
+                <td>
+                    <input type="number" class="cantidad-interno" min="1" placeholder="22" style="width: 60px;" onchange="actualizarDetalleInterno(this)">
+                    <span>viajes internos: </span>
+                    <input type="number" class="costo-interno" min="0" placeholder="$8000" style="width: 100px;" onchange="actualizarDetalleInterno(this)">
+                </td>
+                <td><span class="subtotal-interno">$0</span></td>
+                <td><button class="btn btn-danger" onclick="eliminarFila(this)">×</button></td>
+            `;
+            actualizarDetalleInterno(newRow.querySelector('.cantidad-interno'));
+        }
+
+        // Función para actualizar el detalle de viajes internos
+        function actualizarDetalleInterno(input) {
+            const row = input.closest('tr');
+            const cantidad = parseFloat(row.querySelector('.cantidad-interno').value) || 0;
+            const costo = parseFloat(row.querySelector('.costo-interno').value) || 0;
+            
+            // Calcular subtotal
+            const subtotal = cantidad * costo;
+            
+            // Actualizar el subtotal
+            row.querySelector('.subtotal-interno').textContent = formatearNumero(subtotal);
+            
+            calcularTotales();
+        }
+
+        // Agregar la función de reseteo
+        function resetearFormulario() {
+            if (confirm('¿Estás seguro de que quieres borrar todos los datos?')) {
+                // Limpiar identificador
+                document.getElementById('identificador').value = '';
+                
+                // Limpiar recorridos
+                const recorridosBody = document.getElementById('recorridos-body');
+                recorridosBody.innerHTML = '';
+                
+                // Limpiar viajes internos
+                const internosBody = document.getElementById('internos-body');
+                internosBody.innerHTML = '';
+                
+                // Limpiar extras
+                const extrasBody = document.getElementById('extras-body');
+                extrasBody.innerHTML = '';
+                
+                // Resetear todos los totales
+                document.getElementById('subtotal-recorridos').textContent = '$0';
+                document.getElementById('subtotal-internos').textContent = '$0';
+                document.getElementById('total-viajes').textContent = '$0';
+                document.getElementById('subtotal-extras').textContent = '$0';
+                document.getElementById('total-extras').textContent = '$0';
+                document.getElementById('total-general').textContent = '$0';
+                
+                // Agregar una nueva fila de recorrido vacía
+                agregarRecorrido();
+            }
+        }
+    </script>
+</body>
+</html>
