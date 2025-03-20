@@ -381,6 +381,59 @@
                 transform: none;
             }
         }
+
+        .search-container {
+            max-width: 600px;
+            margin: -1rem auto 2rem;
+            padding: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            border: 1px solid #e2e8f0;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            background: white;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        #search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-result-item:hover {
+            background: #f8fafc;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 <body>
@@ -407,6 +460,14 @@
             <p class="tagline">Tu plataforma integral de herramientas académicas</p>
         </div>
     </header>
+
+    <div class="search-container">
+        <input type="search" 
+               class="search-box" 
+               placeholder="Buscar herramientas (ej: calculadora, convertidor, notas...)" 
+               aria-label="Buscar herramientas">
+        <div id="search-results"></div>
+    </div>
 
     <main role="main">
         <nav class="skip-links" aria-label="Saltar a contenido principal">
@@ -475,6 +536,11 @@
                     <span class="tool-title">Generador de Escala de Notas</span>
                     <span class="tool-description">Crea escalas de calificación personalizadas.</span>
                 </a>
+                <a href="https://trustzonestore.com/" class="tool-card" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-tags tool-icon"></i>
+                    <span class="tool-title">TrustZone Store</span>
+                    <span class="tool-description">Accede a herramientas académicas y software premium a precios reducidos: Canva Pro, Spotify, YouTube Premium y más.</span>
+                </a>
             </div>
         </section>
 
@@ -530,6 +596,11 @@
                     <i class="fas fa-file-invoice-dollar tool-icon"></i>
                     <span class="tool-title">Calcular Facturas</span>
                     <span class="tool-description">Gestiona y calcula tus facturas mensuales de manera eficiente.</span>
+                </a>
+                <a href="https://ytmp3.cc/ZG6b/" class="tool-card" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-youtube tool-icon"></i>
+                    <span class="tool-title">Convertidor YouTube</span>
+                    <span class="tool-description">Convierte videos de YouTube a formato MP3 o MP4.</span>
                 </a>
                 <a href="Dividir-cuenta.html" class="tool-card">
                     <i class="fas fa-hand-holding-usd tool-icon"></i>
@@ -604,12 +675,17 @@
                     <span class="tool-title">Factura de transporte agrícola</span>
                     <span class="tool-description">Genera facturas específicas para transporte agrícola.</span>
                 </a>
+                <a href="https://sellstream.trustzonestore.com/" class="tool-card" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-store tool-icon"></i>
+                    <span class="tool-title">SellStream</span>
+                    <span class="tool-description">Gestiona tus ventas de cuentas de streaming: registra clientes, fechas de vencimiento e información de acceso.</span>
+                </a>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>© 2024 Todo Universidad. Todos los derechos reservados.</p>
+        <p>© 2025 Todo Universidad. Todos los derechos reservados.</p>
         <p>Diseñado por <a href="https://creawebchile.cl/" class="creaweb-link" target="_blank">CreaWeb Chile</a></p>
     </footer>
 
@@ -634,6 +710,66 @@
         window.addEventListener('error', function(e) {
             console.error('Error:', e.message);
             // Mostrar mensaje amigable al usuario
+        });
+
+        // Añadir funcionalidad de búsqueda
+        const searchBox = document.querySelector('.search-box');
+        const searchResults = document.getElementById('search-results');
+        const toolCards = document.querySelectorAll('.tool-card');
+
+        searchBox.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const results = [];
+
+            if (searchTerm.length < 2) {
+                searchResults.style.display = 'none';
+                return;
+            }
+
+            toolCards.forEach(card => {
+                const title = card.querySelector('.tool-title').textContent.toLowerCase();
+                const description = card.querySelector('.tool-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    results.push({
+                        title: card.querySelector('.tool-title').textContent,
+                        description: card.querySelector('.tool-description').textContent,
+                        href: card.href
+                    });
+                }
+            });
+
+            if (results.length > 0) {
+                searchResults.innerHTML = results.map(result => `
+                    <a href="${result.href}" class="search-result-item">
+                        <div><strong>${result.title}</strong></div>
+                        <div style="font-size: 0.9rem; color: #64748b;">${result.description}</div>
+                    </a>
+                `).join('');
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.innerHTML = `
+                    <div class="search-result-item">
+                        No se encontraron resultados para "${searchTerm}"
+                    </div>
+                `;
+                searchResults.style.display = 'block';
+            }
+        });
+
+        // Cerrar resultados al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            if (!searchBox.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Accesibilidad con teclado
+        searchBox.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                searchResults.style.display = 'none';
+                searchBox.blur();
+            }
         });
     </script>
 </body>
