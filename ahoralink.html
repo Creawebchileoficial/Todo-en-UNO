@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mi Block de Notas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="authSection" class="auth-section">
+            <div class="auth-card">
+                <h2>Mi Block de Notas</h2>
+                <div class="input-group">
+                    <input type="email" id="emailInput" placeholder="Email">
+                    <input type="password" id="passwordInput" placeholder="Contraseña">
+                </div>
+                <div class="button-group">
+                    <button onclick="login()" class="btn btn-primary">Iniciar Sesión</button>
+                    <button onclick="register()" class="btn btn-secondary">Registrarse</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="notesSection" class="notes-section hidden">
+            <header class="notes-header">
+                <h2>Mis Notas</h2>
+                <div class="user-info">
+                    <span id="userEmail"></span>
+                    <button onclick="logout()" class="btn btn-logout">Cerrar Sesión</button>
+                </div>
+            </header>
+            
+            <div class="notes-input">
+                <input type="text" id="noteTitle" placeholder="Título de la nota" class="note-title-input">
+                <textarea id="noteInput" rows="4" placeholder="Escribe tu nota, links o datos aquí..."></textarea>
+                <div class="note-actions">
+                    <select id="noteType" class="note-type-select">
+                        <option value="nota">Nota</option>
+                        <option value="link">Link</option>
+                        <option value="dato">Dato Importante</option>
+                    </select>
+                    <button onclick="saveNote()" class="btn btn-save">Guardar</button>
+                </div>
+            </div>
+            
+            <div class="notes-filters">
+                <button onclick="filterNotes('todos')" class="btn btn-filter active">Todos</button>
+                <button onclick="filterNotes('nota')" class="btn btn-filter">Notas</button>
+                <button onclick="filterNotes('link')" class="btn btn-filter">Links</button>
+                <button onclick="filterNotes('dato')" class="btn btn-filter">Datos</button>
+            </div>
+            
+            <div id="notesList" class="notes-list"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } 
+            from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, where } 
+            from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD3w_dVC3qmaHSqeFDCAqhye831u77xK5Q",
+            authDomain: "acortador-e8450.firebaseapp.com",
+            projectId: "acortador-e8450",
+            storageBucket: "acortador-e8450.firebasestorage.app",
+            messagingSenderId: "682101896458",
+            appId: "1:682101896458:web:56c5959c516ccc69feb6f3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        let currentUser = null;
+
+        function handleAuthStateChange(user) {
+            if (user) {
+                currentUser = user;
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('notesSection').style.display = 'block';
+                document.getElementById('userEmail').textContent = user.email;
+                loadNotes(); // Load notes immediately
+            } else {
+                currentUser = null;
+                document.getElementById('authSection').style.display = 'flex';
+                document.getElementById('notesSection').style.display = 'none';
+            }
+        }
+
+        onAuthStateChanged(auth, handleAuthStateChange);
+
+        window.register = async () => {
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+
+            if (!email || !password) {
+                alert('Por favor, complete todos los campos');
+                return;
+            }
+
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                let errorMessage = 'Error en el registro';
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = 'Este correo ya está registrado';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = 'La contraseña debe tener al menos 6 caracteres';
+                }
+                alert(errorMessage);
+            }
+        };
+
+        window.login = async () => {
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+
+            if (!email || !password) {
+                alert('Por favor, complete todos los campos');
+                return;
+            }
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                let errorMessage = 'Error al iniciar sesión';
+                if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+                    errorMessage = 'Correo o contraseña incorrectos';
+                }
+                alert(errorMessage);
+            }
+        };
+
+        window.logout = () => signOut(auth);
+
+        window.saveNote = async () => {
+            const noteTitle = document.getElementById('noteTitle').value;
+            const noteText = document.getElementById('noteInput').value;
+            const noteType = document.getElementById('noteType').value;
+            
+            if (!noteText.trim()) return;
+
+            try {
+                await addDoc(collection(db, "notes"), {
+                    userId: currentUser.uid,
+                    title: noteTitle,
+                    text: noteText,
+                    type: noteType,
+                    timestamp: new Date().toISOString()
+                });
+                document.getElementById('noteTitle').value = '';
+                document.getElementById('noteInput').value = '';
+                loadNotes();
+            } catch (error) {
+                alert('Error al guardar: ' + error.message);
+            }
+        };
+
+        window.deleteNote = async (noteId) => {
+            try {
+                await deleteDoc(doc(db, "notes", noteId));
+                loadNotes();
+            } catch (error) {
+                alert('Error al eliminar la nota: ' + error.message);
+            }
+        };
+
+        let currentFilter = 'todos';
+        window.filterNotes = (type) => {
+            currentFilter = type;
+            loadNotes();
+            document.querySelectorAll('.btn-filter').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText.toLowerCase().includes(type));
+            });
+        };
+
+        async function loadNotes() {
+            if (!currentUser) return;
+            
+            const notesQuery = query(
+                collection(db, "notes"),
+                where("userId", "==", currentUser.uid)
+            );
+
+            try {
+                const querySnapshot = await getDocs(notesQuery);
+                const notesList = document.getElementById('notesList');
+                notesList.innerHTML = '';
+
+                const notes = [];
+                querySnapshot.forEach((doc) => {
+                    notes.push({ id: doc.id, ...doc.data() });
+                });
+
+                notes.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+                notes.forEach((note) => {
+                    if (currentFilter === 'todos' || note.type === currentFilter) {
+                        const noteDiv = document.createElement('div');
+                        noteDiv.className = `note-item ${note.type}-type`;
+                        
+                        let noteContent = note.text;
+                        if (note.type === 'link') {
+                            const url = note.text.startsWith('http') ? note.text : `https://${note.text}`;
+                            noteContent = `<a href="${url}" target="_blank" rel="noopener noreferrer">${note.text}</a>`;
+                        }
+
+                        noteDiv.innerHTML = `
+                            <h3 class="note-title">${note.title || 'Sin título'}</h3>
+                            <p class="note-text">${noteContent}</p>
+                            <div class="note-footer">
+                                <span class="note-type">${note.type}</span>
+                                <span class="note-date">${new Date(note.timestamp).toLocaleString()}</span>
+                                <button onclick="deleteNote('${note.id}')" class="btn btn-delete">Eliminar</button>
+                            </div>
+                        `;
+                        notesList.appendChild(noteDiv);
+                    }
+                });
+            } catch (error) {
+                console.error("Error loading notes:", error);
+                alert('Error al cargar las notas');
+            }
+        }
+    </script>
+</body>
+</html>
