@@ -77,16 +77,24 @@
         let currentUser = null;
 
         function handleAuthStateChange(user) {
+            const authSection = document.getElementById('authSection');
+            const notesSection = document.getElementById('notesSection');
+            const notesList = document.getElementById('notesList');
+
             if (user) {
                 currentUser = user;
-                document.getElementById('authSection').style.display = 'none';
-                document.getElementById('notesSection').style.display = 'block';
+                authSection.style.display = 'none';
+                notesSection.style.display = 'block';
                 document.getElementById('userEmail').textContent = user.email;
-                loadNotes(); // Load notes immediately
+                // Limpiar las notas antes de cargar las nuevas
+                notesList.innerHTML = '';
+                loadNotes();
             } else {
                 currentUser = null;
-                document.getElementById('authSection').style.display = 'flex';
-                document.getElementById('notesSection').style.display = 'none';
+                authSection.style.display = 'flex';
+                notesSection.style.display = 'none';
+                // Limpiar las notas al cerrar sesión
+                notesList.innerHTML = '';
             }
         }
 
@@ -178,8 +186,13 @@
         };
 
         async function loadNotes() {
-            if (!currentUser) return;
+            if (!currentUser || !currentUser.uid) {
+                return;
+            }
             
+            const notesList = document.getElementById('notesList');
+            notesList.innerHTML = ''; // Limpiar las notas existentes
+
             const notesQuery = query(
                 collection(db, "notes"),
                 where("userId", "==", currentUser.uid)
