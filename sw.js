@@ -18,16 +18,27 @@ const staticAssets = [
   '/assets/favicon_iotodo/apple-touch-icon.png',
   '/assets/favicon_iotodo/favicon.ico',
   '/assets/favicon_iotodo/site.webmanifest',
+  '/site.webmanifest',
   'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
 ];
 
-// Install event
+// Install event - Mejorado para PWA
 self.addEventListener('install', event => {
+  console.log('SW: Instalando service worker...');
   event.waitUntil(
     caches.open(STATIC_CACHE)
-      .then(cache => cache.addAll(staticAssets))
-      .then(() => self.skipWaiting())
+      .then(cache => {
+        console.log('SW: Cacheando archivos estáticos...');
+        return cache.addAll(staticAssets);
+      })
+      .then(() => {
+        console.log('SW: Archivos cacheados exitosamente');
+        return self.skipWaiting();
+      })
+      .catch(error => {
+        console.error('SW: Error al cachear archivos:', error);
+      })
   );
 });
 
