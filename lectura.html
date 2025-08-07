@@ -1,706 +1,705 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497"
-     crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2WG7Q3YRT0"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-2WG7Q3YRT0');
-    </script>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
-    <title>Planificador de Lectura Profesional - Todo Universidad</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --success-color: #059669;
-            --warning-color: #d97706;
-            --error-color: #dc2626;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-color: #1f2937;
-            --text-secondary: #6b7280;
-            --border-color: #e5e7eb;
-            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            --border-radius: 12px;
-            --transition: all 0.3s ease;
-        }
+ 
+ <!-- Google tag (gtag.js) -->
+ <script async src="https://www.googletagmanager.com/gtag/js?id=G-2WG7Q3YRT0"></script>
+ <script>
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+ gtag('config', 'G-2WG7Q3YRT0');
+ </script>
+ 
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
+ <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
+ <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
+ <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
+ <title>Planificador de Lectura Profesional - Todo Universidad</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+ <style>
+ :root {
+ --primary-color: #2563eb;
+ --secondary-color: #1e40af;
+ --success-color: #059669;
+ --warning-color: #d97706;
+ --error-color: #dc2626;
+ --bg-color: #f8fafc;
+ --card-bg: #ffffff;
+ --text-color: #1f2937;
+ --text-secondary: #6b7280;
+ --border-color: #e5e7eb;
+ --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+ --border-radius: 12px;
+ --transition: all 0.3s ease;
+ }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--bg-color) 0%, #e0e7ff 100%);
-            color: var(--text-color);
-            min-height: 100vh;
-            padding: 20px;
-            line-height: 1.6;
-        }
+ body {
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ background: linear-gradient(135deg, var(--bg-color) 0%, #e0e7ff 100%);
+ color: var(--text-color);
+ min-height: 100vh;
+ padding: 20px;
+ line-height: 1.6;
+ }
 
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+ .header {
+ text-align: center;
+ margin-bottom: 2rem;
+ }
 
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
+ .header h1 {
+ font-size: 2.5rem;
+ font-weight: 700;
+ color: var(--primary-color);
+ margin-bottom: 0.5rem;
+ }
 
-        .header p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
+ .header p {
+ font-size: 1.1rem;
+ color: var(--text-secondary);
+ max-width: 600px;
+ margin: 0 auto;
+ }
 
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
+ .main-container {
+ max-width: 1200px;
+ margin: 0 auto;
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+ gap: 2rem;
+ }
 
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-        }
+ .card {
+ background: var(--card-bg);
+ border-radius: var(--border-radius);
+ padding: 2rem;
+ box-shadow: var(--shadow);
+ border: 1px solid var(--border-color);
+ transition: var(--transition);
+ }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
+ .card:hover {
+ transform: translateY(-5px);
+ box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+ }
 
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+ .card-title {
+ font-size: 1.5rem;
+ font-weight: 600;
+ color: var(--primary-color);
+ margin-bottom: 1rem;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+ .form-group {
+ margin-bottom: 1.5rem;
+ }
 
-        .form-label {
-            display: block;
-            font-weight: 500;
-            color: var(--text-color);
-            margin-bottom: 0.5rem;
-        }
+ .form-label {
+ display: block;
+ font-weight: 500;
+ color: var(--text-color);
+ margin-bottom: 0.5rem;
+ }
 
-        .form-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: var(--transition);
-            background: #fafafa;
-        }
+ .form-input {
+ width: 100%;
+ padding: 0.75rem 1rem;
+ border: 2px solid var(--border-color);
+ border-radius: 8px;
+ font-size: 1rem;
+ transition: var(--transition);
+ background: #fafafa;
+ }
 
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-            background: white;
-        }
+ .form-input:focus {
+ outline: none;
+ border-color: var(--primary-color);
+ box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+ background: white;
+ }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            width: 100%;
-        }
+ .btn {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ gap: 0.5rem;
+ padding: 0.75rem 1.5rem;
+ border: none;
+ border-radius: 8px;
+ font-size: 1rem;
+ font-weight: 500;
+ cursor: pointer;
+ transition: var(--transition);
+ text-decoration: none;
+ width: 100%;
+ }
 
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-        }
+ .btn-primary {
+ background: var(--primary-color);
+ color: white;
+ }
 
-        .btn-primary:hover {
-            background: var(--secondary-color);
-            transform: translateY(-2px);
-        }
+ .btn-primary:hover {
+ background: var(--secondary-color);
+ transform: translateY(-2px);
+ }
 
-        .btn-success {
-            background: var(--success-color);
-            color: white;
-        }
+ .btn-success {
+ background: var(--success-color);
+ color: white;
+ }
 
-        .btn-success:hover {
-            background: #047857;
-            transform: translateY(-2px);
-        }
+ .btn-success:hover {
+ background: #047857;
+ transform: translateY(-2px);
+ }
 
-        .btn-warning {
-            background: var(--warning-color);
-            color: white;
-        }
+ .btn-warning {
+ background: var(--warning-color);
+ color: white;
+ }
 
-        .btn-warning:hover {
-            background: #b45309;
-            transform: translateY(-2px);
-        }
+ .btn-warning:hover {
+ background: #b45309;
+ transform: translateY(-2px);
+ }
 
-        .cronometer-display {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-align: center;
-            margin: 1.5rem 0;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
-        }
+ .cronometer-display {
+ font-size: 3rem;
+ font-weight: 700;
+ color: var(--primary-color);
+ text-align: center;
+ margin: 1.5rem 0;
+ font-family: 'Courier New', monospace;
+ letter-spacing: 2px;
+ }
 
-        .cronometer-controls {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
+ .cronometer-controls {
+ display: flex;
+ gap: 1rem;
+ margin-bottom: 1.5rem;
+ }
 
-        .result-card {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            border: 2px solid #0ea5e9;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-        }
+ .result-card {
+ background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+ border: 2px solid #0ea5e9;
+ border-radius: var(--border-radius);
+ padding: 1.5rem;
+ margin-top: 1.5rem;
+ }
 
-        .result-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #0369a1;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+ .result-title {
+ font-size: 1.2rem;
+ font-weight: 600;
+ color: #0369a1;
+ margin-bottom: 1rem;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ }
 
-        .result-item {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 0.8rem;
-            border-left: 4px solid var(--primary-color);
-        }
+ .result-item {
+ background: white;
+ padding: 1rem;
+ border-radius: 8px;
+ margin-bottom: 0.8rem;
+ border-left: 4px solid var(--primary-color);
+ }
 
-        .result-item:last-child {
-            margin-bottom: 0;
-        }
+ .result-item:last-child {
+ margin-bottom: 0;
+ }
 
-        .result-label {
-            font-weight: 500;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
+ .result-label {
+ font-weight: 500;
+ color: var(--text-secondary);
+ font-size: 0.9rem;
+ }
 
-        .result-value {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-color);
-        }
+ .result-value {
+ font-size: 1.1rem;
+ font-weight: 600;
+ color: var(--text-color);
+ }
 
-        .tabs {
-            display: flex;
-            background: #f1f5f9;
-            border-radius: 8px;
-            padding: 0.25rem;
-            margin-bottom: 1.5rem;
-        }
+ .tabs {
+ display: flex;
+ background: #f1f5f9;
+ border-radius: 8px;
+ padding: 0.25rem;
+ margin-bottom: 1.5rem;
+ }
 
-        .tab {
-            flex: 1;
-            padding: 0.5rem 1rem;
-            border: none;
-            background: transparent;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: var(--transition);
-            color: var(--text-secondary);
-        }
+ .tab {
+ flex: 1;
+ padding: 0.5rem 1rem;
+ border: none;
+ background: transparent;
+ border-radius: 6px;
+ cursor: pointer;
+ font-weight: 500;
+ transition: var(--transition);
+ color: var(--text-secondary);
+ }
 
-        .tab.active {
-            background: var(--primary-color);
-            color: white;
-        }
+ .tab.active {
+ background: var(--primary-color);
+ color: white;
+ }
 
-        .tab-content {
-            display: none;
-        }
+ .tab-content {
+ display: none;
+ }
 
-        .tab-content.active {
-            display: block;
-        }
+ .tab-content.active {
+ display: block;
+ }
 
-        .info-box {
-            background: #f0f9ff;
-            border: 1px solid #0ea5e9;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
+ .info-box {
+ background: #f0f9ff;
+ border: 1px solid #0ea5e9;
+ border-radius: 8px;
+ padding: 1rem;
+ margin-bottom: 1.5rem;
+ }
 
-        .info-box i {
-            color: #0369a1;
-            margin-right: 0.5rem;
-        }
+ .info-box i {
+ color: #0369a1;
+ margin-right: 0.5rem;
+ }
 
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
+ @media (max-width: 768px) {
+ .header h1 {
+ font-size: 2rem;
+ }
 
-            .main-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
+ .main-container {
+ grid-template-columns: 1fr;
+ gap: 1rem;
+ }
 
-            .card {
-                padding: 1.5rem;
-            }
+ .card {
+ padding: 1.5rem;
+ }
 
-            .cronometer-display {
-                font-size: 2.5rem;
-            }
+ .cronometer-display {
+ font-size: 2.5rem;
+ }
 
-            .cronometer-controls {
-                flex-direction: column;
-            }
-        }
+ .cronometer-controls {
+ flex-direction: column;
+ }
+ }
 
-        .floating-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
+ .floating-shapes {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ pointer-events: none;
+ z-index: -1;
+ }
 
-        .shape {
-            position: absolute;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
+ .shape {
+ position: absolute;
+ opacity: 0.1;
+ animation: float 6s ease-in-out infinite;
+ }
 
-        .shape:nth-child(1) {
-            top: 20%;
-            left: 10%;
-            width: 80px;
-            height: 80px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            animation-delay: 0s;
-        }
+ .shape:nth-child(1) {
+ top: 20%;
+ left: 10%;
+ width: 80px;
+ height: 80px;
+ background: var(--primary-color);
+ border-radius: 50%;
+ animation-delay: 0s;
+ }
 
-        .shape:nth-child(2) {
-            top: 60%;
-            right: 10%;
-            width: 60px;
-            height: 60px;
-            background: var(--success-color);
-            border-radius: 50%;
-            animation-delay: 2s;
-        }
+ .shape:nth-child(2) {
+ top: 60%;
+ right: 10%;
+ width: 60px;
+ height: 60px;
+ background: var(--success-color);
+ border-radius: 50%;
+ animation-delay: 2s;
+ }
 
-        .shape:nth-child(3) {
-            bottom: 20%;
-            left: 20%;
-            width: 100px;
-            height: 100px;
-            background: var(--warning-color);
-            border-radius: 50%;
-            animation-delay: 4s;
-        }
+ .shape:nth-child(3) {
+ bottom: 20%;
+ left: 20%;
+ width: 100px;
+ height: 100px;
+ background: var(--warning-color);
+ border-radius: 50%;
+ animation-delay: 4s;
+ }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
+ @keyframes float {
+ 0%, 100% { transform: translateY(0px) rotate(0deg); }
+ 50% { transform: translateY(-20px) rotate(180deg); }
+ }
 
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: var(--card-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 50px;
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-            z-index: 100;
-        }
+ .back-btn {
+ position: fixed;
+ top: 20px;
+ left: 20px;
+ background: var(--card-bg);
+ border: 2px solid var(--border-color);
+ border-radius: 50px;
+ padding: 0.75rem 1.5rem;
+ text-decoration: none;
+ color: var(--text-color);
+ font-weight: 500;
+ transition: var(--transition);
+ box-shadow: var(--shadow);
+ z-index: 100;
+ }
 
-        .back-btn:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
-        }
-    </style></head>
+ .back-btn:hover {
+ background: var(--primary-color);
+ color: white;
+ transform: translateY(-2px);
+ }
+ </style></head>
 <body>
-    <div class="floating-shapes">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
+ <div class="floating-shapes">
+ <div class="shape"></div>
+ <div class="shape"></div>
+ <div class="shape"></div>
+ </div>
 
-    <a href="index.html" class="back-btn">
-        <i class="fas fa-arrow-left"></i> Volver al inicio
-    </a>
+ <a href="index.html" class="back-btn">
+ <i class="fas fa-arrow-left"></i> Volver al inicio
+ </a>
 
-    <div class="header">
-        <h1><i class="fas fa-book-reader"></i> Planificador de Lectura</h1>
-        <p>Herramienta profesional para calcular y planificar tu tiempo de lectura de forma eficiente</p>
-    </div>
+ <div class="header">
+ <h1><i class="fas fa-book-reader"></i> Planificador de Lectura</h1>
+ <p>Herramienta profesional para calcular y planificar tu tiempo de lectura de forma eficiente</p>
+ </div>
 
-    <div class="main-container">
-        <!-- Cronómetro para medir velocidad -->
-        <div class="card">
-            <h2 class="card-title">
-                <i class="fas fa-stopwatch"></i>
-                Medir Velocidad de Lectura
-            </h2>
-            
-            <div class="info-box">
-                <i class="fas fa-info-circle"></i>
-                <strong>Paso 1:</strong> Lee una página y mide cuánto tiempo tardas para conocer tu velocidad real.
-            </div>
+ <div class="main-container">
+ <!-- Cronómetro para medir velocidad -->
+ <div class="card">
+ <h2 class="card-title">
+ <i class="fas fa-stopwatch"></i>
+ Medir Velocidad de Lectura
+ </h2>
+ 
+ <div class="info-box">
+ <i class="fas fa-info-circle"></i>
+ <strong>Paso 1:</strong> Lee una página y mide cuánto tiempo tardas para conocer tu velocidad real.
+ </div>
 
-            <div class="cronometer-display" id="cronometer">00:00:00</div>
-            
-            <div class="cronometer-controls">
-                <button class="btn btn-success" onclick="startCronometer()">
-                    <i class="fas fa-play"></i> Iniciar
-                </button>
-                <button class="btn btn-warning" onclick="pauseCronometer()">
-                    <i class="fas fa-pause"></i> Pausar
-                </button>
-                <button class="btn btn-primary" onclick="stopCronometer()">
-                    <i class="fas fa-stop"></i> Detener
-                </button>
-            </div>
+ <div class="cronometer-display" id="cronometer">00:00:00</div>
+ 
+ <div class="cronometer-controls">
+ <button class="btn btn-success" onclick="startCronometer()">
+ <i class="fas fa-play"></i> Iniciar
+ </button>
+ <button class="btn btn-warning" onclick="pauseCronometer()">
+ <i class="fas fa-pause"></i> Pausar
+ </button>
+ <button class="btn btn-primary" onclick="stopCronometer()">
+ <i class="fas fa-stop"></i> Detener
+ </button>
+ </div>
 
-            <button class="btn btn-primary" onclick="saveReadingSpeed()">
-                <i class="fas fa-save"></i> Guardar Velocidad
-            </button>
+ <button class="btn btn-primary" onclick="saveReadingSpeed()">
+ <i class="fas fa-save"></i> Guardar Velocidad
+ </button>
 
-            <div id="speed-result"></div>
-        </div>
+ <div id="speed-result"></div>
+ </div>
 
-        <!-- Calculadora principal -->
-        <div class="card">
-            <h2 class="card-title">
-                <i class="fas fa-calculator"></i>
-                Calculadora de Lectura
-            </h2>
+ <!-- Calculadora principal -->
+ <div class="card">
+ <h2 class="card-title">
+ <i class="fas fa-calculator"></i>
+ Calculadora de Lectura
+ </h2>
 
-            <div class="tabs">
-                <button class="tab active" onclick="showTab('basic')">Cálculo Básico</button>
-                <button class="tab" onclick="showTab('planning')">Planificación</button>
-                <button class="tab" onclick="showTab('goals')">Objetivos</button>
-            </div>
+ <div class="tabs">
+ <button class="tab active" onclick="showTab('basic')">Cálculo Básico</button>
+ <button class="tab" onclick="showTab('planning')">Planificación</button>
+ <button class="tab" onclick="showTab('goals')">Objetivos</button>
+ </div>
 
-            <!-- Tab 1: Cálculo Básico -->
-            <div id="basic-tab" class="tab-content active">
-                <div class="form-group">
-                    <label class="form-label">Páginas del libro:</label>
-                    <input type="number" class="form-input" id="total-pages" placeholder="Ej: 300" min="1">
-                </div>
+ <!-- Tab 1: Cálculo Básico -->
+ <div id="basic-tab" class="tab-content active">
+ <div class="form-group">
+ <label class="form-label">Páginas del libro:</label>
+ <input type="number" class="form-input" id="total-pages" placeholder="Ej: 300" min="1">
+ </div>
 
-                <div class="form-group">
-                    <label class="form-label">Tiempo por página (minutos):</label>
-                    <input type="number" class="form-input" id="time-per-page" placeholder="Ej: 2.5" step="0.1" min="0.1">
-                </div>
+ <div class="form-group">
+ <label class="form-label">Tiempo por página (minutos):</label>
+ <input type="number" class="form-input" id="time-per-page" placeholder="Ej: 2.5" step="0.1" min="0.1">
+ </div>
 
-                <button class="btn btn-primary" onclick="calculateBasic()">
-                    <i class="fas fa-calculator"></i> Calcular Tiempo Total
-                </button>
-            </div>
+ <button class="btn btn-primary" onclick="calculateBasic()">
+ <i class="fas fa-calculator"></i> Calcular Tiempo Total
+ </button>
+ </div>
 
-            <!-- Tab 2: Planificación por días -->
-            <div id="planning-tab" class="tab-content">
-                <div class="form-group">
-                    <label class="form-label">Páginas del libro:</label>
-                    <input type="number" class="form-input" id="plan-total-pages" placeholder="Ej: 300" min="1">
-                </div>
+ <!-- Tab 2: Planificación por días -->
+ <div id="planning-tab" class="tab-content">
+ <div class="form-group">
+ <label class="form-label">Páginas del libro:</label>
+ <input type="number" class="form-input" id="plan-total-pages" placeholder="Ej: 300" min="1">
+ </div>
 
-                <div class="form-group">
-                    <label class="form-label">Quiero terminarlo en (días):</label>
-                    <input type="number" class="form-input" id="target-days" placeholder="Ej: 7" min="1">
-                </div>
+ <div class="form-group">
+ <label class="form-label">Quiero terminarlo en (días):</label>
+ <input type="number" class="form-input" id="target-days" placeholder="Ej: 7" min="1">
+ </div>
 
-                <div class="form-group">
-                    <label class="form-label">Tiempo por página (minutos):</label>
-                    <input type="number" class="form-input" id="plan-time-per-page" placeholder="Ej: 2.5" step="0.1" min="0.1">
-                </div>
+ <div class="form-group">
+ <label class="form-label">Tiempo por página (minutos):</label>
+ <input type="number" class="form-input" id="plan-time-per-page" placeholder="Ej: 2.5" step="0.1" min="0.1">
+ </div>
 
-                <button class="btn btn-primary" onclick="calculatePlanning()">
-                    <i class="fas fa-calendar-alt"></i> Calcular Plan de Lectura
-                </button>
-            </div>
+ <button class="btn btn-primary" onclick="calculatePlanning()">
+ <i class="fas fa-calendar-alt"></i> Calcular Plan de Lectura
+ </button>
+ </div>
 
-            <!-- Tab 3: Objetivos diarios -->
-            <div id="goals-tab" class="tab-content">
-                <div class="form-group">
-                    <label class="form-label">Páginas del libro:</label>
-                    <input type="number" class="form-input" id="goal-total-pages" placeholder="Ej: 300" min="1">
-                </div>
+ <!-- Tab 3: Objetivos diarios -->
+ <div id="goals-tab" class="tab-content">
+ <div class="form-group">
+ <label class="form-label">Páginas del libro:</label>
+ <input type="number" class="form-input" id="goal-total-pages" placeholder="Ej: 300" min="1">
+ </div>
 
-                <div class="form-group">
-                    <label class="form-label">Páginas por día:</label>
-                    <input type="number" class="form-input" id="pages-per-day" placeholder="Ej: 10" min="1">
-                </div>
+ <div class="form-group">
+ <label class="form-label">Páginas por día:</label>
+ <input type="number" class="form-input" id="pages-per-day" placeholder="Ej: 10" min="1">
+ </div>
 
-                <div class="form-group">
-                    <label class="form-label">Tiempo por página (minutos):</label>
-                    <input type="number" class="form-input" id="goal-time-per-page" placeholder="Ej: 2.5" step="0.1" min="0.1">
-                </div>
+ <div class="form-group">
+ <label class="form-label">Tiempo por página (minutos):</label>
+ <input type="number" class="form-input" id="goal-time-per-page" placeholder="Ej: 2.5" step="0.1" min="0.1">
+ </div>
 
-                <button class="btn btn-primary" onclick="calculateGoals()">
-                    <i class="fas fa-target"></i> Calcular Duración
-                </button>
-            </div>
+ <button class="btn btn-primary" onclick="calculateGoals()">
+ <i class="fas fa-target"></i> Calcular Duración
+ </button>
+ </div>
 
-            <div id="calculation-results"></div>
-        </div>
-    </div>
+ <div id="calculation-results"></div>
+ </div>
+ </div>
 
-    <script>
-        // Variables del cronómetro
-        let startTime = 0;
-        let elapsedTime = 0;
-        let timerInterval = null;
-        let isRunning = false;
+ <script>
+ // Variables del cronómetro
+ let startTime = 0;
+ let elapsedTime = 0;
+ let timerInterval = null;
+ let isRunning = false;
 
-        // Funciones del cronómetro
-        function startCronometer() {
-            if (!isRunning) {
-                startTime = Date.now() - elapsedTime;
-                timerInterval = setInterval(updateCronometer, 10);
-                isRunning = true;
-            }
-        }
+ // Funciones del cronómetro
+ function startCronometer() {
+ if (!isRunning) {
+ startTime = Date.now() - elapsedTime;
+ timerInterval = setInterval(updateCronometer, 10);
+ isRunning = true;
+ }
+ }
 
-        function pauseCronometer() {
-            if (isRunning) {
-                clearInterval(timerInterval);
-                isRunning = false;
-            }
-        }
+ function pauseCronometer() {
+ if (isRunning) {
+ clearInterval(timerInterval);
+ isRunning = false;
+ }
+ }
 
-        function stopCronometer() {
-            clearInterval(timerInterval);
-            isRunning = false;
-            elapsedTime = 0;
-            updateCronometer();
-        }
+ function stopCronometer() {
+ clearInterval(timerInterval);
+ isRunning = false;
+ elapsedTime = 0;
+ updateCronometer();
+ }
 
-        function updateCronometer() {
-            if (isRunning) {
-                elapsedTime = Date.now() - startTime;
-            }
-            
-            const totalSeconds = Math.floor(elapsedTime / 1000);
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = totalSeconds % 60;
-            const centiseconds = Math.floor((elapsedTime % 1000) / 10);
+ function updateCronometer() {
+ if (isRunning) {
+ elapsedTime = Date.now() - startTime;
+ }
+ 
+ const totalSeconds = Math.floor(elapsedTime / 1000);
+ const minutes = Math.floor(totalSeconds / 60);
+ const seconds = totalSeconds % 60;
+ const centiseconds = Math.floor((elapsedTime % 1000) / 10);
 
-            document.getElementById('cronometer').textContent = 
-                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${centiseconds.toString().padStart(2, '0')}`;
-        }
+ document.getElementById('cronometer').textContent = 
+ `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${centiseconds.toString().padStart(2, '0')}`;
+ }
 
-        function saveReadingSpeed() {
-            if (elapsedTime === 0) {
-                alert('Por favor, usa el cronómetro para medir tu velocidad de lectura primero.');
-                return;
-            }
+ function saveReadingSpeed() {
+ if (elapsedTime === 0) {
+ alert('Por favor, usa el cronómetro para medir tu velocidad de lectura primero.');
+ return;
+ }
 
-            const timeInMinutes = elapsedTime / 60000; // Convertir a minutos
-            const roundedTime = Math.round(timeInMinutes * 100) / 100; // Redondear a 2 decimales
+ const timeInMinutes = elapsedTime / 60000; // Convertir a minutos
+ const roundedTime = Math.round(timeInMinutes * 100) / 100; // Redondear a 2 decimales
 
-            // Guardar en todos los campos de tiempo por página
-            document.getElementById('time-per-page').value = roundedTime;
-            document.getElementById('plan-time-per-page').value = roundedTime;
-            document.getElementById('goal-time-per-page').value = roundedTime;
+ // Guardar en todos los campos de tiempo por página
+ document.getElementById('time-per-page').value = roundedTime;
+ document.getElementById('plan-time-per-page').value = roundedTime;
+ document.getElementById('goal-time-per-page').value = roundedTime;
 
-            document.getElementById('speed-result').innerHTML = `
-                <div class="result-card">
-                    <div class="result-title">
-                        <i class="fas fa-check-circle"></i>
-                        Velocidad Guardada
-                    </div>
-                    <div class="result-item">
-                        <div class="result-label">Tiempo por página:</div>
-                        <div class="result-value">${roundedTime} minutos</div>
-                    </div>
-                </div>
-            `;
+ document.getElementById('speed-result').innerHTML = `
+ <div class="result-card">
+ <div class="result-title">
+ <i class="fas fa-check-circle"></i>
+ Velocidad Guardada
+ </div>
+ <div class="result-item">
+ <div class="result-label">Tiempo por página:</div>
+ <div class="result-value">${roundedTime} minutos</div>
+ </div>
+ </div>
+ `;
 
-            // Reiniciar cronómetro
-            stopCronometer();
-        }
+ // Reiniciar cronómetro
+ stopCronometer();
+ }
 
-        // Funciones de cálculo
-        function showTab(tabName) {
-            // Ocultar todas las pestañas
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
+ // Funciones de cálculo
+ function showTab(tabName) {
+ // Ocultar todas las pestañas
+ document.querySelectorAll('.tab-content').forEach(tab => {
+ tab.classList.remove('active');
+ });
+ document.querySelectorAll('.tab').forEach(tab => {
+ tab.classList.remove('active');
+ });
 
-            // Mostrar la pestaña seleccionada
-            document.getElementById(tabName + '-tab').classList.add('active');
-            event.target.classList.add('active');
+ // Mostrar la pestaña seleccionada
+ document.getElementById(tabName + '-tab').classList.add('active');
+ event.target.classList.add('active');
 
-            // Limpiar resultados
-            document.getElementById('calculation-results').innerHTML = '';
-        }
+ // Limpiar resultados
+ document.getElementById('calculation-results').innerHTML = '';
+ }
 
-        function calculateBasic() {
-            const totalPages = parseInt(document.getElementById('total-pages').value);
-            const timePerPage = parseFloat(document.getElementById('time-per-page').value);
+ function calculateBasic() {
+ const totalPages = parseInt(document.getElementById('total-pages').value);
+ const timePerPage = parseFloat(document.getElementById('time-per-page').value);
 
-            if (!totalPages || !timePerPage || totalPages <= 0 || timePerPage <= 0) {
-                alert('Por favor, ingresa valores válidos.');
-                return;
-            }
+ if (!totalPages || !timePerPage || totalPages <= 0 || timePerPage <= 0) {
+ alert('Por favor, ingresa valores válidos.');
+ return;
+ }
 
-            const totalMinutes = totalPages * timePerPage;
-            const hours = Math.floor(totalMinutes / 60);
-            const minutes = Math.round(totalMinutes % 60);
-            const days = Math.ceil(totalMinutes / (60 * 8)); // Asumiendo 8 horas de lectura por día
+ const totalMinutes = totalPages * timePerPage;
+ const hours = Math.floor(totalMinutes / 60);
+ const minutes = Math.round(totalMinutes % 60);
+ const days = Math.ceil(totalMinutes / (60 * 8)); // Asumiendo 8 horas de lectura por día
 
-            showResults([
-                { label: 'Tiempo total de lectura', value: `${hours}h ${minutes}min` },
-                { label: 'Tiempo sin parar', value: `${Math.round(totalMinutes)} minutos` },
-                { label: 'Días (8h lectura/día)', value: `${days} días` },
-                { label: 'Páginas por hora', value: `${Math.round(60 / timePerPage)} páginas` }
-            ]);
-        }
+ showResults([
+ { label: 'Tiempo total de lectura', value: `${hours}h ${minutes}min` },
+ { label: 'Tiempo sin parar', value: `${Math.round(totalMinutes)} minutos` },
+ { label: 'Días (8h lectura/día)', value: `${days} días` },
+ { label: 'Páginas por hora', value: `${Math.round(60 / timePerPage)} páginas` }
+ ]);
+ }
 
-        function calculatePlanning() {
-            const totalPages = parseInt(document.getElementById('plan-total-pages').value);
-            const targetDays = parseInt(document.getElementById('target-days').value);
-            const timePerPage = parseFloat(document.getElementById('plan-time-per-page').value);
+ function calculatePlanning() {
+ const totalPages = parseInt(document.getElementById('plan-total-pages').value);
+ const targetDays = parseInt(document.getElementById('target-days').value);
+ const timePerPage = parseFloat(document.getElementById('plan-time-per-page').value);
 
-            if (!totalPages || !targetDays || !timePerPage || totalPages <= 0 || targetDays <= 0 || timePerPage <= 0) {
-                alert('Por favor, ingresa valores válidos.');
-                return;
-            }
+ if (!totalPages || !targetDays || !timePerPage || totalPages <= 0 || targetDays <= 0 || timePerPage <= 0) {
+ alert('Por favor, ingresa valores válidos.');
+ return;
+ }
 
-            const pagesPerDay = Math.ceil(totalPages / targetDays);
-            const minutesPerDay = pagesPerDay * timePerPage;
-            const hoursPerDay = minutesPerDay / 60;
+ const pagesPerDay = Math.ceil(totalPages / targetDays);
+ const minutesPerDay = pagesPerDay * timePerPage;
+ const hoursPerDay = minutesPerDay / 60;
 
-            showResults([
-                { label: 'Páginas por día', value: `${pagesPerDay} páginas` },
-                { label: 'Tiempo diario necesario', value: `${Math.floor(hoursPerDay)}h ${Math.round(minutesPerDay % 60)}min` },
-                { label: 'Total de días', value: `${targetDays} días` },
-                { label: 'Tiempo total', value: `${Math.round(totalPages * timePerPage / 60)}h ${Math.round((totalPages * timePerPage) % 60)}min` }
-            ]);
-        }
+ showResults([
+ { label: 'Páginas por día', value: `${pagesPerDay} páginas` },
+ { label: 'Tiempo diario necesario', value: `${Math.floor(hoursPerDay)}h ${Math.round(minutesPerDay % 60)}min` },
+ { label: 'Total de días', value: `${targetDays} días` },
+ { label: 'Tiempo total', value: `${Math.round(totalPages * timePerPage / 60)}h ${Math.round((totalPages * timePerPage) % 60)}min` }
+ ]);
+ }
 
-        function calculateGoals() {
-            const totalPages = parseInt(document.getElementById('goal-total-pages').value);
-            const pagesPerDay = parseInt(document.getElementById('pages-per-day').value);
-            const timePerPage = parseFloat(document.getElementById('goal-time-per-page').value);
+ function calculateGoals() {
+ const totalPages = parseInt(document.getElementById('goal-total-pages').value);
+ const pagesPerDay = parseInt(document.getElementById('pages-per-day').value);
+ const timePerPage = parseFloat(document.getElementById('goal-time-per-page').value);
 
-            if (!totalPages || !pagesPerDay || !timePerPage || totalPages <= 0 || pagesPerDay <= 0 || timePerPage <= 0) {
-                alert('Por favor, ingresa valores válidos.');
-                return;
-            }
+ if (!totalPages || !pagesPerDay || !timePerPage || totalPages <= 0 || pagesPerDay <= 0 || timePerPage <= 0) {
+ alert('Por favor, ingresa valores válidos.');
+ return;
+ }
 
-            const totalDays = Math.ceil(totalPages / pagesPerDay);
-            const minutesPerDay = pagesPerDay * timePerPage;
-            const hoursPerDay = minutesPerDay / 60;
-            const totalMinutes = totalPages * timePerPage;
+ const totalDays = Math.ceil(totalPages / pagesPerDay);
+ const minutesPerDay = pagesPerDay * timePerPage;
+ const hoursPerDay = minutesPerDay / 60;
+ const totalMinutes = totalPages * timePerPage;
 
-            showResults([
-                { label: 'Días para completar', value: `${totalDays} días` },
-                { label: 'Tiempo diario', value: `${Math.floor(hoursPerDay)}h ${Math.round(minutesPerDay % 60)}min` },
-                { label: 'Fecha estimada de finalización', value: getFutureDate(totalDays) },
-                { label: 'Tiempo total acumulado', value: `${Math.floor(totalMinutes / 60)}h ${Math.round(totalMinutes % 60)}min` }
-            ]);
-        }
+ showResults([
+ { label: 'Días para completar', value: `${totalDays} días` },
+ { label: 'Tiempo diario', value: `${Math.floor(hoursPerDay)}h ${Math.round(minutesPerDay % 60)}min` },
+ { label: 'Fecha estimada de finalización', value: getFutureDate(totalDays) },
+ { label: 'Tiempo total acumulado', value: `${Math.floor(totalMinutes / 60)}h ${Math.round(totalMinutes % 60)}min` }
+ ]);
+ }
 
-        function showResults(results) {
-            let html = `
-                <div class="result-card">
-                    <div class="result-title">
-                        <i class="fas fa-chart-line"></i>
-                        Resultados del Cálculo
-                    </div>
-            `;
+ function showResults(results) {
+ let html = `
+ <div class="result-card">
+ <div class="result-title">
+ <i class="fas fa-chart-line"></i>
+ Resultados del Cálculo
+ </div>
+ `;
 
-            results.forEach(result => {
-                html += `
-                    <div class="result-item">
-                        <div class="result-label">${result.label}:</div>
-                        <div class="result-value">${result.value}</div>
-                    </div>
-                `;
-            });
+ results.forEach(result => {
+ html += `
+ <div class="result-item">
+ <div class="result-label">${result.label}:</div>
+ <div class="result-value">${result.value}</div>
+ </div>
+ `;
+ });
 
-            html += '</div>';
-            document.getElementById('calculation-results').innerHTML = html;
-        }
+ html += '</div>';
+ document.getElementById('calculation-results').innerHTML = html;
+ }
 
-        function getFutureDate(days) {
-            const today = new Date();
-            const futureDate = new Date(today.getTime() + (days * 24 * 60 * 60 * 1000));
-            return futureDate.toLocaleDateString('es-ES', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-        }
+ function getFutureDate(days) {
+ const today = new Date();
+ const futureDate = new Date(today.getTime() + (days * 24 * 60 * 60 * 1000));
+ return futureDate.toLocaleDateString('es-ES', { 
+ weekday: 'long', 
+ year: 'numeric', 
+ month: 'long', 
+ day: 'numeric' 
+ });
+ }
 
-        // Inicializar cronómetro
-        updateCronometer();
-    </script>
+ // Inicializar cronómetro
+ updateCronometer();
+ </script>
 </body>
 </html>
 

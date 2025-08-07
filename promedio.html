@@ -1,890 +1,890 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
-    <title>Calculadora de Promedios - Todo Universidad</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <style>
-        :root {
-            --color-primary: #2563eb;
-            --color-secondary: #0f172a;
-            --color-accent: #22c55e;
-            --color-error: #ef4444;
-            --color-warning: #f59e0b;
-            --color-background: #f8fafc;
-            --color-text-dark: #1e293b;
-            --color-white: #ffffff;
-            --shadow-subtle: 0 4px 6px rgba(0,0,0,0.1);
-            --gradient-primary: linear-gradient(135deg, #2563eb, #1e40af);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--color-background);
-            min-height: 100vh;
-            padding: 20px;
-            color: var(--color-text-dark);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .calculator-card {
-            background: linear-gradient(145deg, #ffffff, #f3f4f6);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 
-                0 10px 25px rgba(0,0,0,0.1),
-                inset 2px 2px 5px rgba(255,255,255,0.5),
-                inset -3px -3px 7px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            border: none;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .header::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: var(--gradient-primary);
-            margin: 20px auto 0;
-            border-radius: 2px;
-        }
-
-        .header h1 {
-            color: var(--color-secondary);
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .header p {
-            color: #64748b;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        .grades-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .grade-item {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-            display: grid;
-            grid-template-columns: 1fr auto auto;
-            gap: 15px;
-            align-items: center;
-            position: relative;
-            transition: all 0.3s ease;
-            margin-bottom: 15px;
-        }
-
-        .grade-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-
-        .grade-input {
-            font-size: 1.2rem;
-            padding: 15px;
-            border: 2px solid transparent;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 600;
-            width: 100%;
-            background: #f8fafc;
-        }
-
-        .grade-input:focus {
-            background: white;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-        }
-
-        .nota-decimal {
-            position: absolute;
-            bottom: 5px;
-            left: 25px;
-            color: #64748b;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .weight-input {
-            width: 80px;
-            padding: 12px;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            text-align: center;
-            background: #f8fafc;
-        }
-
-        .weight-input:focus {
-            background: white;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-        }
-
-        .delete-btn {
-            background: #fee2e2;
-            color: #dc2626;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .delete-btn:hover {
-            background: #dc2626;
-            color: white;
-            transform: rotate(90deg);
-        }
-
-        .button-container {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .btn {
-            flex: 1;
-            padding: 16px 32px;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: var(--gradient-primary);
-            border: none;
-            box-shadow: 
-                0 4px 15px rgba(37, 99, 235, 0.2),
-                inset 2px 2px 5px rgba(255,255,255,0.1);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn-add {
-            background: var(--color-accent);
-            color: white;
-        }
-
-        .btn-calculate {
-            background: var(--gradient-primary);
-            color: white;
-        }
-
-        .btn-reset {
-            background: linear-gradient(135deg, #64748b, #475569);
-            color: white;
-        }
-
-        .result-card {
-            background: linear-gradient(145deg, var(--color-primary), #1e40af);
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 30px;
-            color: white;
-            border: none;
-            box-shadow: 
-                0 10px 30px rgba(37, 99, 235, 0.3),
-                inset 2px 2px 5px rgba(255,255,255,0.1);
-        }
-
-        .result-item {
-            padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        .result-item:last-child {
-            border: none;
-        }
-
-        .result-item:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateX(10px);
-        }
-
-        .result-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.1rem;
-        }
-
-        .result-value {
-            font-size: 1.4rem;
-            font-weight: 700;
-        }
-
-        .status-badge {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .status-good {
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
-        }
-
-        .status-warning {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-        }
-
-        .status-danger {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .calculator-card {
-                padding: 20px;
-                margin: 10px;
-            }
-
-            .header h1 {
-                font-size: 1.5rem;
-            }
-
-            .header p {
-                font-size: 0.9rem;
-            }
-
-            .grade-item {
-                padding: 15px;
-                grid-template-columns: 1fr auto;
-            }
-
-            .grade-input {
-                font-size: 1.1rem;
-                padding: 12px;
-            }
-
-            .weight-input {
-                width: 60px;
-                padding: 10px;
-                font-size: 1rem;
-            }
-
-            .nota-decimal {
-                font-size: 0.8rem;
-                bottom: 2px;
-                left: 15px;
-            }
-
-            .button-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .btn {
-                padding: 12px;
-                font-size: 1rem;
-            }
-
-            .result-card {
-                margin: 20px 10px;
-                padding: 20px;
-            }
-
-            .result-item {
-                padding: 15px;
-            }
-
-            .result-label {
-                font-size: 0.9rem;
-            }
-
-            .result-value {
-                font-size: 1.2rem;
-            }
-
-            .status-badge {
-                padding: 6px 12px;
-                font-size: 0.8rem;
-            }
-
-            .mensaje-item .result-value {
-                font-size: 0.9rem !important;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .grade-item {
-                position: relative;
-                padding-bottom: 25px;
-            }
-
-            .header::after {
-                margin: 15px auto 0;
-            }
-
-            .result-card {
-                border-radius: 15px;
-            }
-
-            .btn i {
-                font-size: 1.1rem;
-            }
-        }
-
-        /* Mejoras para la experiencia táctil */
-        @media (hover: none) {
-            input, button {
-                -webkit-tap-highlight-color: transparent;
-            }
-
-            .btn:active {
-                transform: scale(0.98);
-            }
-
-            input {
-                font-size: 16px !important; /* Prevenir zoom en iOS */
-            }
-        }
-
-        .nota-decimal {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-left: 10px;
-        }
-
-        .grade-input {
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        /* Mejoras responsive */
-        @media (max-width: 1024px) {
-            .container {
-                padding: 15px;
-            }
-
-            .calculator-card {
-                padding: 25px;
-                margin: 10px;
-            }
-
-            .grade-item {
-                grid-template-columns: 1fr 80px 40px;
-                padding: 15px;
-                gap: 10px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .grade-item {
-                grid-template-columns: 1fr 45px 35px;
-                padding: 12px;
-                gap: 8px;
-                position: relative;
-                padding-bottom: 25px;
-                margin-bottom: 15px;
-            }
-
-            .grade-input {
-                font-size: 1rem;
-                padding: 8px;
-                text-align: center;
-            }
-
-            .weight-input {
-                width: 45px;
-                padding: 6px;
-                font-size: 0.9rem;
-            }
-
-            .nota-decimal {
-                position: absolute;
-                bottom: 5px;
-                left: 12px;
-                font-size: 0.85rem;
-                margin: 0;
-            }
-
-            .delete-btn {
-                width: 35px;
-                height: 35px;
-            }
-
-            .result-card {
-                padding: 20px;
-                margin: 10px;
-                border-radius: 15px;
-            }
-
-            .result-item {
-                padding: 12px;
-            }
-
-            .result-label {
-                font-size: 0.9rem;
-            }
-
-            .result-value {
-                font-size: 1.1rem;
-            }
-
-            .button-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .btn {
-                padding: 12px;
-                font-size: 0.95rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .calculator-card {
-                padding: 15px;
-                margin: 5px;
-            }
-
-            .header h1 {
-                font-size: 1.4rem;
-            }
-
-            .header p {
-                font-size: 0.9rem;
-            }
-
-            .grade-item {
-                padding: 10px;
-                padding-bottom: 25px;
-            }
-
-            .grade-input, .weight-input {
-                font-size: 0.9rem;
-            }
-
-            .nota-decimal {
-                font-size: 0.8rem;
-            }
-        }
-
-        /* Mejoras para dispositivos táctiles */
-        @media (hover: none) {
-            .btn:active {
-                transform: scale(0.98);
-            }
-
-            input[type="number"] {
-                font-size: 16px !important; /* Prevenir zoom en iOS */
-            }
-
-            .delete-btn {
-                opacity: 1;
-                width: 35px;
-                height: 35px;
-            }
-        }
-
-        /* Orientación landscape en móviles */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .container {
-                padding: 10px;
-            }
-
-            .calculator-card {
-                padding: 15px;
-            }
-
-            .grades-container {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-
-            .button-container {
-                flex-direction: row;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .grade-item {
-                grid-template-columns: 1fr 50px 35px;
-                padding: 12px;
-                gap: 8px;
-                position: relative;
-                padding-bottom: 30px;
-            }
-
-            .nota-decimal {
-                position: absolute;
-                bottom: 5px;
-                left: 12px;
-                font-size: 0.85rem;
-                color: #64748b;
-                margin: 0;
-            }
-
-            .weight-input {
-                width: 50px;
-                padding: 8px;
-                font-size: 0.9rem;
-            }
-
-            .delete-btn {
-                width: 35px;
-                height: 35px;
-            }
-
-            .grade-input {
-                font-size: 1rem;
-                padding: 8px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .grade-item {
-                grid-template-columns: 1fr 45px 30px;
-                padding: 10px;
-                padding-bottom: 25px;
-            }
-
-            .weight-input {
-                width: 45px;
-                padding: 6px;
-            }
-
-            .delete-btn {
-                width: 30px;
-                height: 30px;
-            }
-        }
-    </style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497" crossorigin="anonymous"></script>
+ 
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
+ <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
+ <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
+ <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
+ <title>Calculadora de Promedios - Todo Universidad</title>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+ <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+ <style>
+ :root {
+ --color-primary: #2563eb;
+ --color-secondary: #0f172a;
+ --color-accent: #22c55e;
+ --color-error: #ef4444;
+ --color-warning: #f59e0b;
+ --color-background: #f8fafc;
+ --color-text-dark: #1e293b;
+ --color-white: #ffffff;
+ --shadow-subtle: 0 4px 6px rgba(0,0,0,0.1);
+ --gradient-primary: linear-gradient(135deg, #2563eb, #1e40af);
+ }
+
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+
+ body {
+ font-family: 'Inter', sans-serif;
+ background: var(--color-background);
+ min-height: 100vh;
+ padding: 20px;
+ color: var(--color-text-dark);
+ }
+
+ .container {
+ max-width: 800px;
+ margin: 0 auto;
+ }
+
+ .calculator-card {
+ background: linear-gradient(145deg, #ffffff, #f3f4f6);
+ border-radius: 24px;
+ padding: 40px;
+ box-shadow: 
+ 0 10px 25px rgba(0,0,0,0.1),
+ inset 2px 2px 5px rgba(255,255,255,0.5),
+ inset -3px -3px 7px rgba(0,0,0,0.1);
+ margin-bottom: 20px;
+ border: none;
+ max-width: 1000px;
+ margin: 0 auto;
+ }
+
+ .header {
+ text-align: center;
+ margin-bottom: 40px;
+ position: relative;
+ }
+
+ .header::after {
+ content: '';
+ display: block;
+ width: 60px;
+ height: 4px;
+ background: var(--gradient-primary);
+ margin: 20px auto 0;
+ border-radius: 2px;
+ }
+
+ .header h1 {
+ color: var(--color-secondary);
+ font-size: 2.2rem;
+ margin-bottom: 15px;
+ font-weight: 700;
+ }
+
+ .header p {
+ color: #64748b;
+ font-size: 1.1rem;
+ line-height: 1.6;
+ }
+
+ .grades-container {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+ gap: 20px;
+ margin-bottom: 30px;
+ }
+
+ .grade-item {
+ background: white;
+ padding: 25px;
+ border-radius: 15px;
+ box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+ border: 1px solid #e2e8f0;
+ display: grid;
+ grid-template-columns: 1fr auto auto;
+ gap: 15px;
+ align-items: center;
+ position: relative;
+ transition: all 0.3s ease;
+ margin-bottom: 15px;
+ }
+
+ .grade-item:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+ }
+
+ .grade-input {
+ font-size: 1.2rem;
+ padding: 15px;
+ border: 2px solid transparent;
+ border-radius: 12px;
+ text-align: center;
+ font-weight: 600;
+ width: 100%;
+ background: #f8fafc;
+ }
+
+ .grade-input:focus {
+ background: white;
+ border-color: var(--color-primary);
+ box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+ }
+
+ .nota-decimal {
+ position: absolute;
+ bottom: 5px;
+ left: 25px;
+ color: #64748b;
+ font-size: 0.9rem;
+ font-weight: 500;
+ }
+
+ .weight-input {
+ width: 80px;
+ padding: 12px;
+ border: 2px solid transparent;
+ border-radius: 8px;
+ text-align: center;
+ background: #f8fafc;
+ }
+
+ .weight-input:focus {
+ background: white;
+ border-color: var(--color-primary);
+ box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+ }
+
+ .delete-btn {
+ background: #fee2e2;
+ color: #dc2626;
+ border: none;
+ width: 36px;
+ height: 36px;
+ border-radius: 50%;
+ cursor: pointer;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ transition: all 0.3s ease;
+ }
+
+ .delete-btn:hover {
+ background: #dc2626;
+ color: white;
+ transform: rotate(90deg);
+ }
+
+ .button-container {
+ display: flex;
+ gap: 15px;
+ margin-top: 30px;
+ }
+
+ .btn {
+ flex: 1;
+ padding: 16px 32px;
+ border: none;
+ border-radius: 12px;
+ font-size: 1.1rem;
+ font-weight: 600;
+ cursor: pointer;
+ transition: all 0.3s ease;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 8px;
+ background: var(--gradient-primary);
+ border: none;
+ box-shadow: 
+ 0 4px 15px rgba(37, 99, 235, 0.2),
+ inset 2px 2px 5px rgba(255,255,255,0.1);
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ font-size: 0.9rem;
+ }
+
+ .btn:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+ }
+
+ .btn-add {
+ background: var(--color-accent);
+ color: white;
+ }
+
+ .btn-calculate {
+ background: var(--gradient-primary);
+ color: white;
+ }
+
+ .btn-reset {
+ background: linear-gradient(135deg, #64748b, #475569);
+ color: white;
+ }
+
+ .result-card {
+ background: linear-gradient(145deg, var(--color-primary), #1e40af);
+ border-radius: 20px;
+ padding: 30px;
+ margin-top: 30px;
+ color: white;
+ border: none;
+ box-shadow: 
+ 0 10px 30px rgba(37, 99, 235, 0.3),
+ inset 2px 2px 5px rgba(255,255,255,0.1);
+ }
+
+ .result-item {
+ padding: 20px;
+ border-bottom: 1px solid rgba(255,255,255,0.1);
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ transition: all 0.3s ease;
+ }
+
+ .result-item:last-child {
+ border: none;
+ }
+
+ .result-item:hover {
+ background: rgba(255,255,255,0.1);
+ transform: translateX(10px);
+ }
+
+ .result-label {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ font-size: 1.1rem;
+ }
+
+ .result-value {
+ font-size: 1.4rem;
+ font-weight: 700;
+ }
+
+ .status-badge {
+ padding: 8px 16px;
+ border-radius: 20px;
+ font-weight: 600;
+ font-size: 0.9rem;
+ }
+
+ .status-good {
+ background: rgba(34, 197, 94, 0.2);
+ color: #22c55e;
+ }
+
+ .status-warning {
+ background: rgba(245, 158, 11, 0.2);
+ color: #f59e0b;
+ }
+
+ .status-danger {
+ background: rgba(239, 68, 68, 0.2);
+ color: #ef4444;
+ }
+
+ @keyframes slideIn {
+ from {
+ opacity: 0;
+ transform: translateX(-20px);
+ }
+ to {
+ opacity: 1;
+ transform: translateX(0);
+ }
+ }
+
+ @keyframes slideUp {
+ from {
+ opacity: 0;
+ transform: translateY(30px);
+ }
+ to {
+ opacity: 1;
+ transform: translateY(0);
+ }
+ }
+
+ @media (max-width: 768px) {
+ body {
+ padding: 10px;
+ }
+
+ .calculator-card {
+ padding: 20px;
+ margin: 10px;
+ }
+
+ .header h1 {
+ font-size: 1.5rem;
+ }
+
+ .header p {
+ font-size: 0.9rem;
+ }
+
+ .grade-item {
+ padding: 15px;
+ grid-template-columns: 1fr auto;
+ }
+
+ .grade-input {
+ font-size: 1.1rem;
+ padding: 12px;
+ }
+
+ .weight-input {
+ width: 60px;
+ padding: 10px;
+ font-size: 1rem;
+ }
+
+ .nota-decimal {
+ font-size: 0.8rem;
+ bottom: 2px;
+ left: 15px;
+ }
+
+ .button-container {
+ flex-direction: column;
+ gap: 10px;
+ }
+
+ .btn {
+ padding: 12px;
+ font-size: 1rem;
+ }
+
+ .result-card {
+ margin: 20px 10px;
+ padding: 20px;
+ }
+
+ .result-item {
+ padding: 15px;
+ }
+
+ .result-label {
+ font-size: 0.9rem;
+ }
+
+ .result-value {
+ font-size: 1.2rem;
+ }
+
+ .status-badge {
+ padding: 6px 12px;
+ font-size: 0.8rem;
+ }
+
+ .mensaje-item .result-value {
+ font-size: 0.9rem !important;
+ }
+ }
+
+ @media (max-width: 480px) {
+ .grade-item {
+ position: relative;
+ padding-bottom: 25px;
+ }
+
+ .header::after {
+ margin: 15px auto 0;
+ }
+
+ .result-card {
+ border-radius: 15px;
+ }
+
+ .btn i {
+ font-size: 1.1rem;
+ }
+ }
+
+ /* Mejoras para la experiencia táctil */
+ @media (hover: none) {
+ input, button {
+ -webkit-tap-highlight-color: transparent;
+ }
+
+ .btn:active {
+ transform: scale(0.98);
+ }
+
+ input {
+ font-size: 16px !important; /* Prevenir zoom en iOS */
+ }
+ }
+
+ .nota-decimal {
+ color: #64748b;
+ font-size: 0.9rem;
+ margin-left: 10px;
+ }
+
+ .grade-input {
+ text-align: center;
+ font-size: 1.2rem;
+ font-weight: 600;
+ }
+
+ /* Mejoras responsive */
+ @media (max-width: 1024px) {
+ .container {
+ padding: 15px;
+ }
+
+ .calculator-card {
+ padding: 25px;
+ margin: 10px;
+ }
+
+ .grade-item {
+ grid-template-columns: 1fr 80px 40px;
+ padding: 15px;
+ gap: 10px;
+ }
+ }
+
+ @media (max-width: 768px) {
+ .grade-item {
+ grid-template-columns: 1fr 45px 35px;
+ padding: 12px;
+ gap: 8px;
+ position: relative;
+ padding-bottom: 25px;
+ margin-bottom: 15px;
+ }
+
+ .grade-input {
+ font-size: 1rem;
+ padding: 8px;
+ text-align: center;
+ }
+
+ .weight-input {
+ width: 45px;
+ padding: 6px;
+ font-size: 0.9rem;
+ }
+
+ .nota-decimal {
+ position: absolute;
+ bottom: 5px;
+ left: 12px;
+ font-size: 0.85rem;
+ margin: 0;
+ }
+
+ .delete-btn {
+ width: 35px;
+ height: 35px;
+ }
+
+ .result-card {
+ padding: 20px;
+ margin: 10px;
+ border-radius: 15px;
+ }
+
+ .result-item {
+ padding: 12px;
+ }
+
+ .result-label {
+ font-size: 0.9rem;
+ }
+
+ .result-value {
+ font-size: 1.1rem;
+ }
+
+ .button-container {
+ flex-direction: column;
+ gap: 10px;
+ }
+
+ .btn {
+ padding: 12px;
+ font-size: 0.95rem;
+ }
+ }
+
+ @media (max-width: 480px) {
+ .calculator-card {
+ padding: 15px;
+ margin: 5px;
+ }
+
+ .header h1 {
+ font-size: 1.4rem;
+ }
+
+ .header p {
+ font-size: 0.9rem;
+ }
+
+ .grade-item {
+ padding: 10px;
+ padding-bottom: 25px;
+ }
+
+ .grade-input, .weight-input {
+ font-size: 0.9rem;
+ }
+
+ .nota-decimal {
+ font-size: 0.8rem;
+ }
+ }
+
+ /* Mejoras para dispositivos táctiles */
+ @media (hover: none) {
+ .btn:active {
+ transform: scale(0.98);
+ }
+
+ input[type="number"] {
+ font-size: 16px !important; /* Prevenir zoom en iOS */
+ }
+
+ .delete-btn {
+ opacity: 1;
+ width: 35px;
+ height: 35px;
+ }
+ }
+
+ /* Orientación landscape en móviles */
+ @media (max-height: 500px) and (orientation: landscape) {
+ .container {
+ padding: 10px;
+ }
+
+ .calculator-card {
+ padding: 15px;
+ }
+
+ .grades-container {
+ display: grid;
+ grid-template-columns: repeat(2, 1fr);
+ gap: 10px;
+ }
+
+ .button-container {
+ flex-direction: row;
+ }
+ }
+
+ @media (max-width: 768px) {
+ .grade-item {
+ grid-template-columns: 1fr 50px 35px;
+ padding: 12px;
+ gap: 8px;
+ position: relative;
+ padding-bottom: 30px;
+ }
+
+ .nota-decimal {
+ position: absolute;
+ bottom: 5px;
+ left: 12px;
+ font-size: 0.85rem;
+ color: #64748b;
+ margin: 0;
+ }
+
+ .weight-input {
+ width: 50px;
+ padding: 8px;
+ font-size: 0.9rem;
+ }
+
+ .delete-btn {
+ width: 35px;
+ height: 35px;
+ }
+
+ .grade-input {
+ font-size: 1rem;
+ padding: 8px;
+ }
+ }
+
+ @media (max-width: 480px) {
+ .grade-item {
+ grid-template-columns: 1fr 45px 30px;
+ padding: 10px;
+ padding-bottom: 25px;
+ }
+
+ .weight-input {
+ width: 45px;
+ padding: 6px;
+ }
+
+ .delete-btn {
+ width: 30px;
+ height: 30px;
+ }
+ }
+ </style>
 </head>
 <body>
-    <div class="container">
-        <div class="calculator-card">
-            <div class="header">
-                <h1>Calculadora de Promedios</h1>
-                <p>Calcula tu promedio ponderado fácilmente</p>
-            </div>
+ <div class="container">
+ <div class="calculator-card">
+ <div class="header">
+ <h1>Calculadora de Promedios</h1>
+ <p>Calcula tu promedio ponderado fácilmente</p>
+ </div>
 
-            <div id="gradesContainer" class="grades-container">
-                <!-- Las notas se agregarán aquí dinmicamente -->
-            </div>
+ <div id="gradesContainer" class="grades-container">
+ <!-- Las notas se agregarán aquí dinmicamente -->
+ </div>
 
-            <div class="button-container">
-                <button class="btn btn-add" onclick="agregarNota()">
-                    <i class="ri-add-line"></i>
-                    Agregar Nota
-                </button>
-                <button class="btn btn-calculate" onclick="calcularPromedio()">
-                    <i class="ri-calculator-line"></i>
-                    Calcular
-                </button>
-                <button class="btn btn-reset" onclick="resetearCalculadora()">
-                    <i class="ri-refresh-line"></i>
-                    Resetear
-                </button>
-            </div>
-        </div>
+ <div class="button-container">
+ <button class="btn btn-add" onclick="agregarNota()">
+ <i class="ri-add-line"></i>
+ Agregar Nota
+ </button>
+ <button class="btn btn-calculate" onclick="calcularPromedio()">
+ <i class="ri-calculator-line"></i>
+ Calcular
+ </button>
+ <button class="btn btn-reset" onclick="resetearCalculadora()">
+ <i class="ri-refresh-line"></i>
+ Resetear
+ </button>
+ </div>
+ </div>
 
-        <div class="result-card" id="resultCard">
-            <div class="result-item">
-                <span class="result-label">
-                    <i class="ri-number-1"></i>
-                    Promedio Ponderado
-                </span>
-                <span class="result-value" id="promedioPonderado">1.0</span>
-            </div>
-            <div class="result-item">
-                <span class="result-label">
-                    <i class="ri-number-2"></i>
-                    Promedio Redondeado
-                </span>
-                <span class="result-value" id="promedioRedondeado">1.0</span>
-            </div>
-            <div class="result-item">
-                <span class="result-label">
-                    <i class="ri-medal-line"></i>
-                    Estado
-                </span>
-                <span class="status-badge" id="estado">Pendiente</span>
-            </div>
-        </div>
-    </div>
+ <div class="result-card" id="resultCard">
+ <div class="result-item">
+ <span class="result-label">
+ <i class="ri-number-1"></i>
+ Promedio Ponderado
+ </span>
+ <span class="result-value" id="promedioPonderado">1.0</span>
+ </div>
+ <div class="result-item">
+ <span class="result-label">
+ <i class="ri-number-2"></i>
+ Promedio Redondeado
+ </span>
+ <span class="result-value" id="promedioRedondeado">1.0</span>
+ </div>
+ <div class="result-item">
+ <span class="result-label">
+ <i class="ri-medal-line"></i>
+ Estado
+ </span>
+ <span class="status-badge" id="estado">Pendiente</span>
+ </div>
+ </div>
+ </div>
 
-    <script>
-        function agregarNota() {
-            const container = document.getElementById('gradesContainer');
-            const gradeItem = document.createElement('div');
-            gradeItem.className = 'grade-item';
-            gradeItem.innerHTML = `
-                <input type="text" class="grade-input" placeholder="Ejemplo: 40" 
-                    oninput="validarNota(this)" maxlength="3">
-                <span class="nota-decimal"></span>
-                <input type="number" class="weight-input" placeholder="20" 
-                    oninput="validarPeso(this)" min="0" max="100">
-                <button class="delete-btn" onclick="eliminarNota(this)">×</button>
-            `;
-            container.appendChild(gradeItem);
-            
-            // Solo resetear valores
-            document.getElementById('promedioPonderado').textContent = '0.0';
-            document.getElementById('promedioRedondeado').textContent = '0.0';
-            document.getElementById('estado').textContent = 'Pendiente';
-            document.getElementById('estado').className = 'status-badge';
-        }
+ <script>
+ function agregarNota() {
+ const container = document.getElementById('gradesContainer');
+ const gradeItem = document.createElement('div');
+ gradeItem.className = 'grade-item';
+ gradeItem.innerHTML = `
+ <input type="text" class="grade-input" placeholder="Ejemplo: 40" 
+ oninput="validarNota(this)" maxlength="3">
+ <span class="nota-decimal"></span>
+ <input type="number" class="weight-input" placeholder="20" 
+ oninput="validarPeso(this)" min="0" max="100">
+ <button class="delete-btn" onclick="eliminarNota(this)">×</button>
+ `;
+ container.appendChild(gradeItem);
+ 
+ // Solo resetear valores
+ document.getElementById('promedioPonderado').textContent = '0.0';
+ document.getElementById('promedioRedondeado').textContent = '0.0';
+ document.getElementById('estado').textContent = 'Pendiente';
+ document.getElementById('estado').className = 'status-badge';
+ }
 
-        function validarPeso(input) {
-            let valor = parseInt(input.value) || 0;
-            if (valor > 100) {
-                input.value = '100';
-            }
-            if (valor < 0) {
-                input.value = '0';
-            }
-        }
+ function validarPeso(input) {
+ let valor = parseInt(input.value) || 0;
+ if (valor > 100) {
+ input.value = '100';
+ }
+ if (valor < 0) {
+ input.value = '0';
+ }
+ }
 
-        function actualizarAutomaticamente() {
-            // No hacer nada aquí, solo calcular cuando se presione el botón calcular
-        }
+ function actualizarAutomaticamente() {
+ // No hacer nada aquí, solo calcular cuando se presione el botón calcular
+ }
 
-        function validarPorcentajeTotal() {
-            const pesos = document.querySelectorAll('.weight-input');
-            let sumaPesos = 0;
-            let hayPesosIngresados = false;
-            
-            pesos.forEach(peso => {
-                const valorPeso = parseInt(peso.value) || 0;
-                if (valorPeso > 0) {
-                    sumaPesos += valorPeso;
-                    hayPesosIngresados = true;
-                }
-            });
+ function validarPorcentajeTotal() {
+ const pesos = document.querySelectorAll('.weight-input');
+ let sumaPesos = 0;
+ let hayPesosIngresados = false;
+ 
+ pesos.forEach(peso => {
+ const valorPeso = parseInt(peso.value) || 0;
+ if (valorPeso > 0) {
+ sumaPesos += valorPeso;
+ hayPesosIngresados = true;
+ }
+ });
 
-            if (sumaPesos > 100) {
-                alert('La suma de los porcentajes no puede superar el 100%');
-                return false;
-            }
-            
-            if (hayPesosIngresados && sumaPesos < 100) {
-                const faltante = 100 - sumaPesos;
-                const confirmar = confirm(`Los porcentajes suman ${sumaPesos}%. Falta asignar ${faltante}%. ¿Deseas continuar?`);
-                return confirmar;
-            }
-            
-            return true;
-        }
+ if (sumaPesos > 100) {
+ alert('La suma de los porcentajes no puede superar el 100%');
+ return false;
+ }
+ 
+ if (hayPesosIngresados && sumaPesos < 100) {
+ const faltante = 100 - sumaPesos;
+ const confirmar = confirm(`Los porcentajes suman ${sumaPesos}%. Falta asignar ${faltante}%. ¿Deseas continuar?`);
+ return confirmar;
+ }
+ 
+ return true;
+ }
 
-        function eliminarNota(btn) {
-            btn.parentElement.remove();
-        }
+ function eliminarNota(btn) {
+ btn.parentElement.remove();
+ }
 
-        function validarNota(input) {
-            input.value = input.value.replace(/[^\d]/g, '');
-            
-            let valor = parseInt(input.value || '0');
-            
-            if (valor > 100) {
-                input.value = '100';
-                valor = 100;
-            }
+ function validarNota(input) {
+ input.value = input.value.replace(/[^\d]/g, '');
+ 
+ let valor = parseInt(input.value || '0');
+ 
+ if (valor > 100) {
+ input.value = '100';
+ valor = 100;
+ }
 
-            if (input.value !== '') {
-                const notaDecimal = (valor / 10).toFixed(1);
-                input.parentElement.querySelector('.nota-decimal').textContent = `= ${notaDecimal}`;
-            } else {
-                input.parentElement.querySelector('.nota-decimal').textContent = '';
-            }
-        }
+ if (input.value !== '') {
+ const notaDecimal = (valor / 10).toFixed(1);
+ input.parentElement.querySelector('.nota-decimal').textContent = `= ${notaDecimal}`;
+ } else {
+ input.parentElement.querySelector('.nota-decimal').textContent = '';
+ }
+ }
 
-        function calcularPromedio() {
-            if (!validarPorcentajeTotal()) return;
+ function calcularPromedio() {
+ if (!validarPorcentajeTotal()) return;
 
-            const notas = document.querySelectorAll('.grade-input');
-            const pesos = document.querySelectorAll('.weight-input');
-            
-            if (notas.length === 0) {
-                alert('Agrega al menos una nota');
-                return;
-            }
+ const notas = document.querySelectorAll('.grade-input');
+ const pesos = document.querySelectorAll('.weight-input');
+ 
+ if (notas.length === 0) {
+ alert('Agrega al menos una nota');
+ return;
+ }
 
-            let sumaPonderada = 0;
-            let sumaPesos = 0;
-            let hayValoresValidos = false;
+ let sumaPonderada = 0;
+ let sumaPesos = 0;
+ let hayValoresValidos = false;
 
-            notas.forEach((nota, index) => {
-                const valorNota = parseInt(nota.value) || 0;
-                const peso = parseFloat(pesos[index].value) || 0;
-                
-                if (valorNota && peso) {
-                    sumaPonderada += valorNota * peso;
-                    sumaPesos += peso;
-                    hayValoresValidos = true;
-                }
-            });
+ notas.forEach((nota, index) => {
+ const valorNota = parseInt(nota.value) || 0;
+ const peso = parseFloat(pesos[index].value) || 0;
+ 
+ if (valorNota && peso) {
+ sumaPonderada += valorNota * peso;
+ sumaPesos += peso;
+ hayValoresValidos = true;
+ }
+ });
 
-            if (!hayValoresValidos || sumaPesos === 0) {
-                document.getElementById('promedioPonderado').textContent = '00.00';
-                document.getElementById('promedioRedondeado').textContent = '1';
-                document.getElementById('estado').textContent = 'Pendiente';
-                document.getElementById('estado').className = 'status-badge';
-                return;
-            }
+ if (!hayValoresValidos || sumaPesos === 0) {
+ document.getElementById('promedioPonderado').textContent = '00.00';
+ document.getElementById('promedioRedondeado').textContent = '1';
+ document.getElementById('estado').textContent = 'Pendiente';
+ document.getElementById('estado').className = 'status-badge';
+ return;
+ }
 
-            const promedioPonderado = sumaPonderada / sumaPesos;
-            const promedioRedondeado = Math.round(promedioPonderado);
+ const promedioPonderado = sumaPonderada / sumaPesos;
+ const promedioRedondeado = Math.round(promedioPonderado);
 
-            document.getElementById('promedioPonderado').textContent = promedioPonderado.toFixed(2);
-            document.getElementById('promedioRedondeado').textContent = (promedioRedondeado / 10).toFixed(1);
+ document.getElementById('promedioPonderado').textContent = promedioPonderado.toFixed(2);
+ document.getElementById('promedioRedondeado').textContent = (promedioRedondeado / 10).toFixed(1);
 
-            const estado = document.getElementById('estado');
-            let mensaje = '';
+ const estado = document.getElementById('estado');
+ let mensaje = '';
 
-            if (promedioPonderado >= 60) {
-                estado.textContent = 'Excelente';
-                estado.className = 'status-badge status-good';
-                mensaje = '¡Felicitaciones! Tu rendimiento es excepcional, sigue así.';
-            } else if (promedioPonderado >= 50) {
-                estado.textContent = 'Muy Bien';
-                estado.className = 'status-badge status-good';
-                mensaje = '¡Excelente trabajo! Estás demostrando un gran desempeño.';
-            } else if (promedioPonderado >= 39.5) {
-                estado.textContent = 'Aprobado';
-                estado.className = 'status-badge status-good';
-                mensaje = '¡Felicitaciones! Has aprobado. Sigue esforzándote para mejorar aún más.';
-            } else if (promedioPonderado >= 35) {
-                estado.textContent = 'Reprobado';
-                estado.className = 'status-badge status-danger';
-                mensaje = 'Estás muy cerca de aprobar. ¡No te rindas! Con un poco más de esfuerzo lo lograrás.';
-            } else {
-                estado.textContent = 'Reprobado';
-                estado.className = 'status-badge status-danger';
-                mensaje = 'No te desanimes, identifica las áreas donde necesitas mejorar y busca ayuda si la necesitas. ¡Tú puedes lograrlo!';
-            }
+ if (promedioPonderado >= 60) {
+ estado.textContent = 'Excelente';
+ estado.className = 'status-badge status-good';
+ mensaje = '¡Felicitaciones! Tu rendimiento es excepcional, sigue así.';
+ } else if (promedioPonderado >= 50) {
+ estado.textContent = 'Muy Bien';
+ estado.className = 'status-badge status-good';
+ mensaje = '¡Excelente trabajo! Estás demostrando un gran desempeño.';
+ } else if (promedioPonderado >= 39.5) {
+ estado.textContent = 'Aprobado';
+ estado.className = 'status-badge status-good';
+ mensaje = '¡Felicitaciones! Has aprobado. Sigue esforzándote para mejorar aún más.';
+ } else if (promedioPonderado >= 35) {
+ estado.textContent = 'Reprobado';
+ estado.className = 'status-badge status-danger';
+ mensaje = 'Estás muy cerca de aprobar. ¡No te rindas! Con un poco más de esfuerzo lo lograrás.';
+ } else {
+ estado.textContent = 'Reprobado';
+ estado.className = 'status-badge status-danger';
+ mensaje = 'No te desanimes, identifica las áreas donde necesitas mejorar y busca ayuda si la necesitas. ¡Tú puedes lograrlo!';
+ }
 
-            const resultCard = document.getElementById('resultCard');
-            const mensajeExistente = resultCard.querySelector('.mensaje-item');
-            if (mensajeExistente) {
-                mensajeExistente.remove();
-            }
+ const resultCard = document.getElementById('resultCard');
+ const mensajeExistente = resultCard.querySelector('.mensaje-item');
+ if (mensajeExistente) {
+ mensajeExistente.remove();
+ }
 
-            const mensajeItem = document.createElement('div');
-            mensajeItem.className = 'result-item mensaje-item';
-            mensajeItem.innerHTML = `
-                <span class="result-label">
-                    <i class="ri-message-2-line"></i>
-                    Mensaje
-                </span>
-                <span class="result-value" style="font-size: 1rem; font-style: italic;">${mensaje}</span>
-            `;
-            resultCard.appendChild(mensajeItem);
-            resultCard.classList.add('visible');
-        }
+ const mensajeItem = document.createElement('div');
+ mensajeItem.className = 'result-item mensaje-item';
+ mensajeItem.innerHTML = `
+ <span class="result-label">
+ <i class="ri-message-2-line"></i>
+ Mensaje
+ </span>
+ <span class="result-value" style="font-size: 1rem; font-style: italic;">${mensaje}</span>
+ `;
+ resultCard.appendChild(mensajeItem);
+ resultCard.classList.add('visible');
+ }
 
-        function resetearCalculadora() {
-            document.getElementById('gradesContainer').innerHTML = '';
-            
-            // Valores iniciales con el formato correcto
-            document.getElementById('promedioPonderado').textContent = '00.00';
-            document.getElementById('promedioRedondeado').textContent = '1';
-            document.getElementById('estado').textContent = 'Pendiente';
-            document.getElementById('estado').className = 'status-badge';
-            
-            const mensajeExistente = document.querySelector('.mensaje-item');
-            if (mensajeExistente) {
-                mensajeExistente.remove();
-            }
+ function resetearCalculadora() {
+ document.getElementById('gradesContainer').innerHTML = '';
+ 
+ // Valores iniciales con el formato correcto
+ document.getElementById('promedioPonderado').textContent = '00.00';
+ document.getElementById('promedioRedondeado').textContent = '1';
+ document.getElementById('estado').textContent = 'Pendiente';
+ document.getElementById('estado').className = 'status-badge';
+ 
+ const mensajeExistente = document.querySelector('.mensaje-item');
+ if (mensajeExistente) {
+ mensajeExistente.remove();
+ }
 
-            for (let i = 0; i < 4; i++) {
-                agregarNota();
-            }
-        }
+ for (let i = 0; i < 4; i++) {
+ agregarNota();
+ }
+ }
 
-        window.onload = () => {
-            // Agregar 4 casillas de notas por defecto
-            for (let i = 0; i < 4; i++) {
-                agregarNota();
-            }
-            // Actualizar la vista previa inicial
-            actualizarAutomaticamente();
-        };
-    </script>
+ window.onload = () => {
+ // Agregar 4 casillas de notas por defecto
+ for (let i = 0; i < 4; i++) {
+ agregarNota();
+ }
+ // Actualizar la vista previa inicial
+ actualizarAutomaticamente();
+ };
+ </script>
 </body>
 </html>
 

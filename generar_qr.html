@@ -1,144 +1,521 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497"
-     crossorigin="anonymous"></script>
-</script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Códigos QR Avanzado | Todo Universidad</title>
+    
+    <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
-    <title>Generador de QR Avanzado</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- New QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+
     <style>
-        body {
-            background: linear-gradient(135deg, #e0f2fe, #93c5fd);
-            min-height: 100vh;
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #50E3C2;
+            --background-color: #f5f6fa;
+            --card-color: #ffffff;
+            --text-color: #2c3e50;
+            --text-secondary: #556170;
+            --border-color: #e5e7eb;
+            --shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
         }
-    </style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497" crossorigin="anonymous"></script>
-</head>
-<body class="flex items-center justify-center p-4">
-    <div class="bg-white shadow-2xl rounded-xl p-8 w-full max-w-md">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Generador de Códigos QR</h1>
-        
-        <div class="space-y-4">
-            <div>
-                <label for="url" class="block text-sm font-medium text-gray-700">URL o Texto</label>
-                <input 
-                    type="text" 
-                    id="url" 
-                    placeholder="https://www.ejemplo.com" 
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                >
-            </div>
 
-            <div>
-                <label for="color" class="block text-sm font-medium text-gray-700">Color del QR</label>
-                <input 
-                    type="color" 
-                    id="color" 
-                    value="#000000" 
-                    class="mt-1 block w-full h-10 border-gray-300 rounded-md"
-                >
-            </div>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
 
-            <div>
-                <label for="background" class="block text-sm font-medium text-gray-700">Color de Fondo</label>
-                <input 
-                    type="color" 
-                    id="background" 
-                    value="#ffffff" 
-                    class="mt-1 block w-full h-10 border-gray-300 rounded-md"
-                >
-            </div>
+        .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
 
-            <div class="flex space-x-4">
-                <button 
-                    onclick="generarQR()" 
-                    class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
-                >
-                    Generar QR
-                </button>
-            </div>
-
-            <div id="qrcode" class="flex justify-center mt-6"></div>
-
-            <div class="flex justify-between mt-4">
-                <a 
-                    id="download-link" 
-                    href="#" 
-                    download="codigo_qr.png" 
-                    class="text-blue-500 hover:text-blue-700 hidden"
-                >
-                    Descargar QR
-                </a>
-                <button 
-                    id="copy-link" 
-                    onclick="copiarImagen()" 
-                    class="text-green-500 hover:text-green-700 hidden"
-                >
-                    Copiar Imagen
-                </button>
-            </div>
-        </div>
-
-        <footer class="text-center text-gray-500 mt-6 text-sm">
-            © 2024 Todo Universidad
-        </footer>
-    </div>
-
-    <script>
-        function generarQR() {
-            var url = document.getElementById("url").value;
-            var colorQR = document.getElementById("color").value;
-            var colorFondo = document.getElementById("background").value;
-
-            if (url) {
-                var qrcodeContainer = document.getElementById("qrcode");
-                qrcodeContainer.innerHTML = ""; // Limpiar QR previo
-
-                var qrcode = new QRCode(qrcodeContainer, {
-                    text: url,
-                    width: 256,
-                    height: 256,
-                    colorDark: colorQR,
-                    colorLight: colorFondo
-                });
-
-                // Generar el canvas para la descarga
-                setTimeout(() => {
-                    var qrCanvas = qrcodeContainer.querySelector('canvas');
-                    var downloadLink = document.getElementById("download-link");
-                    var copyLink = document.getElementById("copy-link");
-                    
-                    downloadLink.href = qrCanvas.toDataURL("image/png");
-                    downloadLink.style.display = 'block';
-                    copyLink.style.display = 'block';
-                }, 100);
-            } else {
-                alert("Por favor, introduce una URL o texto.");
+        @media (min-width: 992px) {
+            .container {
+                grid-template-columns: 500px 1fr;
             }
         }
 
-        function copiarImagen() {
-            var qrCanvas = document.querySelector('#qrcode canvas');
-            
-            qrCanvas.toBlob(function(blob) {
-                const item = new ClipboardItem({ "image/png": blob });
-                navigator.clipboard.write([item]).then(
-                    function() {
-                        alert("Imagen copiada al portapapeles");
-                    }, 
-                    function(error) {
-                        alert("Error al copiar: " + error);
-                    }
-                );
-            });
+        .card {
+            background-color: var(--card-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
         }
+
+        .options-card h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label {
+            display: block; font-weight: 500; margin-bottom: 0.5rem;
+            color: var(--text-secondary); font-size: 0.9rem;
+        }
+        .input-field, .select-field {
+            width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border-color);
+            border-radius: 8px; font-size: 1rem; transition: var(--transition); box-sizing: border-box;
+        }
+        .input-field:focus, .select-field:focus {
+            outline: none; border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        }
+        textarea.input-field { resize: vertical; min-height: 80px; }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            width: 100%; padding: 0.8rem 1.5rem; border: none; border-radius: 8px;
+            cursor: pointer; font-size: 1rem; font-weight: 600; transition: var(--transition);
+            text-decoration: none;
+        }
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: #357ac8; }
+        .btn-secondary { background-color: #eef2f7; color: var(--text-color); }
+        .btn-secondary:hover { background-color: #e1e6ec; }
+
+        .preview-card {
+            position: sticky; top: 2rem; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; min-height: 450px;
+        }
+        #qrcode-canvas { width: 100%; max-width: 400px; height: auto; }
+        .action-buttons {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+            width: 100%; max-width: 400px; margin-top: 1.5rem;
+        }
+
+        /* Tabs */
+        .tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem; }
+        .tab-link {
+            padding: 0.75rem 1rem; border: none; background: none; cursor: pointer;
+            font-size: 1rem; font-weight: 500; color: var(--text-secondary);
+            border-bottom: 3px solid transparent; transition: var(--transition);
+        }
+        .tab-link.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .color-input-wrapper { display: flex; align-items: center; gap: 0.5rem; }
+        .color-input {
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+            width: 40px; height: 40px; background-color: transparent;
+            border: none; cursor: pointer;
+        }
+        .color-input::-webkit-color-swatch { border-radius: 8px; border: 1px solid var(--border-color); }
+        .color-input::-moz-color-swatch { border-radius: 8px; border: 1px solid var(--border-color); }
+
+        .file-input-wrapper {
+            position: relative; display: flex; align-items: center; justify-content: center;
+            padding: 1rem; border: 2px dashed var(--border-color); border-radius: 8px;
+            cursor: pointer; transition: var(--transition);
+        }
+        .file-input-wrapper:hover { border-color: var(--primary-color); background-color: #f5faff; }
+        #logo-input { opacity: 0; position: absolute; width: 100%; height: 100%; cursor: pointer; }
+        #logo-preview { max-width: 40px; max-height: 40px; margin-right: 1rem; }
+        #clear-logo { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 1.2rem; }
+
+        .accordion-header {
+            background-color: #f9fafb; padding: 0.75rem 1rem; cursor: pointer;
+            border: 1px solid var(--border-color); border-radius: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 1rem;
+        }
+        .accordion-header:hover { background-color: #f1f3f6; }
+        .accordion-content {
+            padding: 1rem; border: 1px solid var(--border-color); border-top: none;
+            border-radius: 0 0 8px 8px; display: none;
+        }
+        .accordion-content.show { display: block; }
+        .accordion-header .fas { transition: transform 0.3s ease; }
+        .accordion-header.active .fas { transform: rotate(180deg); }
+
+        /* Responsive Adjustments */
+        @media (max-width: 576px) {
+            body {
+                padding: 1rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            .action-buttons {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            .tab-link {
+                font-size: 0.9rem;
+                padding: 0.75rem 0.5rem;
+            }
+        }
+
+        #qrcode-canvas svg {
+            width: 100% !important;
+            height: auto !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card options-card">
+            <h1>Generador QR Avanzado</h1>
+
+            <!-- QR Type Tabs -->
+            <div class="tabs">
+                <button class="tab-link active" data-tab="text-tab"><i class="fas fa-font"></i> Texto/URL</button>
+                <button class="tab-link" data-tab="wifi-tab"><i class="fas fa-wifi"></i> Wi-Fi</button>
+                <button class="tab-link" data-tab="vcard-tab"><i class="fas fa-address-card"></i> vCard</button>
+                <button class="tab-link" data-tab="email-tab"><i class="fas fa-envelope"></i> Email</button>
+            </div>
+
+            <!-- Tab Content: Data Input -->
+            <div id="text-tab" class="tab-content active">
+                <div class="form-group">
+                    <label for="qr-text">URL o Texto</label>
+                    <textarea id="qr-text" class="input-field" placeholder="Ej: https://todouniversidad.xyz"></textarea>
+                </div>
+            </div>
+            <div id="wifi-tab" class="tab-content">
+                <div class="form-group">
+                    <label for="wifi-ssid">Nombre de Red (SSID)</label>
+                    <input type="text" id="wifi-ssid" class="input-field" placeholder="NombreDeMiWifi">
+                </div>
+                <div class="options-grid">
+                    <div class="form-group">
+                        <label for="wifi-pass">Contraseña</label>
+                        <input type="password" id="wifi-pass" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label for="wifi-encryption">Cifrado</label>
+                        <select id="wifi-encryption" class="select-field">
+                            <option value="WPA">WPA/WPA2</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">Sin contraseña</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div id="vcard-tab" class="tab-content">
+                <div class="options-grid">
+                    <div class="form-group"><label for="vcard-fn">Nombre</label><input type="text" id="vcard-fn" class="input-field"></div>
+                    <div class="form-group"><label for="vcard-ln">Apellido</label><input type="text" id="vcard-ln" class="input-field"></div>
+                </div>
+                <div class="form-group"><label for="vcard-tel">Teléfono</label><input type="tel" id="vcard-tel" class="input-field"></div>
+                <div class="form-group"><label for="vcard-email">Email</label><input type="email" id="vcard-email" class="input-field"></div>
+                <div class="form-group"><label for="vcard-org">Organización</label><input type="text" id="vcard-org" class="input-field"></div>
+            </div>
+            <div id="email-tab" class="tab-content">
+                <div class="form-group"><label for="email-to">Para:</label><input type="email" id="email-to" class="input-field" placeholder="destinatario@ejemplo.com"></div>
+                <div class="form-group"><label for="email-subject">Asunto</label><input type="text" id="email-subject" class="input-field"></div>
+                <div class="form-group"><label for="email-body">Mensaje</label><textarea id="email-body" class="input-field"></textarea></div>
+            </div>
+
+            <!-- Accordion for Styling Options -->
+            <div class="accordion-header" data-target="style-options">
+                <span><i class="fas fa-palette"></i> Opciones de Estilo</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div id="style-options" class="accordion-content">
+                <div class="options-grid">
+                    <div class="form-group">
+                        <label for="dot-style">Estilo de Puntos</label>
+                        <select id="dot-style" class="select-field">
+                            <option value="square">Cuadrado</option>
+                            <option value="dots">Puntos</option>
+                            <option value="rounded">Redondeado</option>
+                            <option value="extra-rounded">Extra Redondeado</option>
+                            <option value="classy">Clásico</option>
+                            <option value="classy-rounded">Clásico Redondeado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="corner-square-style">Estilo de Esquinas</label>
+                        <select id="corner-square-style" class="select-field">
+                            <option value="square">Cuadrado</option>
+                            <option value="dot">Punto</option>
+                            <option value="extra-rounded">Extra Redondeado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Color de Puntos</label>
+                    <div class="options-grid">
+                        <div class="color-input-wrapper"><input type="color" id="color-dark" class="color-input" value="#000000"><span>Principal</span></div>
+                        <div class="color-input-wrapper"><input type="color" id="color-light" class="color-input" value="#ffffff"><span>Fondo</span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Gradiente</label>
+                    <div class="options-grid">
+                        <div class="color-input-wrapper"><input type="color" id="gradient-start" class="color-input" value="#4A90E2"><span>Inicio</span></div>
+                        <div class="color-input-wrapper"><input type="color" id="gradient-end" class="color-input" value="#50E3C2"><span>Fin</span></div>
+                    </div>
+                    <div class="options-grid" style="margin-top: 0.5rem;">
+                        <select id="gradient-type" class="select-field">
+                            <option value="linear">Lineal</option>
+                            <option value="radial">Radial</option>
+                        </select>
+                        <input type="checkbox" id="use-gradient" style="margin-top: 1rem;"> <label for="use-gradient">Usar Gradiente</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accordion for Logo -->
+            <div class="accordion-header" data-target="logo-options">
+                <span><i class="fas fa-image"></i> Logo</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div id="logo-options" class="accordion-content">
+                <div class="form-group">
+                    <label for="logo-input">Subir Logo (Opcional)</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="logo-input" accept="image/png, image/jpeg">
+                        <img id="logo-preview" style="display: none;">
+                        <span id="logo-text"><i class="fas fa-upload"></i> Seleccionar archivo...</span>
+                        <button id="clear-logo" style="display: none;"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="logo-size">Tamaño del Logo (%)</label>
+                    <input type="range" id="logo-size" min="0.1" max="0.5" step="0.05" value="0.3">
+                </div>
+            </div>
+        </div>
+
+        <div class="card preview-card">
+            <div id="qrcode-canvas"></div>
+            <div class="action-buttons">
+                <select id="download-type" class="select-field">
+                    <option value="png">PNG</option>
+                    <option value="jpeg">JPEG</option>
+                    <option value="svg">SVG</option>
+                </select>
+                <button class="btn btn-primary" id="download-btn">
+                    <i class="fas fa-download"></i> Descargar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Element References ---
+            const allInputs = document.querySelectorAll('.input-field, .select-field, .color-input, [type=checkbox], [type=range]');
+            const tabs = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const accordions = document.querySelectorAll('.accordion-header');
+            const qrCanvasContainer = document.getElementById('qrcode-canvas');
+
+            // --- Responsive QR Size ---
+            const getQRSize = () => {
+                return qrCanvasContainer.clientWidth > 0 ? qrCanvasContainer.clientWidth : 300;
+            };
+
+            // --- QR Code Instance ---
+            const qrCode = new QRCodeStyling({
+                width: getQRSize(),
+                height: getQRSize(),
+                type: 'svg',
+                data: 'https://todouniversidad.xyz',
+                image: '',
+                dotsOptions: {
+                    color: '#000000',
+                    type: 'square'
+                },
+                backgroundOptions: {
+                    color: '#ffffff',
+                },
+                imageOptions: {
+                    crossOrigin: 'anonymous',
+                    margin: 10,
+                    imageSize: 0.3
+                },
+                cornersSquareOptions: {
+                    type: 'square',
+                    color: '#000000'
+                }
+            });
+
+            qrCode.append(qrCanvasContainer);
+
+            // --- Main Update Function ---
+            const updateQRCode = () => {
+                let data = '';
+                const activeTab = document.querySelector('.tab-link.active').dataset.tab;
+
+                if (activeTab === 'text-tab') {
+                    data = document.getElementById('qr-text').value;
+                } else if (activeTab === 'wifi-tab') {
+                    const ssid = document.getElementById('wifi-ssid').value;
+                    const pass = document.getElementById('wifi-pass').value;
+                    const enc = document.getElementById('wifi-encryption').value;
+                    if (ssid) data = `WIFI:T:${enc};S:${ssid};P:${pass};;`;
+                } else if (activeTab === 'vcard-tab') {
+                    const fn = document.getElementById('vcard-fn').value;
+                    const ln = document.getElementById('vcard-ln').value;
+                    const tel = document.getElementById('vcard-tel').value;
+                    const email = document.getElementById('vcard-email').value;
+                    const org = document.getElementById('vcard-org').value;
+                    if (fn || ln) {
+                        data = `BEGIN:VCARD\nVERSION:3.0\nN:${ln};${fn}\nFN:${fn} ${ln}\nTEL;TYPE=CELL:${tel}\nEMAIL:${email}\nORG:${org}\nEND:VCARD`;
+                    }
+                } else if (activeTab === 'email-tab') {
+                    const to = document.getElementById('email-to').value;
+                    const subject = document.getElementById('email-subject').value;
+                    const body = document.getElementById('email-body').value;
+                    if (to) data = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                }
+                
+                const useGradient = document.getElementById('use-gradient').checked;
+                const mainColor = document.getElementById('color-dark').value;
+                const gradientStart = document.getElementById('gradient-start').value;
+
+                const dotsColor = useGradient ? gradientStart : mainColor;
+                const cornersColor = useGradient ? gradientStart : mainColor;
+
+                const gradientOptions = useGradient ? {
+                    type: document.getElementById('gradient-type').value,
+                    colorStops: [
+                        { offset: 0, color: document.getElementById('gradient-start').value },
+                        { offset: 1, color: document.getElementById('gradient-end').value }
+                    ]
+                } : null;
+
+                qrCode.update({
+                    data: data || ' ', // Use a space to avoid errors on empty data
+                    dotsOptions: {
+                        type: document.getElementById('dot-style').value,
+                        color: dotsColor,
+                        gradient: gradientOptions
+                    },
+                    cornersSquareOptions: {
+                        type: document.getElementById('corner-square-style').value,
+                        color: cornersColor,
+                        gradient: gradientOptions
+                    },
+                    backgroundOptions: {
+                        color: document.getElementById('color-light').value
+                    },
+                    imageOptions: {
+                        imageSize: document.getElementById('logo-size').value
+                    }
+                });
+            };
+
+            // --- Event Listeners ---
+            allInputs.forEach(input => input.addEventListener('input', updateQRCode));
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(item => item.classList.remove('active'));
+                    tab.classList.add('active');
+                    const targetId = tab.dataset.tab;
+                    tabContents.forEach(content => {
+                        content.style.display = content.id === targetId ? 'block' : 'none';
+                        if (content.id === targetId) content.classList.add('active');
+                        else content.classList.remove('active');
+                    });
+                    updateQRCode(); // Update QR when tab changes
+                });
+            });
+
+            accordions.forEach(accordion => {
+                accordion.addEventListener('click', () => {
+                    const targetId = accordion.dataset.target;
+                    const targetContent = document.getElementById(targetId);
+                    accordion.classList.toggle('active');
+                    targetContent.classList.toggle('show');
+                    const icon = accordion.querySelector('.fa-chevron-down, .fa-chevron-up');
+                    if (targetContent.classList.contains('show')) {
+                        targetContent.style.display = 'block';
+                        icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                    } else {
+                        targetContent.style.display = 'none';
+                        icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                    }
+                });
+            });
+
+            // Logo Handling
+            const logoInput = document.getElementById('logo-input');
+            const logoPreview = document.getElementById('logo-preview');
+            const logoText = document.getElementById('logo-text');
+            const clearLogoBtn = document.getElementById('clear-logo');
+
+            logoInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        qrCode.update({ image: event.target.result });
+                        logoPreview.src = event.target.result;
+                        logoPreview.style.display = 'block';
+                        logoText.style.display = 'none';
+                        clearLogoBtn.style.display = 'inline-block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            clearLogoBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                qrCode.update({ image: '' });
+                logoInput.value = '';
+                logoPreview.style.display = 'none';
+                logoText.style.display = 'block';
+                clearLogoBtn.style.display = 'none';
+            });
+
+            // Download Button
+            document.getElementById('download-btn').addEventListener('click', () => {
+                const ext = document.getElementById('download-type').value;
+                qrCode.download({ name: 'codigo-qr', extension: ext });
+            });
+
+            // --- Responsive Handler ---
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    const newSize = getQRSize();
+                    qrCode.update({
+                        width: newSize,
+                        height: newSize
+                    });
+                }, 100);
+            });
+
+            // --- Initial Setup ---
+            document.getElementById('text-tab').style.display = 'block'; // Show first tab
+            updateQRCode(); // Initial QR code generation
+        });
     </script>
 </body>
 </html>

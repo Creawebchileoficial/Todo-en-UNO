@@ -3,39 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>404 - Página No Encontrada | Todo Universidad</title>
+    
+    <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <title>404 - Enlace no encontrado</title>
     <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #5C6BC0;
+            --background-color: #f5f6fa;
+            --card-color: #ffffff;
+            --text-color: #2c3e50;
+            --text-secondary: #556170;
+            --shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background: #f8fafc;
+            min-height: 100vh;
+            padding: 1rem;
         }
-        .error-container {
+
+        .container {
+            max-width: 800px;
+            width: 100%;
             text-align: center;
-            padding: 2rem;
         }
-        h1 { color: #2563eb; }
-        p { color: #64748b; }
-        a {
-            color: #2563eb;
+
+        .error-card {
+            background-color: var(--card-color);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .error-code {
+            font-size: 7rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(74, 144, 226, 0.2);
+        }
+
+        .error-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .error-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
             text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-    </style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497" crossorigin="anonymous"></script>
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #eef2f7;
+            color: var(--text-color);
+        }
+
+        .quick-nav {
+            margin-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 2rem;
+        }
+
+        .quick-nav h3 {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .tool-link {
+            background-color: var(--background-color);
+            padding: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition);
+            border: 1px solid #e5e7eb;
+        }
+
+        .tool-link:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tool-link i {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 600px) {
+            .error-card {
+                padding: 2rem 1.5rem;
+            }
+            .error-code {
+                font-size: 5rem;
+            }
+            .error-title {
+                font-size: 1.5rem;
+            }
+            .buttons-container {
+                flex-direction: column;
+            }
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="error-container">
-        <h1>404 - Enlace no encontrado</h1>
-        <p>El enlace que estás buscando no existe o ha expirado.</p>
-        <a href="https://todouniversidad.xyz/acortador-de-link.html">Volver al acortador</a>
+    <div class="container">
+        <div class="error-card">
+            <div class="error-code">404</div>
+            <h1 class="error-title">Página No Encontrada</h1>
+            <p class="error-description">
+                Lo sentimos, no pudimos encontrar la página que buscas.
+                Es posible que el enlace esté roto, haya sido eliminado o nunca haya existido.
+            </p>
+
+            <div class="buttons-container">
+                <a href="./index.html" class="btn btn-primary">
+                    <i class="fas fa-home"></i>
+                    Volver al Inicio
+                </a>
+                <button onclick="history.back()" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Página Anterior
+                </button>
+            </div>
+
+            <div class="quick-nav">
+                <h3>O quizás buscabas una de estas herramientas:</h3>
+                <div class="tools-grid">
+                    <a href="./promedio.html" class="tool-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Promedio</span>
+                    </a>
+                    <a href="./escaladenotas.html" class="tool-link">
+                        <i class="fas fa-tasks"></i>
+                        <span>Escala de Notas</span>
+                    </a>
+                    <a href="./cientifica.html" class="tool-link">
+                        <i class="fas fa-square-root-alt"></i>
+                        <span>Científica</span>
+                    </a>
+                    <a href="./curriculum.html" class="tool-link">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Curriculum</span>
+                    </a>
+                    <a href="./cronometro.html" class="tool-link">
+                        <i class="fas fa-stopwatch"></i>
+                        <span>Cronómetro</span>
+                    </a>
+                    <a href="./generar_qr.html" class="tool-link">
+                        <i class="fas fa-qrcode"></i>
+                        <span>Código QR</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

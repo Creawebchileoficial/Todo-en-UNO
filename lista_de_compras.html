@@ -1,361 +1,361 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
-    <title>Lista de Compras del Supermercado</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" crossorigin="anonymous">
-    <style>
-        :root {
-            --primary-color: #1A73E8;
-            --secondary-color: #34A853;
-            --background-light: #F1F3F4;
-            --text-dark: #202124;
-            --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
+ 
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
+ <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
+ <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
+ <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
+ <title>Lista de Compras del Supermercado</title>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet" crossorigin="anonymous">
+ <style>
+ :root {
+ --primary-color: #1A73E8;
+ --secondary-color: #34A853;
+ --background-light: #F1F3F4;
+ --text-dark: #202124;
+ --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.1);
+ --shadow-hover: 0 6px 12px rgba(0, 0, 0, 0.15);
+ }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+ }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--background-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
+ body {
+ font-family: 'Inter', sans-serif;
+ background-color: var(--background-light);
+ color: var(--text-dark);
+ line-height: 1.6;
+ }
 
-        .app-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow-soft);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
+ .app-container {
+ max-width: 800px;
+ margin: 2rem auto;
+ background-color: white;
+ border-radius: 12px;
+ box-shadow: var(--shadow-soft);
+ overflow: hidden;
+ transition: all 0.3s ease;
+ }
 
-        .app-header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+ .app-header {
+ background-color: var(--primary-color);
+ color: white;
+ padding: 1.5rem;
+ text-align: center;
+ box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+ }
 
-        .app-header h1 {
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
+ .app-header h1 {
+ font-size: 1.8rem;
+ font-weight: 600;
+ }
 
-        .form-section {
-            padding: 1.5rem;
-            background-color: #f9f9f9;
-        }
+ .form-section {
+ padding: 1.5rem;
+ background-color: #f9f9f9;
+ }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
+ .form-grid {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 1rem;
+ margin-bottom: 1rem;
+ }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
+ .form-group {
+ display: flex;
+ flex-direction: column;
+ }
 
-        .form-group label {
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-dark);
-        }
+ .form-group label {
+ margin-bottom: 0.5rem;
+ font-weight: 500;
+ color: var(--text-dark);
+ }
 
-        .form-group input {
-            padding: 0.75rem;
-            border: 1px solid #dadce0;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-        }
+ .form-group input {
+ padding: 0.75rem;
+ border: 1px solid #dadce0;
+ border-radius: 6px;
+ font-size: 1rem;
+ transition: all 0.2s ease;
+ }
 
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
-        }
+ .form-group input:focus {
+ outline: none;
+ border-color: var(--primary-color);
+ box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+ }
 
-        .action-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-        }
+ .action-buttons {
+ display: flex;
+ justify-content: flex-end;
+ gap: 1rem;
+ }
 
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+ .btn {
+ padding: 0.75rem 1.5rem;
+ border: none;
+ border-radius: 6px;
+ font-weight: 600;
+ cursor: pointer;
+ transition: all 0.3s ease;
+ display: inline-flex;
+ align-items: center;
+ gap: 0.5rem;
+ }
 
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
+ .btn-primary {
+ background-color: var(--primary-color);
+ color: white;
+ }
 
-        .btn-primary:hover {
-            background-color: #165bb6;
-        }
+ .btn-primary:hover {
+ background-color: #165bb6;
+ }
 
-        .btn-secondary {
-            background-color: var(--secondary-color);
-            color: white;
-        }
+ .btn-secondary {
+ background-color: var(--secondary-color);
+ color: white;
+ }
 
-        .btn-secondary:hover {
-            background-color: #2c8a45;
-        }
+ .btn-secondary:hover {
+ background-color: #2c8a45;
+ }
 
-        .product-list {
-            margin-top: 1.5rem;
-        }
+ .product-list {
+ margin-top: 1.5rem;
+ }
 
-        /* Nueva clase product-table-wrapper */
-        .product-table-wrapper {
-            overflow-x: auto; /* Permite desplazamiento horizontal si es necesario */
-        }
+ /* Nueva clase product-table-wrapper */
+ .product-table-wrapper {
+ overflow-x: auto; /* Permite desplazamiento horizontal si es necesario */
+ }
 
-        .product-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            border-radius: 8px;
-            overflow: hidden;
-            min-width: 600px; /* Asegura que las tablas grandes no se compriman demasiado */
-        }
+ .product-table {
+ width: 100%;
+ border-collapse: separate;
+ border-spacing: 0;
+ border-radius: 8px;
+ overflow: hidden;
+ min-width: 600px; /* Asegura que las tablas grandes no se compriman demasiado */
+ }
 
-        .product-table th {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem;
-            text-align: left;
-        }
+ .product-table th {
+ background-color: var(--primary-color);
+ color: white;
+ padding: 1rem;
+ text-align: left;
+ }
 
-        .product-table td {
-            padding: 1rem;
-            border-bottom: 1px solid #e0e0e0;
-        }
+ .product-table td {
+ padding: 1rem;
+ border-bottom: 1px solid #e0e0e0;
+ }
 
-        .product-table tr:last-child td {
-            border-bottom: none;
-        }
+ .product-table tr:last-child td {
+ border-bottom: none;
+ }
 
-        .total-section {
-            background-color: #f1f3f4;
-            padding: 1rem;
-            text-align: right;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
+ .total-section {
+ background-color: #f1f3f4;
+ padding: 1rem;
+ text-align: right;
+ font-size: 1.2rem;
+ font-weight: 600;
+ }
 
-        /* Ajustes al botón de eliminar */
-        .remove-btn {
-            background-color: #d32f2f;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.9rem;
-            cursor: pointer;
-            white-space: nowrap; /* Evita que el texto se corte */
-        }
+ /* Ajustes al botón de eliminar */
+ .remove-btn {
+ background-color: #d32f2f;
+ color: white;
+ border: none;
+ border-radius: 4px;
+ padding: 0.4rem 0.8rem;
+ font-size: 0.9rem;
+ cursor: pointer;
+ white-space: nowrap; /* Evita que el texto se corte */
+ }
 
-        @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
+ @media (max-width: 768px) {
+ .form-grid {
+ grid-template-columns: 1fr;
+ }
 
-            .action-buttons {
-                flex-wrap: wrap; /* Permite que los botones se acomoden en varias filas */
-                gap: 0.5rem; /* Reduce el espacio entre botones */
-            }
+ .action-buttons {
+ flex-wrap: wrap; /* Permite que los botones se acomoden en varias filas */
+ gap: 0.5rem; /* Reduce el espacio entre botones */
+ }
 
-            .remove-btn {
-                font-size: 0.8rem; /* Botones más compactos */
-                padding: 0.3rem 0.6rem;
-            }
-        }
+ .remove-btn {
+ font-size: 0.8rem; /* Botones más compactos */
+ padding: 0.3rem 0.6rem;
+ }
+ }
 
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white;
-            margin-left: 10px;
-        }
+ .btn-danger {
+ background: linear-gradient(135deg, #ef4444, #dc2626);
+ color: white;
+ margin-left: 10px;
+ }
 
-        .btn-danger:hover {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-        }
-    </style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497" crossorigin="anonymous"></script>
+ .btn-danger:hover {
+ background: linear-gradient(135deg, #dc2626, #b91c1c);
+ }
+ </style>
 </head>
 <body>
-    <div class="app-container">
-        <header class="app-header">
-            <h1>Lista de Compras del Supermercado</h1>
-        </header>
+ <div class="app-container">
+ <header class="app-header">
+ <h1>Lista de Compras del Supermercado</h1>
+ </header>
 
-        <section class="form-section">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="product-name">Nombre del Producto</label>
-                    <input type="text" id="product-name" placeholder="Ej: Leche">
-                </div>
-                <div class="form-group">
-                    <label for="quantity">Cantidad</label>
-                    <input type="number" id="quantity" placeholder="Ej: 1" min="1">
-                </div>
-                <div class="form-group">
-                    <label for="unit-price">Precio por Unidad (CLP)</label>
-                    <input type="number" id="unit-price" placeholder="Ej: 5000" min="0">
-                </div>
-            </div>
-            <div class="action-buttons">
-                <button onclick="addProduct()" class="btn btn-primary">
-                    Agregar Productos
-                </button>
-                <button onclick="calculateTotal()" class="btn btn-secondary">
-                    Calcular Total
-                </button>
-                <button class="btn btn-danger" onclick="deleteAll()">
-                    <i class="ri-delete-bin-line"></i>
-                    Borrar Todo
-                </button>
-            </div>
-        </section>
+ <section class="form-section">
+ <div class="form-grid">
+ <div class="form-group">
+ <label for="product-name">Nombre del Producto</label>
+ <input type="text" id="product-name" placeholder="Ej: Leche">
+ </div>
+ <div class="form-group">
+ <label for="quantity">Cantidad</label>
+ <input type="number" id="quantity" placeholder="Ej: 1" min="1">
+ </div>
+ <div class="form-group">
+ <label for="unit-price">Precio por Unidad (CLP)</label>
+ <input type="number" id="unit-price" placeholder="Ej: 5000" min="0">
+ </div>
+ </div>
+ <div class="action-buttons">
+ <button onclick="addProduct()" class="btn btn-primary">
+ Agregar Productos
+ </button>
+ <button onclick="calculateTotal()" class="btn btn-secondary">
+ Calcular Total
+ </button>
+ <button class="btn btn-danger" onclick="deleteAll()">
+ <i class="ri-delete-bin-line"></i>
+ Borrar Todo
+ </button>
+ </div>
+ </section>
 
-        <section class="product-list">
-            <div class="product-table-wrapper">
-                <table id="product-table" class="product-table">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio Unitario</th>
-                            <th>Subtotal</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Productos se agregarán dinámicamente -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
+ <section class="product-list">
+ <div class="product-table-wrapper">
+ <table id="product-table" class="product-table">
+ <thead>
+ <tr>
+ <th>Producto</th>
+ <th>Cantidad</th>
+ <th>Precio Unitario</th>
+ <th>Subtotal</th>
+ <th>Acciones</th>
+ </tr>
+ </thead>
+ <tbody>
+ <!-- Productos se agregarán dinámicamente -->
+ </tbody>
+ </table>
+ </div>
+ </section>
 
-        <section class="total-section" id="total-price">
-            Total: $0 CLP
-        </section>
-    </div>
+ <section class="total-section" id="total-price">
+ Total: $0 CLP
+ </section>
+ </div>
 
-    <script>
-        let products = [];
+ <script>
+ let products = [];
 
-        function addProduct() {
-            const productName = document.getElementById('product-name').value;
-            const quantity = parseInt(document.getElementById('quantity').value);
-            const unitPrice = parseInt(document.getElementById('unit-price').value);
+ function addProduct() {
+ const productName = document.getElementById('product-name').value;
+ const quantity = parseInt(document.getElementById('quantity').value);
+ const unitPrice = parseInt(document.getElementById('unit-price').value);
 
-            if (productName && quantity > 0 && unitPrice > 0) {
-                const product = {
-                    name: productName,
-                    quantity: quantity,
-                    unitPrice: unitPrice,
-                    subtotal: quantity * unitPrice
-                };
-                products.push(product);
-                renderProductList();
-                saveToLocalStorage(); // Guardar después de agregar
+ if (productName && quantity > 0 && unitPrice > 0) {
+ const product = {
+ name: productName,
+ quantity: quantity,
+ unitPrice: unitPrice,
+ subtotal: quantity * unitPrice
+ };
+ products.push(product);
+ renderProductList();
+ saveToLocalStorage(); // Guardar después de agregar
 
-                // Reset form fields
-                document.getElementById('product-name').value = '';
-                document.getElementById('quantity').value = '';
-                document.getElementById('unit-price').value = '';
-            } else {
-                alert('Por favor, ingresa valores válidos.');
-            }
-        }
+ // Reset form fields
+ document.getElementById('product-name').value = '';
+ document.getElementById('quantity').value = '';
+ document.getElementById('unit-price').value = '';
+ } else {
+ alert('Por favor, ingresa valores válidos.');
+ }
+ }
 
-        function removeProduct(index) {
-            products.splice(index, 1);
-            renderProductList();
-            saveToLocalStorage(); // Guardar después de eliminar
-        }
+ function removeProduct(index) {
+ products.splice(index, 1);
+ renderProductList();
+ saveToLocalStorage(); // Guardar después de eliminar
+ }
 
-        function renderProductList() {
-            const productTableBody = document.getElementById('product-table').querySelector('tbody');
-            productTableBody.innerHTML = '';
+ function renderProductList() {
+ const productTableBody = document.getElementById('product-table').querySelector('tbody');
+ productTableBody.innerHTML = '';
 
-            products.forEach((product, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${product.name}</td>
-                    <td>${product.quantity}</td>
-                    <td>${product.unitPrice}</td>
-                    <td>${product.subtotal}</td>
-                    <td><button class="remove-btn" onclick="removeProduct(${index})">Eliminar</button></td>
-                `;
-                productTableBody.appendChild(row);
-            });
+ products.forEach((product, index) => {
+ const row = document.createElement('tr');
+ row.innerHTML = `
+ <td>${product.name}</td>
+ <td>${product.quantity}</td>
+ <td>${product.unitPrice}</td>
+ <td>${product.subtotal}</td>
+ <td><button class="remove-btn" onclick="removeProduct(${index})">Eliminar</button></td>
+ `;
+ productTableBody.appendChild(row);
+ });
 
-            calculateTotal();
-        }
+ calculateTotal();
+ }
 
-        function calculateTotal() {
-            const total = products.reduce((sum, product) => sum + product.subtotal, 0);
-            document.getElementById('total-price').textContent = `Total: $${total} CLP`;
-        }
+ function calculateTotal() {
+ const total = products.reduce((sum, product) => sum + product.subtotal, 0);
+ document.getElementById('total-price').textContent = `Total: $${total} CLP`;
+ }
 
-        // Cargar productos del localStorage cuando la página carga
-        window.onload = function() {
-            loadFromLocalStorage();
-        };
+ // Cargar productos del localStorage cuando la página carga
+ window.onload = function() {
+ loadFromLocalStorage();
+ };
 
-        // Función para guardar en localStorage
-        function saveToLocalStorage() {
-            localStorage.setItem('productList', JSON.stringify(products));
-        }
+ // Función para guardar en localStorage
+ function saveToLocalStorage() {
+ localStorage.setItem('productList', JSON.stringify(products));
+ }
 
-        // Función para cargar desde localStorage
-        function loadFromLocalStorage() {
-            const savedProducts = localStorage.getItem('productList');
-            if (savedProducts) {
-                products = JSON.parse(savedProducts);
-                renderProductList();
-            }
-        }
+ // Función para cargar desde localStorage
+ function loadFromLocalStorage() {
+ const savedProducts = localStorage.getItem('productList');
+ if (savedProducts) {
+ products = JSON.parse(savedProducts);
+ renderProductList();
+ }
+ }
 
-        // Modificar la función deleteAll
-        function deleteAll() {
-            if (confirm('¿Estás seguro de que quieres borrar toda la lista?')) {
-                products = [];
-                renderProductList();
-                localStorage.removeItem('productList');
-            }
-        }
-    </script>
+ // Modificar la función deleteAll
+ function deleteAll() {
+ if (confirm('¿Estás seguro de que quieres borrar toda la lista?')) {
+ products = [];
+ renderProductList();
+ localStorage.removeItem('productList');
+ }
+ }
+ </script>
 </body>
 </html>
 

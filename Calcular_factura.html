@@ -1,618 +1,618 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-  
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
-    <title>Calculadora de Facturas - Todo Universidad</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <style>
-        :root {
-            --color-primary: #2563eb;
-            --color-secondary: #0f172a;
-            --color-accent: #22c55e;
-            --color-error: #ef4444;
-            --color-background: #f8fafc;
-            --color-text-dark: #1e293b;
-            --color-white: #ffffff;
-            --shadow-subtle: 0 4px 6px rgba(0,0,0,0.1);
-            --gradient-primary: linear-gradient(135deg, #2563eb, #1e40af);
-        }
+ 
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
+ <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
+ <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
+ <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
+ <title>Calculadora de Facturas - Todo Universidad</title>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+ <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+ <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+ <style>
+ :root {
+ --color-primary: #2563eb;
+ --color-secondary: #0f172a;
+ --color-accent: #22c55e;
+ --color-error: #ef4444;
+ --color-background: #f8fafc;
+ --color-text-dark: #1e293b;
+ --color-white: #ffffff;
+ --shadow-subtle: 0 4px 6px rgba(0,0,0,0.1);
+ --gradient-primary: linear-gradient(135deg, #2563eb, #1e40af);
+ }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--color-background);
-            min-height: 100vh;
-            padding: 20px;
-            color: var(--color-text-dark);
-        }
+ body {
+ font-family: 'Inter', sans-serif;
+ background: var(--color-background);
+ min-height: 100vh;
+ padding: 20px;
+ color: var(--color-text-dark);
+ }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+ .container {
+ max-width: 800px;
+ margin: 0 auto;
+ }
 
-        .calculator-card {
-            background: var(--color-white);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            border: 1px solid rgba(37, 99, 235, 0.1);
-        }
+ .calculator-card {
+ background: var(--color-white);
+ border-radius: 24px;
+ padding: 40px;
+ box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+ margin-bottom: 20px;
+ border: 1px solid rgba(37, 99, 235, 0.1);
+ }
 
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-        }
+ .header {
+ text-align: center;
+ margin-bottom: 40px;
+ position: relative;
+ }
 
-        .header::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: var(--gradient-primary);
-            margin: 20px auto 0;
-            border-radius: 2px;
-        }
+ .header::after {
+ content: '';
+ display: block;
+ width: 60px;
+ height: 4px;
+ background: var(--gradient-primary);
+ margin: 20px auto 0;
+ border-radius: 2px;
+ }
 
-        .header h1 {
-            color: var(--color-secondary);
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
+ .header h1 {
+ color: var(--color-secondary);
+ font-size: 2.2rem;
+ margin-bottom: 15px;
+ font-weight: 700;
+ }
 
-        .header p {
-            color: #64748b;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
+ .header p {
+ color: #64748b;
+ font-size: 1.1rem;
+ line-height: 1.6;
+ }
 
-        .input-group {
-            margin-bottom: 25px;
-            position: relative;
-        }
+ .input-group {
+ margin-bottom: 25px;
+ position: relative;
+ }
 
-        .input-group i {
-            position: absolute;
-            left: 15px;
-            top: 45px;
-            color: #64748b;
-            font-size: 1.2rem;
-        }
+ .input-group i {
+ position: absolute;
+ left: 15px;
+ top: 45px;
+ color: #64748b;
+ font-size: 1.2rem;
+ }
 
-        label {
-            display: block;
-            color: var(--color-text-dark);
-            margin-bottom: 10px;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
+ label {
+ display: block;
+ color: var(--color-text-dark);
+ margin-bottom: 10px;
+ font-weight: 600;
+ font-size: 0.95rem;
+ }
 
-        input {
-            width: 100%;
-            padding: 12px 12px 12px 45px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #f8fafc;
-        }
+ input {
+ width: 100%;
+ padding: 12px 12px 12px 45px;
+ border: 2px solid #e2e8f0;
+ border-radius: 12px;
+ font-size: 1rem;
+ transition: all 0.3s ease;
+ background: #f8fafc;
+ }
 
-        input:focus {
-            border-color: var(--color-primary);
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-            background: white;
-        }
+ input:focus {
+ border-color: var(--color-primary);
+ outline: none;
+ box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+ background: white;
+ }
 
-        .button-container {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
+ .button-container {
+ display: flex;
+ gap: 15px;
+ margin-top: 30px;
+ }
 
-        .btn {
-            flex: 1;
-            padding: 16px 32px;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
+ .btn {
+ flex: 1;
+ padding: 16px 32px;
+ border: none;
+ border-radius: 12px;
+ font-size: 1.1rem;
+ font-weight: 600;
+ cursor: pointer;
+ transition: all 0.3s ease;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 8px;
+ }
 
-        .btn-calculate {
-            background: var(--gradient-primary);
-            color: white;
-        }
+ .btn-calculate {
+ background: var(--gradient-primary);
+ color: white;
+ }
 
-        .btn-reset {
-            background: linear-gradient(135deg, #64748b, #475569);
-            color: white;
-        }
+ .btn-reset {
+ background: linear-gradient(135deg, #64748b, #475569);
+ color: white;
+ }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-        }
+ .btn:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+ }
 
-        .btn i {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
-        }
+ .btn i {
+ font-size: 1.2rem;
+ transition: transform 0.3s ease;
+ }
 
-        .btn-reset:hover i {
-            transform: rotate(180deg);
-        }
+ .btn-reset:hover i {
+ transform: rotate(180deg);
+ }
 
-        .result-card {
-            background: var(--color-white);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            display: none;
-            border: 1px solid rgba(37, 99, 235, 0.1);
-            animation: slideUp 0.4s ease;
-        }
+ .result-card {
+ background: var(--color-white);
+ border-radius: 24px;
+ padding: 40px;
+ box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+ display: none;
+ border: 1px solid rgba(37, 99, 235, 0.1);
+ animation: slideUp 0.4s ease;
+ }
 
-        .result-card.visible {
-            display: block;
-        }
+ .result-card.visible {
+ display: block;
+ }
 
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 2px solid #f1f5f9;
-            position: relative;
-        }
+ .result-item {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding: 20px;
+ border-bottom: 2px solid #f1f5f9;
+ position: relative;
+ }
 
-        .result-item:last-child {
-            border-bottom: none;
-        }
+ .result-item:last-child {
+ border-bottom: none;
+ }
 
-        .result-label {
-            color: #64748b;
-            font-weight: 500;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+ .result-label {
+ color: #64748b;
+ font-weight: 500;
+ font-size: 1.1rem;
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ }
 
-        .result-value {
-            color: var(--color-secondary);
-            font-weight: 700;
-            font-size: 1.3rem;
-        }
+ .result-value {
+ color: var(--color-secondary);
+ font-weight: 700;
+ font-size: 1.3rem;
+ }
 
-        .total-value {
-            color: var(--color-primary);
-            font-size: 1.5rem;
-        }
+ .total-value {
+ color: var(--color-primary);
+ font-size: 1.5rem;
+ }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+ @keyframes slideUp {
+ from {
+ opacity: 0;
+ transform: translateY(20px);
+ }
+ to {
+ opacity: 1;
+ transform: translateY(0);
+ }
+ }
 
-        @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
+ @media (max-width: 768px) {
+ body {
+ padding: 15px;
+ }
 
-            .calculator-card, .result-card {
-                padding: 25px;
-                border-radius: 20px;
-            }
+ .calculator-card, .result-card {
+ padding: 25px;
+ border-radius: 20px;
+ }
 
-            .header h1 {
-                font-size: 1.8rem;
-            }
+ .header h1 {
+ font-size: 1.8rem;
+ }
 
-            .button-container {
-                flex-direction: column;
-            }
+ .button-container {
+ flex-direction: column;
+ }
 
-            .result-label {
-                font-size: 1rem;
-            }
+ .result-label {
+ font-size: 1rem;
+ }
 
-            .result-value {
-                font-size: 1.1rem;
-            }
-        }
+ .result-value {
+ font-size: 1.1rem;
+ }
+ }
 
-        .factura-item {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-            position: relative;
-            animation: slideIn 0.3s ease;
-        }
+ .factura-item {
+ background: white;
+ border-radius: 12px;
+ padding: 20px;
+ margin-bottom: 15px;
+ box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+ border: 1px solid #e2e8f0;
+ position: relative;
+ animation: slideIn 0.3s ease;
+ }
 
-        .factura-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
+ .factura-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 15px;
+ }
 
-        .categoria-badge {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
+ .categoria-badge {
+ background: var(--gradient-primary);
+ color: white;
+ padding: 4px 12px;
+ border-radius: 20px;
+ font-size: 0.9rem;
+ }
 
-        .factura-monto {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--color-primary);
-        }
+ .factura-monto {
+ font-size: 1.2rem;
+ font-weight: 700;
+ color: var(--color-primary);
+ }
 
-        .factura-descripcion {
-            color: #64748b;
-            margin: 10px 0;
-        }
+ .factura-descripcion {
+ color: #64748b;
+ margin: 10px 0;
+ }
 
-        .facturas-list {
-            margin-top: 30px;
-        }
+ .facturas-list {
+ margin-top: 30px;
+ }
 
-        .totales-card {
-            background: var(--gradient-primary);
-            color: white;
-            border-radius: 16px;
-            padding: 25px;
-            margin-top: 30px;
-        }
+ .totales-card {
+ background: var(--gradient-primary);
+ color: white;
+ border-radius: 16px;
+ padding: 25px;
+ margin-top: 30px;
+ }
 
-        .total-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
+ .total-item {
+ display: flex;
+ justify-content: space-between;
+ padding: 10px 0;
+ border-bottom: 1px solid rgba(255,255,255,0.2);
+ }
 
-        .total-item:last-child {
-            border: none;
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
+ .total-item:last-child {
+ border: none;
+ font-size: 1.2rem;
+ font-weight: 700;
+ }
 
-        .categorias-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+ .categorias-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+ gap: 10px;
+ margin-bottom: 20px;
+ }
 
-        .categoria-btn {
-            background: white;
-            border: 2px solid #e2e8f0;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
+ .categoria-btn {
+ background: white;
+ border: 2px solid #e2e8f0;
+ padding: 10px;
+ border-radius: 8px;
+ cursor: pointer;
+ transition: all 0.3s ease;
+ text-align: center;
+ }
 
-        .categoria-btn.active {
-            border-color: var(--color-primary);
-            background: rgba(37, 99, 235, 0.1);
-            color: var(--color-primary);
-        }
+ .categoria-btn.active {
+ border-color: var(--color-primary);
+ background: rgba(37, 99, 235, 0.1);
+ color: var(--color-primary);
+ }
 
-        .delete-factura {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #fee2e2;
-            color: #dc2626;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
+ .delete-factura {
+ position: absolute;
+ top: 10px;
+ right: 10px;
+ background: #fee2e2;
+ color: #dc2626;
+ border: none;
+ border-radius: 50%;
+ width: 30px;
+ height: 30px;
+ cursor: pointer;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ transition: all 0.3s ease;
+ }
 
-        .delete-factura:hover {
-            background: #dc2626;
-            color: white;
-            transform: rotate(90deg);
-        }
+ .delete-factura:hover {
+ background: #dc2626;
+ color: white;
+ transform: rotate(90deg);
+ }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+ @keyframes slideIn {
+ from {
+ opacity: 0;
+ transform: translateY(20px);
+ }
+ to {
+ opacity: 1;
+ transform: translateY(0);
+ }
+ }
 
-        .iva-container {
-            position: relative;
-        }
+ .iva-container {
+ position: relative;
+ }
 
-        .iva-suggestion {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: #64748b;
-            font-size: 0.85rem;
-            margin-top: 5px;
-        }
+ .iva-suggestion {
+ display: flex;
+ align-items: center;
+ gap: 5px;
+ color: #64748b;
+ font-size: 0.85rem;
+ margin-top: 5px;
+ }
 
-        .iva-suggestion i {
-            color: var(--color-primary);
-            font-size: 1rem;
-        }
-    </style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497" crossorigin="anonymous"></script>
+ .iva-suggestion i {
+ color: var(--color-primary);
+ font-size: 1rem;
+ }
+ </style>
 </head>
 <body>
-    <div class="container">
-        <div class="calculator-card">
-            <div class="header">
-                <h1>Calculadora de Facturas</h1>
-                <p>Registra y calcula tus facturas fácilmente</p>
-            </div>
+ <div class="container">
+ <div class="calculator-card">
+ <div class="header">
+ <h1>Calculadora de Facturas</h1>
+ <p>Registra y calcula tus facturas fácilmente</p>
+ </div>
 
-            <div class="input-group">
-                <label>Categoría</label>
-                <div class="categorias-grid">
-                    <button class="categoria-btn" data-categoria="Servicios">
-                        <i class="ri-home-line"></i> Servicios
-                    </button>
-                    <button class="categoria-btn" data-categoria="Compras">
-                        <i class="ri-shopping-cart-line"></i> Compras
-                    </button>
-                    <button class="categoria-btn" data-categoria="Transporte">
-                        <i class="ri-car-line"></i> Transporte
-                    </button>
-                    <button class="categoria-btn" data-categoria="Otros">
-                        <i class="ri-more-line"></i> Otros
-                    </button>
-                </div>
-            </div>
+ <div class="input-group">
+ <label>Categoría</label>
+ <div class="categorias-grid">
+ <button class="categoria-btn" data-categoria="Servicios">
+ <i class="ri-home-line"></i> Servicios
+ </button>
+ <button class="categoria-btn" data-categoria="Compras">
+ <i class="ri-shopping-cart-line"></i> Compras
+ </button>
+ <button class="categoria-btn" data-categoria="Transporte">
+ <i class="ri-car-line"></i> Transporte
+ </button>
+ <button class="categoria-btn" data-categoria="Otros">
+ <i class="ri-more-line"></i> Otros
+ </button>
+ </div>
+ </div>
 
-            <div class="input-group">
-                <label for="descripcion">Descripción</label>
-                <i class="ri-file-list-line"></i>
-                <input type="text" id="descripcion" placeholder="Ej: Factura de luz">
-            </div>
+ <div class="input-group">
+ <label for="descripcion">Descripción</label>
+ <i class="ri-file-list-line"></i>
+ <input type="text" id="descripcion" placeholder="Ej: Factura de luz">
+ </div>
 
-            <div class="input-group">
-                <label for="monto">Monto</label>
-                <i class="ri-money-dollar-circle-line"></i>
-                <input type="number" id="monto" placeholder="Ingresa el monto">
-            </div>
+ <div class="input-group">
+ <label for="monto">Monto</label>
+ <i class="ri-money-dollar-circle-line"></i>
+ <input type="number" id="monto" placeholder="Ingresa el monto">
+ </div>
 
-            <div class="input-group">
-                <label for="iva">IVA (%) - Opcional</label>
-                <i class="ri-percent-line"></i>
-                <div class="iva-container">
-                    <input type="number" id="iva" placeholder="En Chile es 19%">
-                    <div class="iva-suggestion">
-                        <i class="ri-information-line"></i>
-                        Deja vacío si no aplica IVA
-                    </div>
-                </div>
-            </div>
+ <div class="input-group">
+ <label for="iva">IVA (%) - Opcional</label>
+ <i class="ri-percent-line"></i>
+ <div class="iva-container">
+ <input type="number" id="iva" placeholder="En Chile es 19%">
+ <div class="iva-suggestion">
+ <i class="ri-information-line"></i>
+ Deja vacío si no aplica IVA
+ </div>
+ </div>
+ </div>
 
-            <button class="btn" onclick="agregarFactura()">
-                <i class="ri-add-line"></i> Agregar Factura
-            </button>
+ <button class="btn" onclick="agregarFactura()">
+ <i class="ri-add-line"></i> Agregar Factura
+ </button>
 
-            <div class="facturas-list" id="facturasList"></div>
+ <div class="facturas-list" id="facturasList"></div>
 
-            <div class="totales-card" id="totalesCard" style="display: none;">
-                <div class="total-item">
-                    <span>Subtotal</span>
-                    <span id="subtotal">$0</span>
-                </div>
-                <div class="total-item">
-                    <span>IVA Total</span>
-                    <span id="ivaTotal">$0</span>
-                </div>
-                <div class="total-item">
-                    <span>Total</span>
-                    <span id="total">$0</span>
-                </div>
-                <button class="download-btn" onclick="descargarResumen()">
-                    <i class="ri-download-line"></i> Descargar Resumen
-                </button>
-            </div>
-        </div>
-    </div>
+ <div class="totales-card" id="totalesCard" style="display: none;">
+ <div class="total-item">
+ <span>Subtotal</span>
+ <span id="subtotal">$0</span>
+ </div>
+ <div class="total-item">
+ <span>IVA Total</span>
+ <span id="ivaTotal">$0</span>
+ </div>
+ <div class="total-item">
+ <span>Total</span>
+ <span id="total">$0</span>
+ </div>
+ <button class="download-btn" onclick="descargarResumen()">
+ <i class="ri-download-line"></i> Descargar Resumen
+ </button>
+ </div>
+ </div>
+ </div>
 
-    <script>
-        let facturas = [];
-        let categoriaSeleccionada = '';
+ <script>
+ let facturas = [];
+ let categoriaSeleccionada = '';
 
-        // Selección de categoría
-        document.querySelectorAll('.categoria-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.categoria-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                categoriaSeleccionada = btn.dataset.categoria;
-            });
-        });
+ // Selección de categoría
+ document.querySelectorAll('.categoria-btn').forEach(btn => {
+ btn.addEventListener('click', () => {
+ document.querySelectorAll('.categoria-btn').forEach(b => b.classList.remove('active'));
+ btn.classList.add('active');
+ categoriaSeleccionada = btn.dataset.categoria;
+ });
+ });
 
-        function agregarFactura() {
-            const descripcion = document.getElementById('descripcion').value;
-            const monto = parseFloat(document.getElementById('monto').value);
-            const iva = document.getElementById('iva').value ? parseFloat(document.getElementById('iva').value) : 0;
+ function agregarFactura() {
+ const descripcion = document.getElementById('descripcion').value;
+ const monto = parseFloat(document.getElementById('monto').value);
+ const iva = document.getElementById('iva').value ? parseFloat(document.getElementById('iva').value) : 0;
 
-            if (!descripcion || !monto || !categoriaSeleccionada) {
-                alert('Por favor, completa los campos requeridos');
-                return;
-            }
+ if (!descripcion || !monto || !categoriaSeleccionada) {
+ alert('Por favor, completa los campos requeridos');
+ return;
+ }
 
-            const montoIva = monto * (iva / 100);
-            const total = monto + montoIva;
+ const montoIva = monto * (iva / 100);
+ const total = monto + montoIva;
 
-            facturas.push({
-                descripcion,
-                categoria: categoriaSeleccionada,
-                monto,
-                iva,
-                montoIva,
-                total
-            });
+ facturas.push({
+ descripcion,
+ categoria: categoriaSeleccionada,
+ monto,
+ iva,
+ montoIva,
+ total
+ });
 
-            actualizarListaFacturas();
-            calcularTotales();
-            limpiarFormulario();
-        }
+ actualizarListaFacturas();
+ calcularTotales();
+ limpiarFormulario();
+ }
 
-        function actualizarListaFacturas() {
-            const lista = document.getElementById('facturasList');
-            lista.innerHTML = '';
+ function actualizarListaFacturas() {
+ const lista = document.getElementById('facturasList');
+ lista.innerHTML = '';
 
-            facturas.forEach((factura, index) => {
-                const facturaElement = document.createElement('div');
-                facturaElement.className = 'factura-item';
-                facturaElement.innerHTML = `
-                    <button class="delete-factura" onclick="eliminarFactura(${index})">×</button>
-                    <div class="factura-header">
-                        <span class="categoria-badge">${factura.categoria}</span>
-                        <span class="factura-monto">$${formatearNumero(factura.total)}</span>
-                    </div>
-                    <div class="factura-descripcion">${factura.descripcion}</div>
-                    <div class="factura-detalles">
-                        <small>Monto: $${formatearNumero(factura.monto)} | IVA: ${factura.iva}% ($${formatearNumero(factura.montoIva)})</small>
-                    </div>
-                `;
-                lista.appendChild(facturaElement);
-            });
-        }
+ facturas.forEach((factura, index) => {
+ const facturaElement = document.createElement('div');
+ facturaElement.className = 'factura-item';
+ facturaElement.innerHTML = `
+ <button class="delete-factura" onclick="eliminarFactura(${index})">×</button>
+ <div class="factura-header">
+ <span class="categoria-badge">${factura.categoria}</span>
+ <span class="factura-monto">$${formatearNumero(factura.total)}</span>
+ </div>
+ <div class="factura-descripcion">${factura.descripcion}</div>
+ <div class="factura-detalles">
+ <small>Monto: $${formatearNumero(factura.monto)} | IVA: ${factura.iva}% ($${formatearNumero(factura.montoIva)})</small>
+ </div>
+ `;
+ lista.appendChild(facturaElement);
+ });
+ }
 
-        function calcularTotales() {
-            const subtotal = facturas.reduce((sum, factura) => sum + factura.monto, 0);
-            const ivaTotal = facturas.reduce((sum, factura) => sum + factura.montoIva, 0);
-            const total = facturas.reduce((sum, factura) => sum + factura.total, 0);
+ function calcularTotales() {
+ const subtotal = facturas.reduce((sum, factura) => sum + factura.monto, 0);
+ const ivaTotal = facturas.reduce((sum, factura) => sum + factura.montoIva, 0);
+ const total = facturas.reduce((sum, factura) => sum + factura.total, 0);
 
-            document.getElementById('subtotal').textContent = `$${formatearNumero(subtotal)}`;
-            document.getElementById('ivaTotal').textContent = `$${formatearNumero(ivaTotal)}`;
-            document.getElementById('total').textContent = `$${formatearNumero(total)}`;
-            document.getElementById('totalesCard').style.display = 'block';
-        }
+ document.getElementById('subtotal').textContent = `$${formatearNumero(subtotal)}`;
+ document.getElementById('ivaTotal').textContent = `$${formatearNumero(ivaTotal)}`;
+ document.getElementById('total').textContent = `$${formatearNumero(total)}`;
+ document.getElementById('totalesCard').style.display = 'block';
+ }
 
-        function eliminarFactura(index) {
-            facturas.splice(index, 1);
-            actualizarListaFacturas();
-            calcularTotales();
-            if (facturas.length === 0) {
-                document.getElementById('totalesCard').style.display = 'none';
-            }
-        }
+ function eliminarFactura(index) {
+ facturas.splice(index, 1);
+ actualizarListaFacturas();
+ calcularTotales();
+ if (facturas.length === 0) {
+ document.getElementById('totalesCard').style.display = 'none';
+ }
+ }
 
-        function limpiarFormulario() {
-            document.getElementById('descripcion').value = '';
-            document.getElementById('monto').value = '';
-            document.querySelectorAll('.categoria-btn').forEach(btn => btn.classList.remove('active'));
-            categoriaSeleccionada = '';
-            document.getElementById('descripcion').focus();
-        }
+ function limpiarFormulario() {
+ document.getElementById('descripcion').value = '';
+ document.getElementById('monto').value = '';
+ document.querySelectorAll('.categoria-btn').forEach(btn => btn.classList.remove('active'));
+ categoriaSeleccionada = '';
+ document.getElementById('descripcion').focus();
+ }
 
-        function formatearNumero(numero) {
-            return new Intl.NumberFormat('es-CL', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(numero);
-        }
+ function formatearNumero(numero) {
+ return new Intl.NumberFormat('es-CL', {
+ minimumFractionDigits: 0,
+ maximumFractionDigits: 0
+ }).format(numero);
+ }
 
-        function descargarResumen() {
-            const element = document.createElement('div');
-            element.style.padding = '30px';
-            element.style.background = 'white';
-            element.style.width = '800px';
-            
-            let html = `
-                <h2 style="color: #1e293b; margin-bottom: 20px;">Resumen de Facturas</h2>
-                <div style="margin-bottom: 30px;">
-                    ${facturas.map(factura => `
-                        <div style="padding: 15px; border-bottom: 1px solid #e2e8f0; margin-bottom: 10px;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                                <span style="font-weight: bold; color: #2563eb;">${factura.descripcion}</span>
-                                <span style="color: #1e293b;">$${formatearNumero(factura.total)}</span>
-                            </div>
-                            <div style="color: #64748b; font-size: 0.9em;">
-                                Categoría: ${factura.categoria} | IVA: ${factura.iva}%
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-                <div style="background: #2563eb; color: white; padding: 20px; border-radius: 12px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                        <span>Subtotal:</span>
-                        <span>$${document.getElementById('subtotal').textContent.replace('$', '')}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                        <span>IVA Total:</span>
-                        <span>$${document.getElementById('ivaTotal').textContent.replace('$', '')}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 1.2em; font-weight: bold;">
-                        <span>Total:</span>
-                        <span>$${document.getElementById('total').textContent.replace('$', '')}</span>
-                    </div>
-                </div>
-            `;
-            
-            element.innerHTML = html;
-            document.body.appendChild(element);
+ function descargarResumen() {
+ const element = document.createElement('div');
+ element.style.padding = '30px';
+ element.style.background = 'white';
+ element.style.width = '800px';
+ 
+ let html = `
+ <h2 style="color: #1e293b; margin-bottom: 20px;">Resumen de Facturas</h2>
+ <div style="margin-bottom: 30px;">
+ ${facturas.map(factura => `
+ <div style="padding: 15px; border-bottom: 1px solid #e2e8f0; margin-bottom: 10px;">
+ <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+ <span style="font-weight: bold; color: #2563eb;">${factura.descripcion}</span>
+ <span style="color: #1e293b;">$${formatearNumero(factura.total)}</span>
+ </div>
+ <div style="color: #64748b; font-size: 0.9em;">
+ Categoría: ${factura.categoria} | IVA: ${factura.iva}%
+ </div>
+ </div>
+ `).join('')}
+ </div>
+ <div style="background: #2563eb; color: white; padding: 20px; border-radius: 12px;">
+ <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+ <span>Subtotal:</span>
+ <span>$${document.getElementById('subtotal').textContent.replace('$', '')}</span>
+ </div>
+ <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+ <span>IVA Total:</span>
+ <span>$${document.getElementById('ivaTotal').textContent.replace('$', '')}</span>
+ </div>
+ <div style="display: flex; justify-content: space-between; font-size: 1.2em; font-weight: bold;">
+ <span>Total:</span>
+ <span>$${document.getElementById('total').textContent.replace('$', '')}</span>
+ </div>
+ </div>
+ `;
+ 
+ element.innerHTML = html;
+ document.body.appendChild(element);
 
-            html2canvas(element, {
-                scale: 2,
-                backgroundColor: '#ffffff'
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'resumen-facturas.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-                document.body.removeChild(element);
-            });
-        }
-    </script>
+ html2canvas(element, {
+ scale: 2,
+ backgroundColor: '#ffffff'
+ }).then(canvas => {
+ const link = document.createElement('a');
+ link.download = 'resumen-facturas.png';
+ link.href = canvas.toDataURL('image/png');
+ link.click();
+ document.body.removeChild(element);
+ });
+ }
+ </script>
 </body>
 </html>
 

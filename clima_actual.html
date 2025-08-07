@@ -1,627 +1,627 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
-    <title>Pronóstico del Clima</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #1A73E8;
-            --secondary-color: #34A853;
-            --background-light: #F1F3F4;
-            --text-dark: #202124;
-            --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+ 
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
+ <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
+ <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
+ <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
+ <title>Pronóstico del Clima</title>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+ <style>
+ :root {
+ --primary-color: #1A73E8;
+ --secondary-color: #34A853;
+ --background-light: #F1F3F4;
+ --text-dark: #202124;
+ --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.1);
+ }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--background-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
+ body {
+ font-family: 'Inter', sans-serif;
+ background-color: var(--background-light);
+ color: var(--text-dark);
+ line-height: 1.6;
+ }
 
-        .app-container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow-soft);
-            overflow: hidden;
-            padding: 1.5rem;
-        }
+ .app-container {
+ max-width: 1000px;
+ margin: 2rem auto;
+ background-color: white;
+ border-radius: 12px;
+ box-shadow: var(--shadow-soft);
+ overflow: hidden;
+ padding: 1.5rem;
+ }
 
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+ .header {
+ text-align: center;
+ margin-bottom: 2rem;
+ }
 
-        .header h1 {
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
+ .header h1 {
+ color: var(--primary-color);
+ font-size: 2rem;
+ margin-bottom: 1rem;
+ }
 
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
+ .search-container {
+ display: flex;
+ justify-content: center;
+ margin-bottom: 2rem;
+ }
 
-        .search-input {
-            padding: 0.75rem;
-            width: 300px;
-            border: 1px solid #dadce0;
-            border-radius: 6px;
-            margin-right: 0.5rem;
-        }
+ .search-input {
+ padding: 0.75rem;
+ width: 300px;
+ border: 1px solid #dadce0;
+ border-radius: 6px;
+ margin-right: 0.5rem;
+ }
 
-        .btn {
-            padding: 0.75rem 1.5rem;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+ .btn {
+ padding: 0.75rem 1.5rem;
+ background-color: var(--primary-color);
+ color: white;
+ border: none;
+ border-radius: 6px;
+ cursor: pointer;
+ transition: background-color 0.3s ease;
+ }
 
-        .btn:hover {
-            background-color: #1557b0;
-        }
+ .btn:hover {
+ background-color: #1557b0;
+ }
 
-        .current-weather {
-            background-color: #f1f3f4;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
+ .current-weather {
+ background-color: #f1f3f4;
+ border-radius: 10px;
+ padding: 1.5rem;
+ margin-bottom: 2rem;
+ text-align: center;
+ }
 
-        .forecast-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-        }
+ .forecast-container {
+ display: flex;
+ justify-content: space-between;
+ gap: 1rem;
+ }
 
-        .forecast-day {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
+ .forecast-day {
+ background: white;
+ padding: 20px;
+ border-radius: 12px;
+ margin-bottom: 15px;
+ box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+ transition: transform 0.3s ease;
+ }
 
-        .forecast-day:hover {
-            transform: translateY(-5px);
-        }
+ .forecast-day:hover {
+ transform: translateY(-5px);
+ }
 
-        .forecast-day h3 {
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-        }
+ .forecast-day h3 {
+ margin-bottom: 0.5rem;
+ color: var(--primary-color);
+ }
 
-        .error, .loading {
-            text-align: center;
-            color: red;
-            padding: 1rem;
-        }
+ .error, .loading {
+ text-align: center;
+ color: red;
+ padding: 1rem;
+ }
 
-        .location-permission {
-            text-align: center;
-            background-color: #f9f9f9;
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-        }
+ .location-permission {
+ text-align: center;
+ background-color: #f9f9f9;
+ padding: 1rem;
+ border-radius: 10px;
+ margin-bottom: 1rem;
+ }
 
-        @media (max-width: 768px) {
-            .forecast-container {
-                flex-direction: column;
-            }
-        }
+ @media (max-width: 768px) {
+ .forecast-container {
+ flex-direction: column;
+ }
+ }
 
-        .location-permission {
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+ .location-permission {
+ background: #f8fafc;
+ padding: 20px;
+ border-radius: 12px;
+ margin-bottom: 20px;
+ text-align: center;
+ }
 
-        .loading-spinner {
-            width: 30px;
-            height: 30px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--color-primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 15px auto;
-        }
+ .loading-spinner {
+ width: 30px;
+ height: 30px;
+ border: 3px solid #f3f3f3;
+ border-top: 3px solid var(--color-primary);
+ border-radius: 50%;
+ animation: spin 1s linear infinite;
+ margin: 15px auto;
+ }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+ @keyframes spin {
+ 0% { transform: rotate(0deg); }
+ 100% { transform: rotate(360deg); }
+ }
 
-        .error {
-            color: var(--color-error);
-            margin-bottom: 10px;
-        }
+ .error {
+ color: var(--color-error);
+ margin-bottom: 10px;
+ }
 
-        .simple-recommendation {
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-            border-left: 4px solid var(--primary-color);
-        }
+ .simple-recommendation {
+ background: #f8fafc;
+ padding: 20px;
+ border-radius: 12px;
+ margin-top: 20px;
+ border-left: 4px solid var(--primary-color);
+ }
 
-        .simple-recommendation h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
+ .simple-recommendation h3 {
+ color: var(--primary-color);
+ margin-bottom: 10px;
+ }
 
-        .simple-recommendation p {
-            margin-bottom: 8px;
-        }
+ .simple-recommendation p {
+ margin-bottom: 8px;
+ }
 
-        .simple-recommendation strong {
-            color: var(--primary-color);
-        }
+ .simple-recommendation strong {
+ color: var(--primary-color);
+ }
 
-        .forecast-date {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
+ .forecast-date {
+ color: #64748b;
+ font-size: 0.9rem;
+ margin-bottom: 10px;
+ }
 
-        .forecast-recommendation {
-            background: #f8fafc;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 10px;
-            border-left: 3px solid var(--primary-color);
-        }
+ .forecast-recommendation {
+ background: #f8fafc;
+ padding: 10px;
+ border-radius: 8px;
+ margin-top: 10px;
+ border-left: 3px solid var(--primary-color);
+ }
 
-        .forecast-container h3 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            text-align: center;
-        }
+ .forecast-container h3 {
+ color: var(--primary-color);
+ margin-bottom: 20px;
+ text-align: center;
+ }
 
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 10px 0;
-            transition: all 0.3s ease;
-        }
+ .btn-primary {
+ background: var(--primary-color);
+ color: white;
+ padding: 10px 20px;
+ border: none;
+ border-radius: 8px;
+ cursor: pointer;
+ margin: 10px 0;
+ transition: all 0.3s ease;
+ }
 
-        .btn-primary:hover {
-            background: #1557b0;
-        }
+ .btn-primary:hover {
+ background: #1557b0;
+ }
 
-        .location-permission {
-            text-align: center;
-            padding: 20px;
-            background: #f8fafc;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+ .location-permission {
+ text-align: center;
+ padding: 20px;
+ background: #f8fafc;
+ border-radius: 12px;
+ margin-bottom: 20px;
+ box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+ }
 
-        .error {
-            color: #ef4444;
-            margin-bottom: 10px;
-        }
-    </style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497" crossorigin="anonymous"></script>
+ .error {
+ color: #ef4444;
+ margin-bottom: 10px;
+ }
+ </style>
 </head>
 <body>
-    <div class="app-container">
-        <div class="header">
-            <h1>Pronóstico del Clima</h1>
-        </div>
+ <div class="app-container">
+ <div class="header">
+ <h1>Pronóstico del Clima</h1>
+ </div>
 
-        <div id="location-permission" class="location-permission" style="display:none;">
-            <p>Para mostrar el clima de su ubicación actual, por favor permita el acceso a la ubicación.</p>
-            <div class="loading-spinner"></div>
-        </div>
+ <div id="location-permission" class="location-permission" style="display:none;">
+ <p>Para mostrar el clima de su ubicación actual, por favor permita el acceso a la ubicación.</p>
+ <div class="loading-spinner"></div>
+ </div>
 
-        <div class="search-container">
-            <input type="text" id="city-input" class="search-input" placeholder="Ingrese ciudad o país (opcional)">
-            <button class="btn" onclick="fetchWeatherData()">Buscar</button>
-        </div>
+ <div class="search-container">
+ <input type="text" id="city-input" class="search-input" placeholder="Ingrese ciudad o país (opcional)">
+ <button class="btn" onclick="fetchWeatherData()">Buscar</button>
+ </div>
 
-        <div id="current-weather" class="current-weather">
-            <p class="loading">Cargando datos del clima...</p>
-        </div>
+ <div id="current-weather" class="current-weather">
+ <p class="loading">Cargando datos del clima...</p>
+ </div>
 
-        <div id="forecast-container" class="forecast-container">
-            <!-- Forecast days will be dynamically inserted here -->
-        </div>
-    </div>
+ <div id="forecast-container" class="forecast-container">
+ <!-- Forecast days will be dynamically inserted here -->
+ </div>
+ </div>
 
-    <script>
-        const apiKey = 'bd645748de1066c9ad7e6a5f0148aca7';
-        const currentWeatherElement = document.getElementById('current-weather');
-        const forecastContainer = document.getElementById('forecast-container');
-        const locationPermissionElement = document.getElementById('location-permission');
+ <script>
+ const apiKey = 'bd645748de1066c9ad7e6a5f0148aca7';
+ const currentWeatherElement = document.getElementById('current-weather');
+ const forecastContainer = document.getElementById('forecast-container');
+ const locationPermissionElement = document.getElementById('location-permission');
 
-        // Helper function to get day name
-        function getDayName(dateString) {
-            const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-            const date = new Date(dateString);
-            return days[date.getDay()];
-        }
+ // Helper function to get day name
+ function getDayName(dateString) {
+ const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+ const date = new Date(dateString);
+ return days[date.getDay()];
+ }
 
-        async function fetchWeatherByCoordinates(lat, lon) {
-            try {
-                // Current weather
-                const currentResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`);
-                if (!currentResponse.ok) {
-                    throw new Error('Error en la solicitud de clima actual');
-                }
-                const currentData = await currentResponse.json();
+ async function fetchWeatherByCoordinates(lat, lon) {
+ try {
+ // Current weather
+ const currentResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`);
+ if (!currentResponse.ok) {
+ throw new Error('Error en la solicitud de clima actual');
+ }
+ const currentData = await currentResponse.json();
 
-                // 5-day forecast
-                const forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`);
-                if (!forecastResponse.ok) {
-                    throw new Error('Error en la solicitud de pronóstico');
-                }
-                const forecastData = await forecastResponse.json();
+ // 5-day forecast
+ const forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`);
+ if (!forecastResponse.ok) {
+ throw new Error('Error en la solicitud de pronóstico');
+ }
+ const forecastData = await forecastResponse.json();
 
-                displayWeatherData(currentData, forecastData);
-            } catch (error) {
-                currentWeatherElement.innerHTML = `
-                    <p class="error">Error al obtener datos del clima: ${error.message}</p>
-                `;
-                forecastContainer.innerHTML = '';
-                console.error('Error:', error);
-            }
-        }
+ displayWeatherData(currentData, forecastData);
+ } catch (error) {
+ currentWeatherElement.innerHTML = `
+ <p class="error">Error al obtener datos del clima: ${error.message}</p>
+ `;
+ forecastContainer.innerHTML = '';
+ console.error('Error:', error);
+ }
+ }
 
-        async function fetchWeatherData() {
-            const cityInput = document.getElementById('city-input').value;
+ async function fetchWeatherData() {
+ const cityInput = document.getElementById('city-input').value;
 
-            if (cityInput) {
-                // If a city is specified, use city-based search
-                try {
-                    // Current weather
-                    const currentResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${apiKey}&units=metric&lang=es`);
-                    if (!currentResponse.ok) {
-                        throw new Error('Error en la solicitud de clima actual');
-                    }
-                    const currentData = await currentResponse.json();
+ if (cityInput) {
+ // If a city is specified, use city-based search
+ try {
+ // Current weather
+ const currentResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${apiKey}&units=metric&lang=es`);
+ if (!currentResponse.ok) {
+ throw new Error('Error en la solicitud de clima actual');
+ }
+ const currentData = await currentResponse.json();
 
-                    // 5-day forecast
-                    const forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=${apiKey}&units=metric&lang=es`);
-                    if (!forecastResponse.ok) {
-                        throw new Error('Error en la solicitud de pronóstico');
-                    }
-                    const forecastData = await forecastResponse.json();
+ // 5-day forecast
+ const forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${cityInput}&appid=${apiKey}&units=metric&lang=es`);
+ if (!forecastResponse.ok) {
+ throw new Error('Error en la solicitud de pronóstico');
+ }
+ const forecastData = await forecastResponse.json();
 
-                    displayWeatherData(currentData, forecastData);
-                } catch (error) {
-                    currentWeatherElement.innerHTML = `
-                        <p class="error">Error al obtener datos del clima: ${error.message}</p>
-                    `;
-                    forecastContainer.innerHTML = '';
-                    console.error('Error:', error);
-                }
-            } else {
-                // If no city is specified, try to use geolocation
-                getCurrentLocationWeather();
-            }
-        }
+ displayWeatherData(currentData, forecastData);
+ } catch (error) {
+ currentWeatherElement.innerHTML = `
+ <p class="error">Error al obtener datos del clima: ${error.message}</p>
+ `;
+ forecastContainer.innerHTML = '';
+ console.error('Error:', error);
+ }
+ } else {
+ // If no city is specified, try to use geolocation
+ getCurrentLocationWeather();
+ }
+ }
 
-        // Agregar esta función para obtener recomendaciones simples
-        function getWeatherRecommendation(temp, weatherDesc) {
-            let recommendation = {
-                feeling: '',
-                clothing: '',
-                advice: ''
-            };
+ // Agregar esta función para obtener recomendaciones simples
+ function getWeatherRecommendation(temp, weatherDesc) {
+ let recommendation = {
+ feeling: '',
+ clothing: '',
+ advice: ''
+ };
 
-            // Determinar sensación térmica y recomendaciones
-            if (temp < 10) {
-                recommendation.feeling = 'Hará mucho frío';
-                recommendation.clothing = 'Muy abrigado';
-                recommendation.advice = 'Usa varias capas de ropa, abrigo grueso, guantes y gorro';
-            } else if (temp < 15) {
-                recommendation.feeling = 'Hará frío';
-                recommendation.clothing = 'Abrigado';
-                recommendation.advice = 'Usa chaqueta o abrigo, y ropa de manga larga';
-            } else if (temp < 20) {
-                recommendation.feeling = 'Temperatura fresca';
-                recommendation.clothing = 'Semi abrigado';
-                recommendation.advice = 'Una chaqueta ligera será suficiente';
-            } else if (temp < 25) {
-                recommendation.feeling = 'Temperatura agradable';
-                recommendation.clothing = 'Ropa ligera';
-                recommendation.advice = 'Ropa normal, quizás una capa extra para la tarde';
-            } else if (temp < 30) {
-                recommendation.feeling = 'Hará calor';
-                recommendation.clothing = 'Ropa muy ligera';
-                recommendation.advice = 'Usa ropa fresca y protector solar';
-            } else {
-                recommendation.feeling = 'Hará mucho calor';
-                recommendation.clothing = 'Lo más ligero posible';
-                recommendation.advice = 'Usa ropa muy ligera, protector solar y mantente hidratado';
-            }
+ // Determinar sensación térmica y recomendaciones
+ if (temp < 10) {
+ recommendation.feeling = 'Hará mucho frío';
+ recommendation.clothing = 'Muy abrigado';
+ recommendation.advice = 'Usa varias capas de ropa, abrigo grueso, guantes y gorro';
+ } else if (temp < 15) {
+ recommendation.feeling = 'Hará frío';
+ recommendation.clothing = 'Abrigado';
+ recommendation.advice = 'Usa chaqueta o abrigo, y ropa de manga larga';
+ } else if (temp < 20) {
+ recommendation.feeling = 'Temperatura fresca';
+ recommendation.clothing = 'Semi abrigado';
+ recommendation.advice = 'Una chaqueta ligera será suficiente';
+ } else if (temp < 25) {
+ recommendation.feeling = 'Temperatura agradable';
+ recommendation.clothing = 'Ropa ligera';
+ recommendation.advice = 'Ropa normal, quizás una capa extra para la tarde';
+ } else if (temp < 30) {
+ recommendation.feeling = 'Hará calor';
+ recommendation.clothing = 'Ropa muy ligera';
+ recommendation.advice = 'Usa ropa fresca y protector solar';
+ } else {
+ recommendation.feeling = 'Hará mucho calor';
+ recommendation.clothing = 'Lo más ligero posible';
+ recommendation.advice = 'Usa ropa muy ligera, protector solar y mantente hidratado';
+ }
 
-            // Ajustar según condición climática
-            if (weatherDesc.includes('lluvia')) {
-                recommendation.advice += '. Lleva paraguas o impermeable';
-            } else if (weatherDesc.includes('nube')) {
-                recommendation.advice += '. Puede que el sol salga y entre durante el día';
-            } else if (weatherDesc.includes('sol')) {
-                recommendation.advice += '. No olvides el protector solar';
-            }
+ // Ajustar según condición climática
+ if (weatherDesc.includes('lluvia')) {
+ recommendation.advice += '. Lleva paraguas o impermeable';
+ } else if (weatherDesc.includes('nube')) {
+ recommendation.advice += '. Puede que el sol salga y entre durante el día';
+ } else if (weatherDesc.includes('sol')) {
+ recommendation.advice += '. No olvides el protector solar';
+ }
 
-            return recommendation;
-        }
+ return recommendation;
+ }
 
-        // Modificar la función displayWeatherData
-        function displayWeatherData(currentData, forecastData) {
-            const temp = currentData.main.temp;
-            const weatherDesc = currentData.weather[0].description;
-            const recommendation = getWeatherRecommendation(temp, weatherDesc);
+ // Modificar la función displayWeatherData
+ function displayWeatherData(currentData, forecastData) {
+ const temp = currentData.main.temp;
+ const weatherDesc = currentData.weather[0].description;
+ const recommendation = getWeatherRecommendation(temp, weatherDesc);
 
-            currentWeatherElement.innerHTML = `
-                <h2>Clima Actual en ${currentData.name}</h2>
-                <p><strong>Temperatura:</strong> ${temp.toFixed(1)}°C</p>
-                <p><strong>Condición:</strong> ${weatherDesc}</p>
-                <p><strong>Humedad:</strong> ${currentData.main.humidity}%</p>
-                <p><strong>Viento:</strong> ${currentData.wind.speed} m/s</p>
-                
-                <div class="simple-recommendation">
-                    <h3>Recomendación Simple</h3>
-                    <p><strong>${recommendation.feeling}</strong></p>
-                    <p>Vestimenta recomendada: <strong>${recommendation.clothing}</strong></p>
-                    <p>${recommendation.advice}</p>
-                </div>
-            `;
+ currentWeatherElement.innerHTML = `
+ <h2>Clima Actual en ${currentData.name}</h2>
+ <p><strong>Temperatura:</strong> ${temp.toFixed(1)}°C</p>
+ <p><strong>Condición:</strong> ${weatherDesc}</p>
+ <p><strong>Humedad:</strong> ${currentData.main.humidity}%</p>
+ <p><strong>Viento:</strong> ${currentData.wind.speed} m/s</p>
+ 
+ <div class="simple-recommendation">
+ <h3>Recomendación Simple</h3>
+ <p><strong>${recommendation.feeling}</strong></p>
+ <p>Vestimenta recomendada: <strong>${recommendation.clothing}</strong></p>
+ <p>${recommendation.advice}</p>
+ </div>
+ `;
 
-            // Procesar pronóstico de 5 días
-            const dailyForecasts = {};
-            const today = new Date();
-            today.setHours(0, 0, 0, 0); // Obtener fecha actual sin hora
-            
-            // Crear un mapa de fechas ya procesadas
-            const processedDates = new Set();
-            
-            forecastData.list.forEach(forecast => {
-                const date = new Date(forecast.dt * 1000);
-                date.setHours(0, 0, 0, 0); // Normalizar la hora a medianoche
-                const dateString = date.toISOString().split('T')[0];
-                
-                // Solo procesar si es un día futuro y no ha sido procesado aún
-                if (date > today && !processedDates.has(dateString)) {
-                    processedDates.add(dateString);
-                    dailyForecasts[dateString] = {
-                        ...forecast,
-                        dayName: getDayName(date),
-                        fullDate: formatDate(date)
-                    };
-                }
-            });
+ // Procesar pronóstico de 5 días
+ const dailyForecasts = {};
+ const today = new Date();
+ today.setHours(0, 0, 0, 0); // Obtener fecha actual sin hora
+ 
+ // Crear un mapa de fechas ya procesadas
+ const processedDates = new Set();
+ 
+ forecastData.list.forEach(forecast => {
+ const date = new Date(forecast.dt * 1000);
+ date.setHours(0, 0, 0, 0); // Normalizar la hora a medianoche
+ const dateString = date.toISOString().split('T')[0];
+ 
+ // Solo procesar si es un día futuro y no ha sido procesado aún
+ if (date > today && !processedDates.has(dateString)) {
+ processedDates.add(dateString);
+ dailyForecasts[dateString] = {
+ ...forecast,
+ dayName: getDayName(date),
+ fullDate: formatDate(date)
+ };
+ }
+ });
 
-            // Limpiar pronóstico anterior
-            forecastContainer.innerHTML = '<h3>Pronóstico para los próximos días</h3>';
+ // Limpiar pronóstico anterior
+ forecastContainer.innerHTML = '<h3>Pronóstico para los próximos días</h3>';
 
-            // Mostrar solo los próximos 5 días únicos
-            Object.values(dailyForecasts)
-                .slice(0, 5)
-                .forEach(forecast => {
-                    const recommendation = getWeatherRecommendation(forecast.main.temp, forecast.weather[0].description);
-                    const dayElement = document.createElement('div');
-                    dayElement.classList.add('forecast-day');
-                    dayElement.innerHTML = `
-                        <h3>${forecast.dayName}</h3>
-                        <p class="forecast-date">${forecast.fullDate}</p>
-                        <p><strong>Temperatura:</strong> ${forecast.main.temp.toFixed(1)}°C</p>
-                        <p><strong>Clima:</strong> ${forecast.weather[0].description}</p>
-                        <p><strong>Humedad:</strong> ${forecast.main.humidity}%</p>
-                        <div class="forecast-recommendation">
-                            <p><strong>${recommendation.feeling}</strong></p>
-                            <p>${recommendation.clothing}</p>
-                        </div>
-                    `;
-                    forecastContainer.appendChild(dayElement);
-                });
-        }
+ // Mostrar solo los próximos 5 días únicos
+ Object.values(dailyForecasts)
+ .slice(0, 5)
+ .forEach(forecast => {
+ const recommendation = getWeatherRecommendation(forecast.main.temp, forecast.weather[0].description);
+ const dayElement = document.createElement('div');
+ dayElement.classList.add('forecast-day');
+ dayElement.innerHTML = `
+ <h3>${forecast.dayName}</h3>
+ <p class="forecast-date">${forecast.fullDate}</p>
+ <p><strong>Temperatura:</strong> ${forecast.main.temp.toFixed(1)}°C</p>
+ <p><strong>Clima:</strong> ${forecast.weather[0].description}</p>
+ <p><strong>Humedad:</strong> ${forecast.main.humidity}%</p>
+ <div class="forecast-recommendation">
+ <p><strong>${recommendation.feeling}</strong></p>
+ <p>${recommendation.clothing}</p>
+ </div>
+ `;
+ forecastContainer.appendChild(dayElement);
+ });
+ }
 
-        // Función para obtener el nombre del día
-        function getDayName(date) {
-            const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-            return days[date.getDay()];
-        }
+ // Función para obtener el nombre del día
+ function getDayName(date) {
+ const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+ return days[date.getDay()];
+ }
 
-        // Función para formatear la fecha
-        function formatDate(date) {
-            const options = { 
-                day: 'numeric', 
-                month: 'long'
-            };
-            return date.toLocaleDateString('es-ES', options);
-        }
+ // Función para formatear la fecha
+ function formatDate(date) {
+ const options = { 
+ day: 'numeric', 
+ month: 'long'
+ };
+ return date.toLocaleDateString('es-ES', options);
+ }
 
-        function getCurrentLocationWeather() {
-            if ("geolocation" in navigator) {
-                locationPermissionElement.style.display = 'block';
-                
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        locationPermissionElement.style.display = 'none';
-                        const lat = position.coords.latitude;
-                        const lon = position.coords.longitude;
-                        fetchWeatherByCoordinates(lat, lon);
-                    },
-                    (error) => {
-                        locationPermissionElement.style.display = 'block';
-                        locationPermissionElement.innerHTML = `
-                            <p class="error">No se pudo acceder a la ubicación: ${error.message}. 
-                            Por favor, ingrese una ciudad manualmente o revise los permisos de ubicación.</p>
-                        `;
-                        // Fallback to a default location (Santiago, Chile)
-                        fetchWeatherByCoordinates(-33.4489, -70.6693);
-                    },
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 5000,
-                        maximumAge: 0
-                    }
-                );
-            } else {
-                // Fallback to a default location if geolocation is not supported
-                fetchWeatherByCoordinates(-33.4489, -70.6693);
-            }
-        }
+ function getCurrentLocationWeather() {
+ if ("geolocation" in navigator) {
+ locationPermissionElement.style.display = 'block';
+ 
+ navigator.geolocation.getCurrentPosition(
+ (position) => {
+ locationPermissionElement.style.display = 'none';
+ const lat = position.coords.latitude;
+ const lon = position.coords.longitude;
+ fetchWeatherByCoordinates(lat, lon);
+ },
+ (error) => {
+ locationPermissionElement.style.display = 'block';
+ locationPermissionElement.innerHTML = `
+ <p class="error">No se pudo acceder a la ubicación: ${error.message}. 
+ Por favor, ingrese una ciudad manualmente o revise los permisos de ubicación.</p>
+ `;
+ // Fallback to a default location (Santiago, Chile)
+ fetchWeatherByCoordinates(-33.4489, -70.6693);
+ },
+ {
+ enableHighAccuracy: true,
+ timeout: 5000,
+ maximumAge: 0
+ }
+ );
+ } else {
+ // Fallback to a default location if geolocation is not supported
+ fetchWeatherByCoordinates(-33.4489, -70.6693);
+ }
+ }
 
-        // Initial load using geolocation
-        getCurrentLocationWeather();
+ // Initial load using geolocation
+ getCurrentLocationWeather();
 
-        // Modificar la función requestLocation
-        async function requestLocation() {
-            const locationPermissionElement = document.getElementById('location-permission');
-            
-            try {
-                // Primero verificar si el navegador soporta geolocalización
-                if (!("geolocation" in navigator)) {
-                    locationPermissionElement.innerHTML = `
-                        <p class="error">Su navegador no soporta geolocalización.</p>
-                        <p>Por favor ingrese una ciudad manualmente.</p>
-                    `;
-                    return;
-                }
+ // Modificar la función requestLocation
+ async function requestLocation() {
+ const locationPermissionElement = document.getElementById('location-permission');
+ 
+ try {
+ // Primero verificar si el navegador soporta geolocalización
+ if (!("geolocation" in navigator)) {
+ locationPermissionElement.innerHTML = `
+ <p class="error">Su navegador no soporta geolocalización.</p>
+ <p>Por favor ingrese una ciudad manualmente.</p>
+ `;
+ return;
+ }
 
-                // Verificar el estado actual de los permisos si el navegador lo soporta
-                if ('permissions' in navigator) {
-                    const permission = await navigator.permissions.query({ name: 'geolocation' });
-                    
-                    if (permission.state === 'denied') {
-                        locationPermissionElement.innerHTML = `
-                            <p class="error">El acceso a la ubicación está bloqueado.</p>
-                            <p>Por favor, habilite el acceso a la ubicación en la configuración de su navegador y recargue la página.</p>
-                            <button class="btn btn-primary" onclick="showLocationInstructions()">
-                                Ver instrucciones
-                            </button>
-                        `;
-                        return;
-                    }
-                }
+ // Verificar el estado actual de los permisos si el navegador lo soporta
+ if ('permissions' in navigator) {
+ const permission = await navigator.permissions.query({ name: 'geolocation' });
+ 
+ if (permission.state === 'denied') {
+ locationPermissionElement.innerHTML = `
+ <p class="error">El acceso a la ubicación está bloqueado.</p>
+ <p>Por favor, habilite el acceso a la ubicación en la configuración de su navegador y recargue la página.</p>
+ <button class="btn btn-primary" onclick="showLocationInstructions()">
+ Ver instrucciones
+ </button>
+ `;
+ return;
+ }
+ }
 
-                // Mostrar mensaje de solicitud de ubicación
-                locationPermissionElement.style.display = 'block';
-                locationPermissionElement.innerHTML = `
-                    <p>Para mostrar el clima de su ubicación actual, necesitamos acceder a su ubicación.</p>
-                    <button class="btn btn-primary" onclick="getLocationWithPrompt()">
-                        Permitir acceso a ubicación
-                    </button>
-                    <div class="loading-spinner" style="display: none;"></div>
-                `;
+ // Mostrar mensaje de solicitud de ubicación
+ locationPermissionElement.style.display = 'block';
+ locationPermissionElement.innerHTML = `
+ <p>Para mostrar el clima de su ubicación actual, necesitamos acceder a su ubicación.</p>
+ <button class="btn btn-primary" onclick="getLocationWithPrompt()">
+ Permitir acceso a ubicación
+ </button>
+ <div class="loading-spinner" style="display: none;"></div>
+ `;
 
-            } catch (error) {
-                console.error('Error al solicitar ubicación:', error);
-                locationPermissionElement.innerHTML = `
-                    <p class="error">Error al acceder a la ubicación: ${error.message}</p>
-                    <p>Por favor ingrese una ciudad manualmente.</p>
-                `;
-            }
-        }
+ } catch (error) {
+ console.error('Error al solicitar ubicación:', error);
+ locationPermissionElement.innerHTML = `
+ <p class="error">Error al acceder a la ubicación: ${error.message}</p>
+ <p>Por favor ingrese una ciudad manualmente.</p>
+ `;
+ }
+ }
 
-        // Función para solicitar ubicación con prompt
-        function getLocationWithPrompt() {
-            const locationPermissionElement = document.getElementById('location-permission');
-            const spinner = locationPermissionElement.querySelector('.loading-spinner');
-            
-            spinner.style.display = 'block';
-            
-            navigator.geolocation.getCurrentPosition(
-                // Éxito
-                (position) => {
-                    spinner.style.display = 'none';
-                    locationPermissionElement.style.display = 'none';
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-                    fetchWeatherByCoordinates(lat, lon);
-                },
-                // Error
-                (error) => {
-                    spinner.style.display = 'none';
-                    let errorMessage = '';
-                    switch(error.code) {
-                        case error.PERMISSION_DENIED:
-                            errorMessage = "No se otorgó permiso para acceder a la ubicación.";
-                            break;
-                        case error.POSITION_UNAVAILABLE:
-                            errorMessage = "La información de ubicación no está disponible.";
-                            break;
-                        case error.TIMEOUT:
-                            errorMessage = "Se agotó el tiempo para obtener la ubicación.";
-                            break;
-                        default:
-                            errorMessage = "Ocurrió un error desconocido.";
-                    }
-                    locationPermissionElement.innerHTML = `
-                        <p class="error">${errorMessage}</p>
-                        <p>Por favor ingrese una ciudad manualmente o intente nuevamente.</p>
-                        <button class="btn btn-primary" onclick="requestLocation()">
-                            Intentar nuevamente
-                        </button>
-                    `;
-                },
-                {
-                    enableHighAccuracy: true,
-                    timeout: 10000,
-                    maximumAge: 0
-                }
-            );
-        }
+ // Función para solicitar ubicación con prompt
+ function getLocationWithPrompt() {
+ const locationPermissionElement = document.getElementById('location-permission');
+ const spinner = locationPermissionElement.querySelector('.loading-spinner');
+ 
+ spinner.style.display = 'block';
+ 
+ navigator.geolocation.getCurrentPosition(
+ // Éxito
+ (position) => {
+ spinner.style.display = 'none';
+ locationPermissionElement.style.display = 'none';
+ const lat = position.coords.latitude;
+ const lon = position.coords.longitude;
+ fetchWeatherByCoordinates(lat, lon);
+ },
+ // Error
+ (error) => {
+ spinner.style.display = 'none';
+ let errorMessage = '';
+ switch(error.code) {
+ case error.PERMISSION_DENIED:
+ errorMessage = "No se otorgó permiso para acceder a la ubicación.";
+ break;
+ case error.POSITION_UNAVAILABLE:
+ errorMessage = "La información de ubicación no está disponible.";
+ break;
+ case error.TIMEOUT:
+ errorMessage = "Se agotó el tiempo para obtener la ubicación.";
+ break;
+ default:
+ errorMessage = "Ocurrió un error desconocido.";
+ }
+ locationPermissionElement.innerHTML = `
+ <p class="error">${errorMessage}</p>
+ <p>Por favor ingrese una ciudad manualmente o intente nuevamente.</p>
+ <button class="btn btn-primary" onclick="requestLocation()">
+ Intentar nuevamente
+ </button>
+ `;
+ },
+ {
+ enableHighAccuracy: true,
+ timeout: 10000,
+ maximumAge: 0
+ }
+ );
+ }
 
-        // Función para mostrar instrucciones de cómo habilitar la ubicación
-        function showLocationInstructions() {
-            const instructions = `
-                Para habilitar el acceso a la ubicación:
-                
-                En Android:
-                1. Abra Configuración
-                2. Busque Permisos o Privacidad
-                3. Seleccione Ubicación
-                4. Active el permiso para su navegador
+ // Función para mostrar instrucciones de cómo habilitar la ubicación
+ function showLocationInstructions() {
+ const instructions = `
+ Para habilitar el acceso a la ubicación:
+ 
+ En Android:
+ 1. Abra Configuración
+ 2. Busque Permisos o Privacidad
+ 3. Seleccione Ubicación
+ 4. Active el permiso para su navegador
 
-                En iOS:
-                1. Abra Configuración
-                2. Busque Privacidad
-                3. Seleccione Servicios de Localización
-                4. Active el permiso para su navegador
+ En iOS:
+ 1. Abra Configuración
+ 2. Busque Privacidad
+ 3. Seleccione Servicios de Localización
+ 4. Active el permiso para su navegador
 
-                Después de habilitar la ubicación, recargue esta página.
-            `;
-            alert(instructions);
-        }
+ Después de habilitar la ubicación, recargue esta página.
+ `;
+ alert(instructions);
+ }
 
-        // Modificar la carga inicial
-        window.onload = function() {
-            requestLocation();
-        };
-    </script>
+ // Modificar la carga inicial
+ window.onload = function() {
+ requestLocation();
+ };
+ </script>
 </body>
 </html>
 

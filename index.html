@@ -1,2037 +1,2042 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="version" content="1.2.0">
-    <meta name="build-date" content="06-08-2025">
-    <meta name="author" content="Todo Universidad">
-    <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
-    <link rel="manifest" href="./site.webmanifest">
-    
-    <!-- PWA Meta Tags -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="TodoUni">
-    <meta name="msapplication-TileColor" content="#2563eb">
-    <meta name="theme-color" content="#2563eb">
-    <meta name="msapplication-navbutton-color" content="#2563eb">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Todo Universidad - Calculadoras y Herramientas Académicas | La Mejor Plataforma Educativa</title>
-    <meta name="description" content="Recursos educativos para estudiantes universitarios. Herramientas para mejorar tu rendimiento académico.">
-    <meta name="keywords" content="calculadoras académicas, herramientas universitarias, promedio académico, convertidor documentos, calculadora GPA, recursos estudiantes">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Todo Universidad">
-    <meta property="og:title" content="Todo Universidad - Calculadoras y Herramientas Académicas">
-    <meta property="og:description" content="Plataforma integral de herramientas académicas para estudiantes universitarios. Calculadoras, convertidores y recursos educativos gratuitos.">
-    <meta property="og:image" content="./assets/Todo_Universidad.png">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://todouniversidad.xyz">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="canonical" href="https://todouniversidad.xyz" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline'; ">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <style>
-        :root {
-            --primary: #2563eb;
-            --secondary: #3b82f6;
-            --accent: #60a5fa;
-            --background: #f8fafc;
-            --card-bg: #ffffff;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --border-radius: 16px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --spacing-xs: 0.5rem;
-            --spacing-sm: 1rem;
-            --spacing-md: 1.5rem;
-            --spacing-lg: 2rem;
-            --spacing-xl: 3rem;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary), #8b5cf6);
-            padding: 4rem 0;
-            position: relative;
-            overflow: hidden;
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff20" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,208C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-            background-size: cover;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .floating-shapes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-
-        .shape {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: floatShapes 8s infinite linear;
-        }
-
-        .shape:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
-        .shape:nth-child(2) { width: 60px; height: 60px; left: 20%; animation-delay: 2s; }
-        .shape:nth-child(3) { width: 100px; height: 100px; left: 70%; animation-delay: 4s; }
-        .shape:nth-child(4) { width: 50px; height: 50px; left: 85%; animation-delay: 6s; }
-
-        @keyframes floatShapes {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            text-align: center;
-            color: white;
-            position: relative;
-            z-index: 2;
-        }
-
-        .logo-container {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            animation: fadeInDown 1s ease;
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .logo-container img {
-            height: 80px;
-            width: auto;
-            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .logo-container h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            background: linear-gradient(45deg, #ffffff, #e0e7ff);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInDown 1s ease 0.2s both;
-        }
-
-        .tagline {
-            font-size: 1.8rem;
-            color: rgba(255, 255, 255, 0.95);
-            margin: var(--spacing-md) 0 3rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            animation: fadeInUp 1s ease 0.4s both;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 2rem;
-            animation: fadeInUp 1s ease 0.6s both;
-        }
-
-        .stat-item {
-            text-align: center;
-            color: white;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            display: block;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #ffffff, #f8fafc);
-            color: var(--primary);
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-top: 2rem;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            animation: fadeInUp 1s ease 0.8s both;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.3);
-            background: linear-gradient(45deg, #f8fafc, #e2e8f0);
-        }
-
-        main {
-            max-width: 1200px;
-            margin: -3rem auto 2rem;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .category-section {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            margin-bottom: var(--spacing-lg, 2rem);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: var(--transition);
-        }
-
-        .category-section:hover {
-            transform: translateY(-5px);
-        }
-
-        .category-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .category-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .category-title {
-            font-size: 1.8rem;
-            color: var(--text);
-            margin: 0;
-        }
-
-        .category-description {
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        /* Reglas originales comentadas para evitar conflictos
-        .tool-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2rem;
-            text-decoration: none;
-            color: var(--text);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-        */
-
-        /* Reglas originales comentadas para evitar conflictos
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            opacity: 0;
-            transition: var(--transition);
-            z-index: 0;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            border-color: var(--primary);
-        }
-
-        .tool-card:hover::before {
-            opacity: 0.03;
-        }
-
-        .tool-card:hover .tool-icon {
-            transform: scale(1.2) rotate(5deg);
-            color: var(--primary);
-        }
-
-        .tool-icon {
-            position: relative;
-            z-index: 1;
-            color: var(--primary);
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .tool-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--text);
-            position: relative;
-            z-index: 1;
-            transition: color 0.3s ease;
-        }
-
-        .tool-description {
-            color: var(--text-light);
-            font-size: 1rem;
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-            transition: color 0.3s ease;
-        }
-        */
-
-        footer {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
-            color: #1e293b;
-            margin-top: 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
-        }
-
-        /* Main Footer Content */
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem 2rem;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .footer-section h4 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .footer-section h4 i {
-            color: var(--primary);
-            font-size: 1.1rem;
-        }
-
-        /* Footer Brand Section */
-        .footer-brand .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .footer-brand .footer-logo img {
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-        }
-
-        .footer-description {
-            color: #475569;
-            line-height: 1.7;
-            margin-bottom: 2rem;
-            font-size: 1rem;
-        }
-
-        .footer-stats {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 15px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .footer-stat {
-            text-align: center;
-        }
-
-        .footer-stat .stat-number {
-            display: block;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.3rem;
-        }
-
-        .footer-stat .stat-text {
-            font-size: 0.9rem;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Footer Lists */
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-section ul li a {
-            color: #64748b;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 0.3rem 0;
-            border-radius: 8px;
-            position: relative;
-        }
-
-        .footer-section ul li a i {
-            font-size: 0.9rem;
-            color: var(--primary);
-            width: 16px;
-        }
-
-        .footer-section ul li a:hover {
-            color: #1e293b;
-            padding-left: 1rem;
-            background: rgba(37, 99, 235, 0.05);
-        }
-
-        /* Footer Bottom */
-        .footer-bottom {
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            padding: 2rem 0;
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        .footer-bottom-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            text-align: center;
-        }
-
-        .copyright {
-            color: #64748b;
-        }
-
-        .copyright p {
-            margin-bottom: 0.3rem;
-        }
-
-        .made-with {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        .version-info {
-            font-size: 0.85rem;
-            opacity: 0.7;
-            margin-top: 0.5rem;
-            font-family: 'Courier New', monospace;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.2rem;
-        }
-
-        .creaweb-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .creaweb-link:hover {
-            color: var(--secondary);
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                padding: 0 1rem;
-            }
-
-            main {
-                padding: 0 1rem;
-                margin-top: -2rem;
-            }
-
-            .category-section {
-                padding: 1.5rem;
-            }
-
-            .tools-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .logo-container h1 {
-                font-size: 2.5rem;
-            }
-
-            .tagline {
-                font-size: 1.3rem;
-            }
-
-            .hero-stats {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .hero-stats .stat-item {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 1rem;
-            }
-
-            .stat-number {
-                font-size: 2rem;
-            }
-
-            header {
-                min-height: 50vh;
-                padding: 3rem 0;
-            }
-        }
-
-        /* Agregar estilos para focus visible */
-        .tool-card:focus {
-            outline: 3px solid var(--primary);
-            outline-offset: 2px;
-        }
-
-        /* Mejorar breakpoints */
-        @media (max-width: 1024px) {
-            .tools-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-        }
-
-        @media (max-width: 640px) {
-            .category-section {
-                padding: 1rem;
-            }
-
-            .tool-card {
-                padding: 1.25rem;
-            }
-
-            .category-title {
-                font-size: 1.5rem;
-            }
-
-            .header-content {
-                padding: 1rem;
-            }
-        }
-
-        /* NUEVO CSS PARA TARJETAS - LIMPIO Y FUNCIONAL */
-        .tool-card {
-            background: #ffffff !important;
-            border-radius: 20px !important;
-            padding: 2rem !important;
-            text-decoration: none !important;
-            color: #1e293b !important;
-            border: 1px solid rgba(148, 163, 184, 0.1) !important;
-            transition: all 0.3s ease !important;
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 1rem !important;
-            position: relative !important;
-            overflow: visible !important;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
-            min-height: 200px !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-5px) !important;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
-            border-color: #2563eb !important;
-        }
-
-        .tool-card .tool-icon {
-            color: #2563eb !important;
-            font-size: 2rem !important;
-            margin-bottom: 0.5rem !important;
-            display: block !important;
-            transition: all 0.3s ease !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            font-family: "Font Awesome 6 Free" !important;
-            font-weight: 900 !important;
-        }
-
-        .tool-card .tool-title {
-            color: #1e293b !important;
-            font-size: 1.3rem !important;
-            font-weight: 600 !important;
-            margin: 0 !important;
-            display: block !important;
-            transition: color 0.3s ease !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-
-        .tool-card .tool-description {
-            color: #64748b !important;
-            font-size: 1rem !important;
-            line-height: 1.6 !important;
-            margin: 0 !important;
-            display: block !important;
-            transition: color 0.3s ease !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-
-        .tool-card:hover .tool-icon {
-            transform: scale(1.2) !important;
-            color: #2563eb !important;
-        }
-
-        /* Font Awesome - Asegurar carga correcta */
-        .fas, .far, .fab {
-            font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
-            font-weight: 900 !important;
-            display: inline-block !important;
-        }
-
-        /* Agregar indicador de carga */
-        .loading {
-            display: none;
-            /* Estilos para el indicador de carga */
-        }
-
-        .skip-links {
-            position: absolute;
-            top: -100%;
-            left: 0;
-            z-index: 1000;
-        }
-
-        .skip-links a {
-            background: var(--primary);
-            color: white;
-            padding: var(--spacing-sm);
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            text-decoration: none;
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
-        }
-
-        .skip-links a:focus {
-            top: 100%;
-        }
-
-        .tagline {
-            font-size: 1.5rem;
-            color: white;
-            margin: var(--spacing-md) 0;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .category-section {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.5s ease forwards;
-            margin-bottom: var(--spacing-xl);
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Reglas duplicadas comentadas
-        .tool-card {
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--card-bg) 0%, #f8fafc 100%);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-        */
-
-        /* Más reglas duplicadas comentadas
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            opacity: 0;
-            transition: var(--transition);
-            z-index: 0;
-        }
-
-        .tool-card:hover::before {
-            opacity: 0.05;
-        }
-
-        .tool-icon {
-            position: relative;
-            z-index: 1;
-        }
-        */
-
-        @media (max-width: 768px) {
-            .header-content {
-                padding: var(--spacing-md);
-            }
-
-            .tagline {
-                font-size: 1.2rem;
-            }
-
-            .category-section {
-                margin-bottom: var(--spacing-lg);
-            }
-
-            .tool-card {
-                margin-bottom: var(--spacing-sm);
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .category-section {
-                animation: none;
-                opacity: 1;
-                transform: none;
-            }
-
-            .tool-card:hover {
-                transform: none;
-            }
-        }
-
-        .search-container {
-            max-width: 600px;
-            margin: -1rem auto 3rem;
-            padding: 1rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .search-wrapper {
-            position: relative;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
-            font-size: 1.2rem;
-            z-index: 1;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 1.2rem 1.5rem 1.2rem 3.5rem;
-            border-radius: 50px;
-            border: 2px solid transparent;
-            font-size: 1.1rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-            background: white;
-            outline: none;
-        }
-
-        .search-box:focus {
-            border-color: var(--primary);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .features-section {
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-            padding: 0 2rem;
-        }
-
-        .features-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(148, 163, 184, 0.1);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: white;
-            font-size: 2rem;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-        }
-
-        .feature-card h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text);
-        }
-
-        .feature-card p {
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        #search-results {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .search-result-item {
-            padding: 1rem;
-            border-bottom: 1px solid #e2e8f0;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .search-result-item:hover {
-            background: #f8fafc;
-        }
-
-        .search-result-item:last-child {
-            border-bottom: none;
-        }
-
-        /* Botón scroll to top */
-        .scroll-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-            transition: all 0.3s ease;
-            opacity: 0;
-            visibility: hidden;
-            z-index: 1000;
-        }
-
-        .scroll-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .scroll-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
-        }
-
-        /* Mejoras en responsive para características */
-        @media (max-width: 768px) {
-            .features-container {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .feature-card {
-                padding: 1.5rem;
-            }
-
-            .feature-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-            }
-
-            /* Footer responsive */
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                text-align: center;
-            }
-
-            .footer-stats {
-                justify-content: center;
-            }
-
-            .footer-bottom-content {
-                text-align: center;
-            }
-
-            .version-info {
-                flex-direction: column;
-                gap: 0.3rem;
-                font-size: 0.8rem;
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-            }
-
-            .footer-brand {
-                grid-column: 1 / -1;
-                text-align: center;
-                margin-bottom: 1rem;
-            }
-        }
-
-        /* Animación de carga para las tarjetas - SIMPLIFICADA */
-        .tool-card {
-            animation: none !important;
-        }
-
-        /* Efecto de parallax suave */
-        .category-section {
-            scroll-margin-top: 2rem;
-        }
-
-        /* Mejora del indicador de progreso de scroll */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            z-index: 1000;
-            transition: width 0.1s ease;
-        }
-
-        /* CSS FINAL PARA ASEGURAR VISIBILIDAD - MÁXIMA PRIORIDAD */
-        .tool-card {
-            background: white !important;
-            border: 1px solid #e2e8f0 !important;
-            border-radius: 15px !important;
-            padding: 1.5rem !important;
-            margin: 0.5rem !important;
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 1rem !important;
-            text-decoration: none !important;
-            color: inherit !important;
-            min-height: 180px !important;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
-            transition: all 0.2s ease !important;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-3px) !important;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
-        }
-
-        .tool-card .tool-icon {
-            font-size: 2rem !important;
-            color: #3b82f6 !important;
-            margin-bottom: 0.5rem !important;
-            font-family: "Font Awesome 6 Free" !important;
-            font-weight: 900 !important;
-        }
-
-        .tool-card .tool-title {
-            font-size: 1.2rem !important;
-            font-weight: 600 !important;
-            color: #1f2937 !important;
-            margin: 0 0 0.5rem 0 !important;
-        }
-
-        .tool-card .tool-description {
-            font-size: 0.95rem !important;
-            line-height: 1.5 !important;
-            color: #6b7280 !important;
-            margin: 0 !important;
-        }
-    </style><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1273212656995497" crossorigin="anonymous"></script>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="version" content="1.2.0">
+ <meta name="build-date" content="06-08-2025">
+ <meta name="author" content="Todo Universidad">
+ <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
+ <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
+ <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
+ <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
+ <link rel="manifest" href="./site.webmanifest">
+ 
+ <!-- PWA Meta Tags -->
+ <meta name="mobile-web-app-capable" content="yes">
+ <meta name="apple-mobile-web-app-capable" content="yes">
+ <meta name="apple-mobile-web-app-status-bar-style" content="default">
+ <meta name="apple-mobile-web-app-title" content="TodoUni">
+ <meta name="msapplication-TileColor" content="#2563eb">
+ <meta name="theme-color" content="#2563eb">
+ <meta name="msapplication-navbutton-color" content="#2563eb">
+ <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+ <title>Todo Universidad - Calculadoras y Herramientas Académicas | La Mejor Plataforma Educativa</title>
+ <meta name="description" content="Recursos educativos para estudiantes universitarios. Herramientas para mejorar tu rendimiento académico.">
+ <meta name="keywords" content="calculadoras académicas, herramientas universitarias, promedio académico, convertidor documentos, calculadora GPA, recursos estudiantes">
+ <meta name="robots" content="index, follow">
+ <meta name="author" content="Todo Universidad">
+ <meta property="og:title" content="Todo Universidad - Calculadoras y Herramientas Académicas">
+ <meta property="og:description" content="Plataforma integral de herramientas académicas para estudiantes universitarios. Calculadoras, convertidores y recursos educativos gratuitos.">
+ <meta property="og:image" content="./assets/Todo_Universidad.png">
+ <meta property="og:type" content="website">
+ <meta property="og:url" content="https://todouniversidad.xyz">
+ <meta name="twitter:card" content="summary_large_image">
+ <link rel="canonical" href="https://todouniversidad.xyz" />
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" as="style">
+ <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style">
+ <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+ <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline'; ">
+ <meta http-equiv="X-Content-Type-Options" content="nosniff">
+ <meta http-equiv="X-Frame-Options" content="DENY">
+ <style>
+ :root {
+ --primary: #2563eb;
+ --secondary: #3b82f6;
+ --accent: #60a5fa;
+ --background: #f8fafc;
+ --card-bg: #ffffff;
+ --text: #1e293b;
+ --text-light: #64748b;
+ --border-radius: 16px;
+ --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+ --spacing-xs: 0.5rem;
+ --spacing-sm: 1rem;
+ --spacing-md: 1.5rem;
+ --spacing-lg: 2rem;
+ --spacing-xl: 3rem;
+ }
+
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+
+ body {
+ font-family: 'Poppins', sans-serif;
+ background: var(--background);
+ color: var(--text);
+ line-height: 1.6;
+ }
+
+ header {
+ background: linear-gradient(135deg, var(--primary), var(--secondary), #8b5cf6);
+ padding: 4rem 0;
+ position: relative;
+ overflow: hidden;
+ min-height: 60vh;
+ display: flex;
+ align-items: center;
+ }
+
+ header::before {
+ content: '';
+ position: absolute;
+ width: 100%;
+ height: 100%;
+ top: 0;
+ left: 0;
+ background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff20" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,208C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+ background-size: cover;
+ opacity: 0.1;
+ animation: float 6s ease-in-out infinite;
+ }
+
+ @keyframes float {
+ 0%, 100% { transform: translateY(0px); }
+ 50% { transform: translateY(-20px); }
+ }
+
+ .floating-shapes {
+ position: absolute;
+ width: 100%;
+ height: 100%;
+ top: 0;
+ left: 0;
+ pointer-events: none;
+ }
+
+ .shape {
+ position: absolute;
+ background: rgba(255, 255, 255, 0.1);
+ border-radius: 50%;
+ animation: floatShapes 8s infinite linear;
+ }
+
+ .shape:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+ .shape:nth-child(2) { width: 60px; height: 60px; left: 20%; animation-delay: 2s; }
+ .shape:nth-child(3) { width: 100px; height: 100px; left: 70%; animation-delay: 4s; }
+ .shape:nth-child(4) { width: 50px; height: 50px; left: 85%; animation-delay: 6s; }
+
+ @keyframes floatShapes {
+ 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+ 10% { opacity: 1; }
+ 90% { opacity: 1; }
+ 100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+ }
+
+ .header-content {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 0 2rem;
+ text-align: center;
+ color: white;
+ position: relative;
+ z-index: 2;
+ }
+
+ .logo-container {
+ display: inline-flex;
+ align-items: center;
+ gap: 1rem;
+ margin-bottom: 2rem;
+ animation: fadeInDown 1s ease;
+ }
+
+ @keyframes fadeInDown {
+ from { opacity: 0; transform: translateY(-30px); }
+ to { opacity: 1; transform: translateY(0); }
+ }
+
+ .logo-container img {
+ height: 80px;
+ width: auto;
+ filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));
+ animation: pulse 2s infinite;
+ }
+
+ @keyframes pulse {
+ 0%, 100% { transform: scale(1); }
+ 50% { transform: scale(1.05); }
+ }
+
+ .logo-container h1 {
+ font-size: 3.5rem;
+ font-weight: 700;
+ text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+ background: linear-gradient(45deg, #ffffff, #e0e7ff);
+ background-clip: text;
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ animation: fadeInDown 1s ease 0.2s both;
+ }
+
+ .tagline {
+ font-size: 1.8rem;
+ color: rgba(255, 255, 255, 0.95);
+ margin: var(--spacing-md) 0 3rem;
+ text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+ animation: fadeInUp 1s ease 0.4s both;
+ }
+
+ @keyframes fadeInUp {
+ from { opacity: 0; transform: translateY(30px); }
+ to { opacity: 1; transform: translateY(0); }
+ }
+
+ .hero-stats {
+ display: flex;
+ justify-content: center;
+ gap: 3rem;
+ margin-top: 2rem;
+ animation: fadeInUp 1s ease 0.6s both;
+ }
+
+ .stat-item {
+ text-align: center;
+ color: white;
+ }
+
+ .stat-number {
+ font-size: 2.5rem;
+ font-weight: 700;
+ display: block;
+ text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+ }
+
+ .stat-label {
+ font-size: 1rem;
+ opacity: 0.9;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ }
+
+ .cta-button {
+ display: inline-block;
+ background: linear-gradient(45deg, #ffffff, #f8fafc);
+ color: var(--primary);
+ padding: 1rem 2rem;
+ border-radius: 50px;
+ text-decoration: none;
+ font-weight: 600;
+ font-size: 1.1rem;
+ margin-top: 2rem;
+ box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+ transition: all 0.3s ease;
+ animation: fadeInUp 1s ease 0.8s both;
+ }
+
+ .cta-button:hover {
+ transform: translateY(-3px);
+ box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+ background: linear-gradient(45deg, #f8fafc, #e2e8f0);
+ }
+
+ main {
+ max-width: 1200px;
+ margin: -3rem auto 2rem;
+ padding: 0 2rem;
+ position: relative;
+ z-index: 1;
+ }
+
+ .category-section {
+ background: var(--card-bg);
+ border-radius: var(--border-radius);
+ padding: 2rem;
+ margin-bottom: var(--spacing-lg, 2rem);
+ box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+ transition: var(--transition);
+ }
+
+ .category-section:hover {
+ transform: translateY(-5px);
+ }
+
+ .category-header {
+ display: flex;
+ align-items: center;
+ gap: 1rem;
+ margin-bottom: 2rem;
+ }
+
+ .category-icon {
+ width: 48px;
+ height: 48px;
+ background: linear-gradient(135deg, var(--primary), var(--secondary));
+ border-radius: 12px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ color: white;
+ font-size: 1.5rem;
+ }
+
+ .category-title {
+ font-size: 1.8rem;
+ color: var(--text);
+ margin: 0;
+ }
+
+ .category-description {
+ color: var(--text-light);
+ margin-bottom: 2rem;
+ font-size: 1.1rem;
+ }
+
+ .tools-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+ gap: 1.5rem;
+ }
+
+ /* Reglas originales comentadas para evitar conflictos
+ .tool-card {
+ background: var(--card-bg);
+ border-radius: 20px;
+ padding: 2rem;
+ text-decoration: none;
+ color: var(--text);
+ border: 1px solid rgba(148, 163, 184, 0.1);
+ transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+ display: flex;
+ flex-direction: column;
+ gap: 1rem;
+ position: relative;
+ overflow: hidden;
+ backdrop-filter: blur(10px);
+ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+ }
+ */
+
+ /* Reglas originales comentadas para evitar conflictos
+ .tool-card::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+ opacity: 0;
+ transition: var(--transition);
+ z-index: 0;
+ }
+
+ .tool-card:hover {
+ transform: translateY(-8px) scale(1.02);
+ box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+ border-color: var(--primary);
+ }
+
+ .tool-card:hover::before {
+ opacity: 0.03;
+ }
+
+ .tool-card:hover .tool-icon {
+ transform: scale(1.2) rotate(5deg);
+ color: var(--primary);
+ }
+
+ .tool-icon {
+ position: relative;
+ z-index: 1;
+ color: var(--primary);
+ font-size: 2rem;
+ margin-bottom: 0.5rem;
+ transition: all 0.3s ease;
+ }
+
+ .tool-title {
+ font-size: 1.3rem;
+ font-weight: 600;
+ color: var(--text);
+ position: relative;
+ z-index: 1;
+ transition: color 0.3s ease;
+ }
+
+ .tool-description {
+ color: var(--text-light);
+ font-size: 1rem;
+ line-height: 1.6;
+ position: relative;
+ z-index: 1;
+ transition: color 0.3s ease;
+ }
+ */
+
+ footer {
+ background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+ color: #1e293b;
+ margin-top: 4rem;
+ position: relative;
+ overflow: hidden;
+ }
+
+ footer::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ height: 1px;
+ background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+ }
+
+ /* Main Footer Content */
+ .footer-content {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 4rem 2rem 2rem;
+ display: grid;
+ grid-template-columns: 2fr 1fr 1fr;
+ gap: 3rem;
+ }
+
+ .footer-section h4 {
+ font-size: 1.3rem;
+ font-weight: 600;
+ margin-bottom: 1.5rem;
+ color: #1e293b;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ }
+
+ .footer-section h4 i {
+ color: var(--primary);
+ font-size: 1.1rem;
+ }
+
+ /* Footer Brand Section */
+ .footer-brand .footer-logo {
+ display: flex;
+ align-items: center;
+ gap: 1rem;
+ margin-bottom: 1.5rem;
+ font-size: 1.5rem;
+ font-weight: 700;
+ color: #1e293b;
+ }
+
+ .footer-brand .footer-logo img {
+ filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+ }
+
+ .footer-description {
+ color: #475569;
+ line-height: 1.7;
+ margin-bottom: 2rem;
+ font-size: 1rem;
+ }
+
+ .footer-stats {
+ display: flex;
+ gap: 2rem;
+ margin-bottom: 2rem;
+ padding: 1.5rem;
+ background: rgba(255, 255, 255, 0.5);
+ border-radius: 15px;
+ border: 1px solid rgba(0, 0, 0, 0.1);
+ }
+
+ .footer-stat {
+ text-align: center;
+ }
+
+ .footer-stat .stat-number {
+ display: block;
+ font-size: 1.8rem;
+ font-weight: 700;
+ color: var(--primary);
+ margin-bottom: 0.3rem;
+ }
+
+ .footer-stat .stat-text {
+ font-size: 0.9rem;
+ color: #64748b;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ }
+
+ /* Footer Lists */
+ .footer-section ul {
+ list-style: none;
+ }
+
+ .footer-section ul li {
+ margin-bottom: 0.8rem;
+ }
+
+ .footer-section ul li a {
+ color: #64748b;
+ text-decoration: none;
+ transition: all 0.3s ease;
+ display: flex;
+ align-items: center;
+ gap: 0.8rem;
+ padding: 0.3rem 0;
+ border-radius: 8px;
+ position: relative;
+ }
+
+ .footer-section ul li a i {
+ font-size: 0.9rem;
+ color: var(--primary);
+ width: 16px;
+ }
+
+ .footer-section ul li a:hover {
+ color: #1e293b;
+ padding-left: 1rem;
+ background: rgba(37, 99, 235, 0.05);
+ }
+
+ /* Footer Bottom */
+ .footer-bottom {
+ border-top: 1px solid rgba(0, 0, 0, 0.1);
+ padding: 2rem 0;
+ background: rgba(0, 0, 0, 0.05);
+ }
+
+ .footer-bottom-content {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 0 2rem;
+ text-align: center;
+ }
+
+ .copyright {
+ color: #64748b;
+ }
+
+ .copyright p {
+ margin-bottom: 0.3rem;
+ }
+
+ .made-with {
+ font-size: 0.9rem;
+ opacity: 0.8;
+ }
+
+ .version-info {
+ font-size: 0.85rem;
+ opacity: 0.7;
+ margin-top: 0.5rem;
+ font-family: 'Courier New', monospace;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 0.2rem;
+ }
+
+ .creaweb-link {
+ color: var(--primary);
+ text-decoration: none;
+ font-weight: 500;
+ transition: color 0.3s ease;
+ }
+
+ .creaweb-link:hover {
+ color: var(--secondary);
+ }
+
+ @media (max-width: 768px) {
+ .header-content {
+ padding: 0 1rem;
+ }
+
+ main {
+ padding: 0 1rem;
+ margin-top: -2rem;
+ }
+
+ .category-section {
+ padding: 1.5rem;
+ }
+
+ .tools-grid {
+ grid-template-columns: 1fr;
+ }
+
+ .logo-container h1 {
+ font-size: 2.5rem;
+ }
+
+ .tagline {
+ font-size: 1.3rem;
+ }
+
+ .hero-stats {
+ flex-direction: column;
+ gap: 1rem;
+ }
+
+ .hero-stats .stat-item {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 1rem;
+ }
+
+ .stat-number {
+ font-size: 2rem;
+ }
+
+ header {
+ min-height: 50vh;
+ padding: 3rem 0;
+ }
+ }
+
+ /* Agregar estilos para focus visible */
+ .tool-card:focus {
+ outline: 3px solid var(--primary);
+ outline-offset: 2px;
+ }
+
+ /* Mejorar breakpoints */
+ @media (max-width: 1024px) {
+ .tools-grid {
+ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+ }
+ }
+
+ @media (max-width: 640px) {
+ .category-section {
+ padding: 1rem;
+ }
+
+ .tool-card {
+ padding: 1.25rem;
+ }
+
+ .category-title {
+ font-size: 1.5rem;
+ }
+
+ .header-content {
+ padding: 1rem;
+ }
+ }
+
+ /* NUEVO CSS PARA TARJETAS - LIMPIO Y FUNCIONAL */
+ .tool-card {
+ background: #ffffff !important;
+ border-radius: 20px !important;
+ padding: 2rem !important;
+ text-decoration: none !important;
+ color: #1e293b !important;
+ border: 1px solid rgba(148, 163, 184, 0.1) !important;
+ transition: all 0.3s ease !important;
+ display: flex !important;
+ flex-direction: column !important;
+ gap: 1rem !important;
+ position: relative !important;
+ overflow: visible !important;
+ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+ min-height: 200px !important;
+ opacity: 1 !important;
+ visibility: visible !important;
+ }
+
+ .tool-card:hover {
+ transform: translateY(-5px) !important;
+ box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+ border-color: #2563eb !important;
+ }
+
+ .tool-card .tool-icon {
+ color: #2563eb !important;
+ font-size: 2rem !important;
+ margin-bottom: 0.5rem !important;
+ display: block !important;
+ transition: all 0.3s ease !important;
+ opacity: 1 !important;
+ visibility: visible !important;
+ font-family: "Font Awesome 6 Free" !important;
+ font-weight: 900 !important;
+ }
+
+ .tool-card .tool-title {
+ color: #1e293b !important;
+ font-size: 1.3rem !important;
+ font-weight: 600 !important;
+ margin: 0 !important;
+ display: block !important;
+ transition: color 0.3s ease !important;
+ opacity: 1 !important;
+ visibility: visible !important;
+ }
+
+ .tool-card .tool-description {
+ color: #64748b !important;
+ font-size: 1rem !important;
+ line-height: 1.6 !important;
+ margin: 0 !important;
+ display: block !important;
+ transition: color 0.3s ease !important;
+ opacity: 1 !important;
+ visibility: visible !important;
+ }
+
+ .tool-card:hover .tool-icon {
+ transform: scale(1.2) !important;
+ color: #2563eb !important;
+ }
+
+ /* Font Awesome - Asegurar carga correcta */
+ .fas, .far, .fab {
+ font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+ font-weight: 900 !important;
+ display: inline-block !important;
+ }
+
+ /* Agregar indicador de carga */
+ .loading {
+ display: none;
+ /* Estilos para el indicador de carga */
+ }
+
+ .skip-links {
+ position: absolute;
+ top: -100%;
+ left: 0;
+ z-index: 1000;
+ }
+
+ .skip-links a {
+ background: var(--primary);
+ color: white;
+ padding: var(--spacing-sm);
+ position: absolute;
+ left: 50%;
+ transform: translateX(-50%);
+ text-decoration: none;
+ border-radius: 0 0 var(--border-radius) var(--border-radius);
+ }
+
+ .skip-links a:focus {
+ top: 100%;
+ }
+
+ .tagline {
+ font-size: 1.5rem;
+ color: white;
+ margin: var(--spacing-md) 0;
+ text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+ }
+
+ .category-section {
+ opacity: 0;
+ transform: translateY(20px);
+ animation: fadeInUp 0.5s ease forwards;
+ margin-bottom: var(--spacing-xl);
+ }
+
+ @keyframes fadeInUp {
+ to {
+ opacity: 1;
+ transform: translateY(0);
+ }
+ }
+
+ /* Reglas duplicadas comentadas
+ .tool-card {
+ position: relative;
+ overflow: hidden;
+ background: linear-gradient(135deg, var(--card-bg) 0%, #f8fafc 100%);
+ border: 1px solid rgba(148, 163, 184, 0.1);
+ box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+ }
+
+ .tool-card:hover {
+ transform: translateY(-5px);
+ box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+ }
+ */
+
+ /* Más reglas duplicadas comentadas
+ .tool-card::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+ opacity: 0;
+ transition: var(--transition);
+ z-index: 0;
+ }
+
+ .tool-card:hover::before {
+ opacity: 0.05;
+ }
+
+ .tool-icon {
+ position: relative;
+ z-index: 1;
+ }
+ */
+
+ @media (max-width: 768px) {
+ .header-content {
+ padding: var(--spacing-md);
+ }
+
+ .tagline {
+ font-size: 1.2rem;
+ }
+
+ .category-section {
+ margin-bottom: var(--spacing-lg);
+ }
+
+ .tool-card {
+ margin-bottom: var(--spacing-sm);
+ }
+ }
+
+ @media (prefers-reduced-motion: reduce) {
+ .category-section {
+ animation: none;
+ opacity: 1;
+ transform: none;
+ }
+
+ .tool-card:hover {
+ transform: none;
+ }
+ }
+
+ .search-container {
+ max-width: 600px;
+ margin: -1rem auto 3rem;
+ padding: 1rem;
+ position: relative;
+ z-index: 2;
+ }
+
+ .search-wrapper {
+ position: relative;
+ }
+
+ .search-icon {
+ position: absolute;
+ left: 1.5rem;
+ top: 50%;
+ transform: translateY(-50%);
+ color: var(--text-light);
+ font-size: 1.2rem;
+ z-index: 1;
+ }
+
+ .search-box {
+ width: 100%;
+ padding: 1.2rem 1.5rem 1.2rem 3.5rem;
+ border-radius: 50px;
+ border: 2px solid transparent;
+ font-size: 1.1rem;
+ box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+ transition: var(--transition);
+ background: white;
+ outline: none;
+ }
+
+ .search-box:focus {
+ border-color: var(--primary);
+ box-shadow: 0 8px 25px rgba(37, 99, 235, 0.2);
+ transform: translateY(-2px);
+ }
+
+ .features-section {
+ max-width: 1200px;
+ margin: 0 auto 4rem;
+ padding: 0 2rem;
+ }
+
+ .features-container {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+ gap: 2rem;
+ }
+
+ .feature-card {
+ background: white;
+ padding: 2rem;
+ border-radius: 20px;
+ text-align: center;
+ box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+ transition: all 0.3s ease;
+ border: 1px solid rgba(148, 163, 184, 0.1);
+ }
+
+ .feature-card:hover {
+ transform: translateY(-5px);
+ box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+ }
+
+ .feature-icon {
+ width: 80px;
+ height: 80px;
+ background: linear-gradient(135deg, var(--primary), var(--secondary));
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ margin: 0 auto 1.5rem;
+ color: white;
+ font-size: 2rem;
+ box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+ }
+
+ .feature-card h3 {
+ font-size: 1.3rem;
+ font-weight: 600;
+ margin-bottom: 1rem;
+ color: var(--text);
+ }
+
+ .feature-card p {
+ color: var(--text-light);
+ line-height: 1.6;
+ }
+
+ #search-results {
+ position: absolute;
+ top: 100%;
+ left: 0;
+ right: 0;
+ background: white;
+ border-radius: var(--border-radius);
+ box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+ max-height: 300px;
+ overflow-y: auto;
+ display: none;
+ }
+
+ .search-result-item {
+ padding: 1rem;
+ border-bottom: 1px solid #e2e8f0;
+ cursor: pointer;
+ transition: var(--transition);
+ }
+
+ .search-result-item:hover {
+ background: #f8fafc;
+ }
+
+ .search-result-item:last-child {
+ border-bottom: none;
+ }
+
+ /* Botón scroll to top */
+ .scroll-to-top {
+ position: fixed;
+ bottom: 2rem;
+ right: 2rem;
+ width: 50px;
+ height: 50px;
+ background: linear-gradient(135deg, var(--primary), var(--secondary));
+ color: white;
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ text-decoration: none;
+ box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+ transition: all 0.3s ease;
+ opacity: 0;
+ visibility: hidden;
+ z-index: 1000;
+ }
+
+ .scroll-to-top.visible {
+ opacity: 1;
+ visibility: visible;
+ }
+
+ .scroll-to-top:hover {
+ transform: translateY(-3px);
+ box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+ }
+
+ /* Mejoras en responsive para características */
+ @media (max-width: 768px) {
+ .features-container {
+ grid-template-columns: 1fr;
+ gap: 1.5rem;
+ }
+
+ .feature-card {
+ padding: 1.5rem;
+ }
+
+ .feature-icon {
+ width: 60px;
+ height: 60px;
+ font-size: 1.5rem;
+ }
+
+ /* Footer responsive */
+ .footer-content {
+ grid-template-columns: 1fr;
+ gap: 2rem;
+ text-align: center;
+ }
+
+ .footer-stats {
+ justify-content: center;
+ }
+
+ .footer-bottom-content {
+ text-align: center;
+ }
+
+ .version-info {
+ flex-direction: column;
+ gap: 0.3rem;
+ font-size: 0.8rem;
+ }
+ }
+
+ @media (max-width: 1024px) {
+ .footer-content {
+ grid-template-columns: repeat(2, 1fr);
+ gap: 2rem;
+ }
+
+ .footer-brand {
+ grid-column: 1 / -1;
+ text-align: center;
+ margin-bottom: 1rem;
+ }
+ }
+
+ /* Animación de carga para las tarjetas - SIMPLIFICADA */
+ .tool-card {
+ animation: none !important;
+ }
+
+ /* Efecto de parallax suave */
+ .category-section {
+ scroll-margin-top: 2rem;
+ }
+
+ /* Mejora del indicador de progreso de scroll */
+ .scroll-progress {
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 0%;
+ height: 4px;
+ background: linear-gradient(90deg, var(--primary), var(--secondary));
+ z-index: 1000;
+ transition: width 0.1s ease;
+ }
+
+ /* CSS FINAL PARA ASEGURAR VISIBILIDAD - MÁXIMA PRIORIDAD */
+ .tool-card {
+ background: white !important;
+ border: 1px solid #e2e8f0 !important;
+ border-radius: 15px !important;
+ padding: 1.5rem !important;
+ margin: 0.5rem !important;
+ display: flex !important;
+ flex-direction: column !important;
+ gap: 1rem !important;
+ text-decoration: none !important;
+ color: inherit !important;
+ min-height: 180px !important;
+ box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+ transition: all 0.2s ease !important;
+ }
+
+ .tool-card:hover {
+ transform: translateY(-3px) !important;
+ box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
+ }
+
+ .tool-card .tool-icon {
+ font-size: 2rem !important;
+ color: #3b82f6 !important;
+ margin-bottom: 0.5rem !important;
+ font-family: "Font Awesome 6 Free" !important;
+ font-weight: 900 !important;
+ }
+
+ .tool-card .tool-title {
+ font-size: 1.2rem !important;
+ font-weight: 600 !important;
+ color: #1f2937 !important;
+ margin: 0 0 0.5rem 0 !important;
+ }
+
+ .tool-card .tool-description {
+ font-size: 0.95rem !important;
+ line-height: 1.5 !important;
+ color: #6b7280 !important;
+ margin: 0 !important;
+ }
+ </style>
 </head>
 <body>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Todo Universidad",
-      "description": "Plataforma integral de herramientas académicas para estudiantes universitarios",
-      "url": "https://todouniversidad.com",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://todouniversidad.com/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-    <header role="banner">
-        <div class="floating-shapes">
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-            <div class="shape"></div>
-        </div>
-        <div class="header-content">
-            <div class="logo-container">
-                <img src="./assets/Todo_Universidad.png" alt="Logo Todo Universidad" width="80" height="80">
-                <h1>Todo Universidad</h1>
-            </div>
-            <p class="tagline">Tu plataforma integral de herramientas académicas</p>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <span class="stat-number">30+</span>
-                    <span class="stat-label">Herramientas</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">100%</span>
-                    <span class="stat-label">Gratuito</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">24/7</span>
-                    <span class="stat-label">Disponible</span>
-                </div>
-            </div>
-            <a href="#herramientas" class="cta-button">
-                <i class="fas fa-rocket" style="margin-right: 0.5rem;"></i>
-                Explorar Herramientas
-            </a>
-        </div>
-    </header>
+ <script type="application/ld+json">
+ {
+ "@context": "https://schema.org",
+ "@type": "WebSite",
+ "name": "Todo Universidad",
+ "description": "Plataforma integral de herramientas académicas para estudiantes universitarios",
+ "url": "https://todouniversidad.com",
+ "potentialAction": {
+ "@type": "SearchAction",
+ "target": "https://todouniversidad.com/search?q={search_term_string}",
+ "query-input": "required name=search_term_string"
+ }
+ }
+ </script>
+ <header role="banner">
+ <div class="floating-shapes">
+ <div class="shape"></div>
+ <div class="shape"></div>
+ <div class="shape"></div>
+ <div class="shape"></div>
+ </div>
+ <div class="header-content">
+ <div class="logo-container">
+ <img src="./assets/Todo_Universidad.png" alt="Logo Todo Universidad" width="80" height="80">
+ <h1>Todo Universidad</h1>
+ </div>
+ <p class="tagline">Tu plataforma integral de herramientas académicas</p>
+ <div class="hero-stats">
+ <div class="stat-item">
+ <span class="stat-number">30+</span>
+ <span class="stat-label">Herramientas</span>
+ </div>
+ <div class="stat-item">
+ <span class="stat-number">100%</span>
+ <span class="stat-label">Gratuito</span>
+ </div>
+ <div class="stat-item">
+ <span class="stat-number">24/7</span>
+ <span class="stat-label">Disponible</span>
+ </div>
+ </div>
+ <a href="#herramientas" class="cta-button">
+ <i class="fas fa-rocket" style="margin-right: 0.5rem;"></i>
+ Explorar Herramientas
+ </a>
+ </div>
+ </header>
 
-    <div class="search-container">
-        <div class="search-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="search" 
-                   class="search-box" 
-                   placeholder="Buscar herramientas (ej: calculadora, convertidor, notas...)" 
-                   aria-label="Buscar herramientas">
-            <div id="search-results"></div>
-        </div>
-    </div>
+ <div class="search-container">
+ <div class="search-wrapper">
+ <i class="fas fa-search search-icon"></i>
+ <input type="search" 
+ class="search-box" 
+ placeholder="Buscar herramientas (ej: calculadora, convertidor, notas...)" 
+ aria-label="Buscar herramientas">
+ <div id="search-results"></div>
+ </div>
+ </div>
 
-    <!-- Nueva sección de características destacadas -->
-    <section class="features-section">
-        <div class="features-container">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
-                <h3>Rápido y Eficiente</h3>
-                <p>Herramientas optimizadas para obtener resultados al instante</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <h3>Totalmente Responsive</h3>
-                <p>Funciona perfectamente en cualquier dispositivo</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3>Seguro y Privado</h3>
-                <p>Tus datos se procesan localmente, sin almacenamiento en servidores</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <h3>100% Gratuito</h3>
-                <p>Todas las herramientas son completamente gratuitas</p>
-            </div>
-        </div>
-    </section>
+ <!-- Nueva sección de características destacadas -->
+ <section class="features-section">
+ <div class="features-container">
+ <div class="feature-card">
+ <div class="feature-icon">
+ <i class="fas fa-bolt"></i>
+ </div>
+ <h3>Rápido y Eficiente</h3>
+ <p>Herramientas optimizadas para obtener resultados al instante</p>
+ </div>
+ <div class="feature-card">
+ <div class="feature-icon">
+ <i class="fas fa-mobile-alt"></i>
+ </div>
+ <h3>Totalmente Responsive</h3>
+ <p>Funciona perfectamente en cualquier dispositivo</p>
+ </div>
+ <div class="feature-card">
+ <div class="feature-icon">
+ <i class="fas fa-shield-alt"></i>
+ </div>
+ <h3>Seguro y Privado</h3>
+ <p>Tus datos se procesan localmente, sin almacenamiento en servidores</p>
+ </div>
+ <div class="feature-card">
+ <div class="feature-icon">
+ <i class="fas fa-heart"></i>
+ </div>
+ <h3>100% Gratuito</h3>
+ <p>Todas las herramientas son completamente gratuitas</p>
+ </div>
+ </div>
+ </section>
 
-    <main role="main">
-        <nav class="skip-links" aria-label="Saltar a contenido principal">
-            <a href="#herramientas">Ir a Herramientas Académicas</a>
-            <a href="#calculadoras">Ir a Calculadoras</a>
-            <a href="#utilidades">Ir a Utilidades</a>
-        </nav>
+ <main role="main">
+ <nav class="skip-links" aria-label="Saltar a contenido principal">
+ <a href="#herramientas">Ir a Herramientas Académicas</a>
+ <a href="#calculadoras">Ir a Calculadoras</a>
+ <a href="#utilidades">Ir a Utilidades</a>
+ </nav>
 
-        <!-- Sección Herramientas Académicas -->
-        <section id="herramientas" class="category-section" role="region" aria-labelledby="herramientas-title">
-            <div class="category-header">
-                <div class="category-icon" aria-hidden="true">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <h2 class="category-title" id="herramientas-title">Herramientas Académicas</h2>
-            </div>
-            <p class="category-description">Recursos esenciales para optimizar tu vida académica</p>
-            <div class="tools-grid">
-                <a href="promedio.html" class="tool-card">
-                    <i class="fas fa-chart-line tool-icon"></i>
-                    <span class="tool-title">Promedio</span>
-                    <span class="tool-description">Calcula tu promedio académico ponderado y general por semestre o período.</span>
-                </a>
-                <a href="escaladenotas.html" class="tool-card">
-                    <i class="fas fa-tasks tool-icon"></i>
-                    <span class="tool-title">Generador de Escala de Notas</span>
-                    <span class="tool-description">Crea escalas de calificación personalizadas.</span>
-                </a>
-                <a href="Calculadora_asistencia.html" class="tool-card">
-                    <i class="fas fa-user-check tool-icon"></i>
-                    <span class="tool-title">Calcular Asistencia</span>
-                    <span class="tool-description">Registra y calcula porcentajes de asistencia a clases.</span>
-                </a>
-                <a href="https://pdfdrive.webs.nf/" class="tool-card" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-book tool-icon"></i>
-                    <span class="tool-title">Biblioteca Digital</span>
-                    <span class="tool-description">Encuentra y descarga libros, guías de estudio, manuales y PDFs académicos completamente gratis para tu carrera universitaria.</span>
-                </a>
-                <a href="https://notebooklm.google/" class="tool-card" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-robot tool-icon"></i>
-                    <span class="tool-title">Asistente de Investigación IA</span>
-                    <span class="tool-description">Asistente de IA que analiza tus documentos, notas y fuentes para generar resúmenes, responder preguntas y encontrar conexiones entre ideas.</span>
-                </a>
-                <a href="cientifica.html" class="tool-card">
-                    <i class="fas fa-square-root-alt tool-icon"></i>
-                    <span class="tool-title">Calculadora Científica</span>
-                    <span class="tool-description">Realiza cálculos matemáticos avanzados y funciones trigonométricas.</span>
-                </a>
-                <a href="estadistica.html" class="tool-card">
-                    <i class="fas fa-chart-bar tool-icon"></i>
-                    <span class="tool-title">Estadística</span>
-                    <span class="tool-description">Analiza datos estadísticos y calcula medidas de tendencia central.</span>
-                </a>
-                <a href="https://app.bibguru.com/p/3e2093fc-6c7d-4546-814f-e1846c04ac52" class="tool-card" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-quote-right tool-icon"></i>
-                    <span class="tool-title">Generador de Citas</span>
-                    <span class="tool-description">Crea citas bibliográficas en diferentes formatos (APA, MLA, Chicago).</span>
-                </a>
-                <a href="lectura.html" class="tool-card">
-                    <i class="fas fa-book-reader tool-icon"></i>
-                    <span class="tool-title">Tiempo de Lectura</span>
-                    <span class="tool-description">Calcula el tiempo estimado para leer un texto o libro.</span>
-                </a>
-                <a href="https://unitoolspdf.netlify.app/" class="tool-card" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-file-pdf tool-icon"></i>
-                    <span class="tool-title">UniTools PDF</span>
-                    <span class="tool-description">Convierte fotos a PDF, une múltiples PDFs en uno solo o separa páginas de PDFs. Herramienta todo-en-uno para manipular documentos PDF.</span>
-                </a>
-                <a href="ahoralink.html" class="tool-card">
-                    <i class="fas fa-sticky-note tool-icon"></i>
-                    <span class="tool-title">AhoraLink</span>
-                    <span class="tool-description">Guarda y accede a tus notas o enlaces importantes de forma segura sin necesidad de iniciar sesión en tus cuentas personales desde cualquier dispositivo.</span>
-                </a>
-                <a href="https://trustzonestore.com/" class="tool-card" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-tags tool-icon"></i>
-                    <span class="tool-title">TrustZone Store</span>
-                    <span class="tool-description">Accede a herramientas académicas y software premium a precios reducidos: Canva Pro, Spotify, YouTube Premium y más.</span>
-                </a>
-            </div>
-        </section>
+ <!-- Sección Herramientas Académicas -->
+ <section id="herramientas" class="category-section" role="region" aria-labelledby="herramientas-title">
+ <div class="category-header">
+ <div class="category-icon" aria-hidden="true">
+ <i class="fas fa-graduation-cap"></i>
+ </div>
+ <h2 class="category-title" id="herramientas-title">Herramientas Académicas</h2>
+ </div>
+ <p class="category-description">Recursos esenciales para optimizar tu vida académica</p>
+ <div class="tools-grid">
+ <a href="promedio.html" class="tool-card">
+ <i class="fas fa-chart-line tool-icon"></i>
+ <span class="tool-title">Promedio</span>
+ <span class="tool-description">Calcula tu promedio académico ponderado y general por semestre o período.</span>
+ </a>
+ <a href="escaladenotas.html" class="tool-card">
+ <i class="fas fa-tasks tool-icon"></i>
+ <span class="tool-title">Generador de Escala de Notas</span>
+ <span class="tool-description">Crea escalas de calificación personalizadas.</span>
+ </a>
+ <a href="Calculadora_asistencia.html" class="tool-card">
+ <i class="fas fa-user-check tool-icon"></i>
+ <span class="tool-title">Calcular Asistencia</span>
+ <span class="tool-description">Registra y calcula porcentajes de asistencia a clases.</span>
+ </a>
+ <a href="https://pdfdrive.webs.nf/" class="tool-card" target="_blank" rel="noopener noreferrer">
+ <i class="fas fa-book tool-icon"></i>
+ <span class="tool-title">Biblioteca Digital</span>
+ <span class="tool-description">Encuentra y descarga libros, guías de estudio, manuales y PDFs académicos completamente gratis para tu carrera universitaria.</span>
+ </a>
+ <a href="https://notebooklm.google/" class="tool-card" target="_blank" rel="noopener noreferrer">
+ <i class="fas fa-robot tool-icon"></i>
+ <span class="tool-title">Asistente de Investigación IA</span>
+ <span class="tool-description">Asistente de IA que analiza tus documentos, notas y fuentes para generar resúmenes, responder preguntas y encontrar conexiones entre ideas.</span>
+ </a>
+ <a href="cientifica.html" class="tool-card">
+ <i class="fas fa-square-root-alt tool-icon"></i>
+ <span class="tool-title">Calculadora Científica</span>
+ <span class="tool-description">Realiza cálculos matemáticos avanzados y funciones trigonométricas.</span>
+ </a>
+ <a href="estadistica.html" class="tool-card">
+ <i class="fas fa-chart-bar tool-icon"></i>
+ <span class="tool-title">Estadística</span>
+ <span class="tool-description">Analiza datos estadísticos y calcula medidas de tendencia central.</span>
+ </a>
+ <a href="https://app.bibguru.com/p/3e2093fc-6c7d-4546-814f-e1846c04ac52" class="tool-card" target="_blank" rel="noopener noreferrer">
+ <i class="fas fa-quote-right tool-icon"></i>
+ <span class="tool-title">Generador de Citas</span>
+ <span class="tool-description">Crea citas bibliográficas en diferentes formatos (APA, MLA, Chicago).</span>
+ </a>
+ <a href="lectura.html" class="tool-card">
+ <i class="fas fa-book-reader tool-icon"></i>
+ <span class="tool-title">Tiempo de Lectura</span>
+ <span class="tool-description">Calcula el tiempo estimado para leer un texto o libro.</span>
+ </a>
+ <a href="https://unitoolspdf.netlify.app/" class="tool-card" target="_blank" rel="noopener noreferrer">
+ <i class="fas fa-file-pdf tool-icon"></i>
+ <span class="tool-title">UniTools PDF</span>
+ <span class="tool-description">Convierte fotos a PDF, une múltiples PDFs en uno solo o separa páginas de PDFs. Herramienta todo-en-uno para manipular documentos PDF.</span>
+ </a>
+ <a href="ahoralink.html" class="tool-card">
+ <i class="fas fa-sticky-note tool-icon"></i>
+ <span class="tool-title">AhoraLink</span>
+ <span class="tool-description">Guarda y accede a tus notas o enlaces importantes de forma segura sin necesidad de iniciar sesión en tus cuentas personales desde cualquier dispositivo.</span>
+ </a>
+ <a href="https://trustzonestore.com/" class="tool-card" target="_blank" rel="noopener noreferrer">
+ <i class="fas fa-tags tool-icon"></i>
+ <span class="tool-title">TrustZone Store</span>
+ <span class="tool-description">Accede a herramientas académicas y software premium a precios reducidos: Canva Pro, Spotify, YouTube Premium y más.</span>
+ </a>
+ </div>
+ </section>
 
-        <!-- Sección Calculadoras -->
-        <section id="calculadoras" class="category-section" role="region" aria-labelledby="calculadoras-title">
-            <div class="category-header">
-                <div class="category-icon" aria-hidden="true">
-                    <i class="fas fa-calculator"></i>
-                </div>
-                <h2 class="category-title" id="calculadoras-title">Calculadoras</h2>
-            </div>
-            <p class="category-description">Herramientas precisas para tus cálculos diarios</p>
-            <div class="tools-grid">
-                <a href="Calculadora_de_ahorros.html" class="tool-card" aria-labelledby="ahorro-title ahorro-desc">
-                    <i class="fas fa-piggy-bank tool-icon" aria-hidden="true"></i>
-                    <span class="tool-title" id="ahorro-title">Ahorro</span>
-                    <span class="tool-description" id="ahorro-desc">Planifica tus ahorros y calcula cuánto necesitas ahorrar mensualmente para alcanzar tus metas financieras.</span>
-                </a>
-                <a href="Calculadora-de-Gastos-de-Combustible.html" class="tool-card">
-                    <i class="fas fa-gas-pump tool-icon"></i>
-                    <span class="tool-title">Combustible</span>
-                    <span class="tool-description">Calcula el costo de combustible para tus viajes según el consumo de tu vehículo y precio actual.</span>
-                </a>
-                <a href="Calculadora-nutricional.html" class="tool-card">
-                    <i class="fas fa-apple-alt tool-icon"></i>
-                    <span class="tool-title">Nutricional</span>
-                    <span class="tool-description">Analiza el valor nutricional de tus comidas: calorías, proteínas, carbohidratos y grasas.</span>
-                </a>
-                <a href="Calculadora-de-Calorías.html" class="tool-card">
-                    <i class="fas fa-fire tool-icon"></i>
-                    <span class="tool-title">Calorías</span>
-                    <span class="tool-description">Calcula tu ingesta diaria de calorías y establece metas para mantener un peso saludable.</span>
-                </a>
-                <a href="calculadora_agua.html" class="tool-card">
-                    <i class="fas fa-tint tool-icon"></i>
-                    <span class="tool-title">Agua</span>
-                    <span class="tool-description">Calcula tu consumo ideal de agua diario según tu peso y actividad física.</span>
-                </a>
-            </div>
-        </section>
+ <!-- Sección Calculadoras -->
+ <section id="calculadoras" class="category-section" role="region" aria-labelledby="calculadoras-title">
+ <div class="category-header">
+ <div class="category-icon" aria-hidden="true">
+ <i class="fas fa-calculator"></i>
+ </div>
+ <h2 class="category-title" id="calculadoras-title">Calculadoras</h2>
+ </div>
+ <p class="category-description">Herramientas precisas para tus cálculos diarios</p>
+ <div class="tools-grid">
+ <a href="Calculadora_de_ahorros.html" class="tool-card" aria-labelledby="ahorro-title ahorro-desc">
+ <i class="fas fa-piggy-bank tool-icon" aria-hidden="true"></i>
+ <span class="tool-title" id="ahorro-title">Ahorro</span>
+ <span class="tool-description" id="ahorro-desc">Planifica tus ahorros y calcula cuánto necesitas ahorrar mensualmente para alcanzar tus metas financieras.</span>
+ </a>
+ <a href="Calculadora-de-Gastos-de-Combustible.html" class="tool-card">
+ <i class="fas fa-gas-pump tool-icon"></i>
+ <span class="tool-title">Combustible</span>
+ <span class="tool-description">Calcula el costo de combustible para tus viajes según el consumo de tu vehículo y precio actual.</span>
+ </a>
+ <a href="Calculadora-nutricional.html" class="tool-card">
+ <i class="fas fa-apple-alt tool-icon"></i>
+ <span class="tool-title">Nutricional</span>
+ <span class="tool-description">Analiza el valor nutricional de tus comidas: calorías, proteínas, carbohidratos y grasas.</span>
+ </a>
+ <a href="Calculadora-de-Calorías.html" class="tool-card">
+ <i class="fas fa-fire tool-icon"></i>
+ <span class="tool-title">Calorías</span>
+ <span class="tool-description">Calcula tu ingesta diaria de calorías y establece metas para mantener un peso saludable.</span>
+ </a>
+ <a href="calculadora_agua.html" class="tool-card">
+ <i class="fas fa-tint tool-icon"></i>
+ <span class="tool-title">Agua</span>
+ <span class="tool-description">Calcula tu consumo ideal de agua diario según tu peso y actividad física.</span>
+ </a>
+ <a href="https://savemoney.cl/clubs" class="tool-card" target="_blank" rel="noopener noreferrer">
+ <i class="fas fa-percentage tool-icon"></i>
+ <span class="tool-title">SaveMoney</span>
+ <span class="tool-description">IA 100% gratuita que encuentra los mejores descuentos para ti en segundos. Reunimos ofertas de tus tarjetas bancarias, fidelidad, celular y más en un solo lugar.</span>
+ </a>
+ </div>
+ </section>
 
-        <!-- Sección Utilidades -->
-        <section class="category-section">
-            <div class="category-header">
-                <div class="category-icon">
-                    <i class="fas fa-tools"></i>
-                </div>
-                <h2 class="category-title">Utilidades</h2>
-            </div>
-            <p class="category-description">Herramientas útiles para el día a día</p>
-            <div class="tools-grid">
-                <a href="curriculum.html" class="tool-card">
-                    <i class="fas fa-file-alt tool-icon"></i>
-                    <span class="tool-title">Curriculum</span>
-                    <span class="tool-description">Crea un CV profesional con plantillas modernas y personalizables.</span>
-                </a>
-                <a href="Calcular_factura.html" class="tool-card">
-                    <i class="fas fa-file-invoice-dollar tool-icon"></i>
-                    <span class="tool-title">Calcular Facturas</span>
-                    <span class="tool-description">Gestiona y calcula tus facturas mensuales de manera eficiente.</span>
-                </a>
-                <a href="https://ytmp3.cc/ZG6b/" class="tool-card" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-youtube tool-icon"></i>
-                    <span class="tool-title">Convertidor YouTube</span>
-                    <span class="tool-description">Convierte videos de YouTube a formato MP3 o MP4.</span>
-                </a>
-                <a href="Dividir-cuenta.html" class="tool-card">
-                    <i class="fas fa-hand-holding-usd tool-icon"></i>
-                    <span class="tool-title">Dividir Gastos</span>
-                    <span class="tool-description">Divide cuentas grupales incluyendo propinas y gastos adicionales.</span>
-                </a>
-                <a href="cronometro.html" class="tool-card">
-                    <i class="fas fa-stopwatch tool-icon"></i>
-                    <span class="tool-title">Cronómetro</span>
-                    <span class="tool-description">Mide el tiempo con precisión para tus actividades.</span>
-                </a>
-                <a href="planeador-de_presupuesto.html" class="tool-card">
-                    <i class="fas fa-coins tool-icon"></i>
-                    <span class="tool-title">Presupuesto</span>
-                    <span class="tool-description">Planifica y controla tus gastos mensuales.</span>
-                </a>
-                <a href="generar_qr.html" class="tool-card">
-                    <i class="fas fa-qrcode tool-icon"></i>
-                    <span class="tool-title">Código QR</span>
-                    <span class="tool-description">Genera códigos QR personalizados para cualquier enlace o texto.</span>
-                </a>
-                <a href="lista_de_compras.html" class="tool-card">
-                    <i class="fas fa-shopping-cart tool-icon"></i>
-                    <span class="tool-title">Lista de Compras</span>
-                    <span class="tool-description">Organiza tu lista de compras del supermercado.</span>
-                </a>
-            </div>
-        </section>
+ <!-- Sección Utilidades -->
+ <section class="category-section">
+ <div class="category-header">
+ <div class="category-icon">
+ <i class="fas fa-tools"></i>
+ </div>
+ <h2 class="category-title">Utilidades</h2>
+ </div>
+ <p class="category-description">Herramientas útiles para el día a día</p>
+ <div class="tools-grid">
+ <a href="curriculum.html" class="tool-card">
+ <i class="fas fa-file-alt tool-icon"></i>
+ <span class="tool-title">Curriculum</span>
+ <span class="tool-description">Crea un CV profesional con plantillas modernas y personalizables.</span>
+ </a>
+ <a href="Calcular_factura.html" class="tool-card">
+ <i class="fas fa-file-invoice-dollar tool-icon"></i>
+ <span class="tool-title">Calcular Facturas</span>
+ <span class="tool-description">Gestiona y calcula tus facturas mensuales de manera eficiente.</span>
+ </a>
+ <a href="https://ytmp3.cc/ZG6b/" class="tool-card" target="_blank" rel="noopener noreferrer">
+ <i class="fab fa-youtube tool-icon"></i>
+ <span class="tool-title">Convertidor YouTube</span>
+ <span class="tool-description">Convierte videos de YouTube a formato MP3 o MP4.</span>
+ </a>
+ <a href="Dividir-cuenta.html" class="tool-card">
+ <i class="fas fa-hand-holding-usd tool-icon"></i>
+ <span class="tool-title">Dividir Gastos</span>
+ <span class="tool-description">Divide cuentas grupales incluyendo propinas y gastos adicionales.</span>
+ </a>
+ <a href="cronometro.html" class="tool-card">
+ <i class="fas fa-stopwatch tool-icon"></i>
+ <span class="tool-title">Cronómetro</span>
+ <span class="tool-description">Mide el tiempo con precisión para tus actividades.</span>
+ </a>
+ <a href="planeador-de_presupuesto.html" class="tool-card">
+ <i class="fas fa-coins tool-icon"></i>
+ <span class="tool-title">Presupuesto</span>
+ <span class="tool-description">Planifica y controla tus gastos mensuales.</span>
+ </a>
+ <a href="generar_qr.html" class="tool-card">
+ <i class="fas fa-qrcode tool-icon"></i>
+ <span class="tool-title">Código QR</span>
+ <span class="tool-description">Genera códigos QR personalizados para cualquier enlace o texto.</span>
+ </a>
+ <a href="lista_de_compras.html" class="tool-card">
+ <i class="fas fa-shopping-cart tool-icon"></i>
+ <span class="tool-title">Lista de Compras</span>
+ <span class="tool-description">Organiza tu lista de compras del supermercado.</span>
+ </a>
+ </div>
+ </section>
 
-        <!-- Sección Otras Herramientas -->
-        <section class="category-section">
-            <div class="category-header">
-                <div class="category-icon">
-                    <i class="fas fa-plus-circle"></i>
-                </div>
-                <h2 class="category-title">Otras Herramientas</h2>
-            </div>
-            <p class="category-description">Herramientas adicionales para mejorar tu experiencia</p>
-            <div class="tools-grid">
-                <a href="juego_memoria.html" class="tool-card">
-                    <i class="fas fa-brain tool-icon"></i>
-                    <span class="tool-title">Juego para la memoria</span>
-                    <span class="tool-description">Ejercita tu memoria con juegos interactivos y divertidos.</span>
-                </a>
-                <a href="selector.html" class="tool-card">
-                    <i class="fas fa-random tool-icon"></i>
-                    <span class="tool-title">Selector de personas/grupos</span>
-                    <span class="tool-description">Forma grupos o selecciona personas al azar.</span>
-                </a>
-                <a href="nasa_apod.html" class="tool-card">
-                    <i class="fas fa-space-shuttle tool-icon"></i>
-                    <span class="tool-title">Imagen del Día NASA</span>
-                    <span class="tool-description">Explora la imagen astronómica diaria de la NASA.</span>
-                </a>
-                <a href="clima_actual.html" class="tool-card">
-                    <i class="fas fa-cloud-sun tool-icon"></i>
-                    <span class="tool-title">Clima Actual</span>
-                    <span class="tool-description">Consulta el pronóstico del tiempo actual y próximos días.</span>
-                </a>
-                <a href="divisas.html" class="tool-card">
-                    <i class="fas fa-exchange-alt tool-icon"></i>
-                    <span class="tool-title">Convertidor de Divisas</span>
-                    <span class="tool-description">Convierte entre diferentes monedas con tasas actualizadas.</span>
-                </a>
-                <a href="https://www.camscanner.com/es-es/download" class="tool-card" target="_blank">
-                    <i class="fas fa-camera tool-icon"></i>
-                    <span class="tool-title">Scanear documentos</span>
-                    <span class="tool-description">Escanea y digitaliza documentos desde tu dispositivo.</span>
-                </a>
-                <a href="Factura-agricola.html" class="tool-card">
-                    <i class="fas fa-tractor tool-icon"></i>
-                    <span class="tool-title">Factura de transporte agrícola</span>
-                    <span class="tool-description">Genera facturas específicas para transporte agrícola.</span>
-                </a>
-                <a href="https://sellstream.trustzonestore.com/" class="tool-card" target="_blank" rel="noopener noreferrer">
-                    <i class="fas fa-store tool-icon"></i>
-                    <span class="tool-title">SellStream</span>
-                    <span class="tool-description">Gestiona tus ventas de cuentas de streaming: registra clientes, fechas de vencimiento e información de acceso.</span>
-                </a>
-            </div>
-        </section>
-    </main>
+ <!-- Sección Otras Herramientas -->
+ <section class="category-section">
+ <div class="category-header">
+ <div class="category-icon">
+ <i class="fas fa-plus-circle"></i>
+ </div>
+ <h2 class="category-title">Otras Herramientas</h2>
+ </div>
+ <p class="category-description">Herramientas adicionales para mejorar tu experiencia</p>
+ <div class="tools-grid">
+ <a href="juego_memoria.html" class="tool-card">
+ <i class="fas fa-brain tool-icon"></i>
+ <span class="tool-title">Juego para la memoria</span>
+ <span class="tool-description">Ejercita tu memoria con juegos interactivos y divertidos.</span>
+ </a>
+ <a href="selector.html" class="tool-card">
+ <i class="fas fa-random tool-icon"></i>
+ <span class="tool-title">Selector de personas/grupos</span>
+ <span class="tool-description">Forma grupos o selecciona personas al azar.</span>
+ </a>
+ <a href="nasa_apod.html" class="tool-card">
+ <i class="fas fa-space-shuttle tool-icon"></i>
+ <span class="tool-title">Imagen del Día NASA</span>
+ <span class="tool-description">Explora la imagen astronómica diaria de la NASA.</span>
+ </a>
+ <a href="clima_actual.html" class="tool-card">
+ <i class="fas fa-cloud-sun tool-icon"></i>
+ <span class="tool-title">Clima Actual</span>
+ <span class="tool-description">Consulta el pronóstico del tiempo actual y próximos días.</span>
+ </a>
+ <a href="divisas.html" class="tool-card">
+ <i class="fas fa-exchange-alt tool-icon"></i>
+ <span class="tool-title">Convertidor de Divisas</span>
+ <span class="tool-description">Convierte entre diferentes monedas con tasas actualizadas.</span>
+ </a>
+ <a href="https://www.camscanner.com/es-es/download" class="tool-card" target="_blank">
+ <i class="fas fa-camera tool-icon"></i>
+ <span class="tool-title">Scanear documentos</span>
+ <span class="tool-description">Escanea y digitaliza documentos desde tu dispositivo.</span>
+ </a>
+ <a href="Factura-agricola.html" class="tool-card">
+ <i class="fas fa-tractor tool-icon"></i>
+ <span class="tool-title">Factura de transporte agrícola</span>
+ <span class="tool-description">Genera facturas específicas para transporte agrícola.</span>
+ </a>
+ <a href="https://sellstream.trustzonestore.com/" class="tool-card" target="_blank" rel="noopener noreferrer">
+ <i class="fas fa-store tool-icon"></i>
+ <span class="tool-title">SellStream</span>
+ <span class="tool-description">Gestiona tus ventas de cuentas de streaming: registra clientes, fechas de vencimiento e información de acceso.</span>
+ </a>
+ </div>
+ </section>
+ </main>
 
-    <footer>
-        <!-- Main Footer Content -->
-        <div class="footer-content">
-            <div class="footer-section footer-brand">
-                <div class="footer-logo">
-                    <img src="./assets/Todo_Universidad.png" alt="Logo Todo Universidad" width="50" height="50">
-                    <span>Todo Universidad</span>
-                </div>
-                <p class="footer-description">La plataforma más completa de herramientas académicas para estudiantes universitarios. Optimiza tu rendimiento académico con nuestras herramientas gratuitas.</p>
-                <div class="footer-stats">
-                    <div class="footer-stat">
-                        <span class="stat-number">30+</span>
-                        <span class="stat-text">Herramientas</span>
-                    </div>
-                    <div class="footer-stat">
-                        <span class="stat-number">10K+</span>
-                        <span class="stat-text">Usuarios</span>
-                    </div>
-                    <div class="footer-stat">
-                        <span class="stat-number">99%</span>
-                        <span class="stat-text">Satisfacción</span>
-                    </div>
-                </div>
-            </div>
+ <footer>
+ <!-- Main Footer Content -->
+ <div class="footer-content">
+ <div class="footer-section footer-brand">
+ <div class="footer-logo">
+ <img src="./assets/Todo_Universidad.png" alt="Logo Todo Universidad" width="50" height="50">
+ <span>Todo Universidad</span>
+ </div>
+ <p class="footer-description">La plataforma más completa de herramientas académicas para estudiantes universitarios. Optimiza tu rendimiento académico con nuestras herramientas gratuitas.</p>
+ <div class="footer-stats">
+ <div class="footer-stat">
+ <span class="stat-number">30+</span>
+ <span class="stat-text">Herramientas</span>
+ </div>
+ <div class="footer-stat">
+ <span class="stat-number">10K+</span>
+ <span class="stat-text">Usuarios</span>
+ </div>
+ <div class="footer-stat">
+ <span class="stat-number">99%</span>
+ <span class="stat-text">Satisfacción</span>
+ </div>
+ </div>
+ </div>
 
-            <div class="footer-section">
-                <h4><i class="fas fa-graduation-cap"></i> Herramientas Populares</h4>
-                <ul>
-                    <li><a href="promedio.html"><i class="fas fa-chart-line"></i> Calculadora de Promedio</a></li>
-                    <li><a href="cientifica.html"><i class="fas fa-calculator"></i> Calculadora Científica</a></li>
-                    <li><a href="https://unitoolspdf.netlify.app/" target="_blank"><i class="fas fa-file-pdf"></i> UniTools PDF</a></li>
-                    <li><a href="citas.html"><i class="fas fa-quote-right"></i> Generador de Citas</a></li>
-                </ul>
-            </div>
+ <div class="footer-section">
+ <h4><i class="fas fa-graduation-cap"></i> Herramientas Populares</h4>
+ <ul>
+ <li><a href="promedio.html"><i class="fas fa-chart-line"></i> Calculadora de Promedio</a></li>
+ <li><a href="cientifica.html"><i class="fas fa-calculator"></i> Calculadora Científica</a></li>
+ <li><a href="https://unitoolspdf.netlify.app/" target="_blank"><i class="fas fa-file-pdf"></i> UniTools PDF</a></li>
+ <li><a href="citas.html"><i class="fas fa-quote-right"></i> Generador de Citas</a></li>
+ </ul>
+ </div>
 
-            <div class="footer-section">
-                <h4><i class="fas fa-layer-group"></i> Categorías</h4>
-                <ul>
-                    <li><a href="#herramientas"><i class="fas fa-tools"></i> Herramientas Académicas</a></li>
-                    <li><a href="#calculadoras"><i class="fas fa-calculator"></i> Calculadoras</a></li>
-                    <li><a href="#utilidades"><i class="fas fa-cogs"></i> Utilidades</a></li>
-                    <li><a href="https://trustzonestore.com/" target="_blank" rel="noopener"><i class="fas fa-store"></i> TrustZone Store</a></li>
-                    <li><a href="https://sellstream.trustzonestore.com/" target="_blank" rel="noopener"><i class="fas fa-stream"></i> SellStream</a></li>
-                </ul>
-            </div>
-        </div>
+ <div class="footer-section">
+ <h4><i class="fas fa-layer-group"></i> Categorías</h4>
+ <ul>
+ <li><a href="#herramientas"><i class="fas fa-tools"></i> Herramientas Académicas</a></li>
+ <li><a href="#calculadoras"><i class="fas fa-calculator"></i> Calculadoras</a></li>
+ <li><a href="#utilidades"><i class="fas fa-cogs"></i> Utilidades</a></li>
+ <li><a href="https://trustzonestore.com/" target="_blank" rel="noopener"><i class="fas fa-store"></i> TrustZone Store</a></li>
+ <li><a href="https://sellstream.trustzonestore.com/" target="_blank" rel="noopener"><i class="fas fa-stream"></i> SellStream</a></li>
+ </ul>
+ </div>
+ </div>
 
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
-            <div class="footer-bottom-content">
-                <div class="copyright">
-                    <p>© 2025 Todo Universidad. Todos los derechos reservados.</p>
-                    <p class="made-with">Diseñado con <i class="fas fa-heart" style="color: #e74c3c;"></i> por <a href="https://creawebchile.cl/" class="creaweb-link" target="_blank" rel="noopener">CreaWeb Chile</a></p>
-                    <p class="version-info">
-                        <i class="fas fa-code-branch" style="margin-right: 0.5rem; color: #64748b;"></i>
-                        <span style="color: #64748b;">Versión 1.2.0</span>
-                        <span style="margin: 0 0.5rem; color: #94a3b8;">•</span>
-                        <span style="color: #64748b;">Build: 06-08-2025</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
+ <!-- Footer Bottom -->
+ <div class="footer-bottom">
+ <div class="footer-bottom-content">
+ <div class="copyright">
+ <p>© 2025 Todo Universidad. Todos los derechos reservados.</p>
+ <p class="made-with">Diseñado con <i class="fas fa-heart" style="color: #e74c3c;"></i> por <a href="https://creawebchile.cl/" class="creaweb-link" target="_blank" rel="noopener">CreaWeb Chile</a></p>
+ <p class="version-info">
+ <i class="fas fa-code-branch" style="margin-right: 0.5rem; color: #64748b;"></i>
+ <span style="color: #64748b;">Versión 1.2.0</span>
+ <span style="margin: 0 0.5rem; color: #94a3b8;">•</span>
+ <span style="color: #64748b;">Build: 06-08-2025</span>
+ </p>
+ </div>
+ </div>
+ </div>
+ </footer>
 
-    <!-- Barra de progreso de scroll -->
-    <div class="scroll-progress"></div>
-    
-    <!-- Botón scroll to top -->
-    <a href="#" class="scroll-to-top" id="scrollToTop" aria-label="Volver arriba">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+ <!-- Barra de progreso de scroll -->
+ <div class="scroll-progress"></div>
+ 
+ <!-- Botón scroll to top -->
+ <a href="#" class="scroll-to-top" id="scrollToTop" aria-label="Volver arriba">
+ <i class="fas fa-arrow-up"></i>
+ </a>
 
-    <script>
-        // Elementos del DOM
-        const scrollToTopBtn = document.getElementById('scrollToTop');
-        const scrollProgress = document.querySelector('.scroll-progress');
-        const searchBox = document.querySelector('.search-box');
-        const searchResults = document.getElementById('search-results');
-        const toolCards = document.querySelectorAll('.tool-card');
+ <script>
+ // Elementos del DOM
+ const scrollToTopBtn = document.getElementById('scrollToTop');
+ const scrollProgress = document.querySelector('.scroll-progress');
+ const searchBox = document.querySelector('.search-box');
+ const searchResults = document.getElementById('search-results');
+ const toolCards = document.querySelectorAll('.tool-card');
 
-        // PWA Installation
-        let deferredPrompt;
-        let installButton;
+ // PWA Installation
+ let deferredPrompt;
+ let installButton;
 
-        // Crear botón de instalación
-        function createInstallButton() {
-            installButton = document.createElement('button');
-            installButton.id = 'installButton';
-            installButton.innerHTML = '<i class="fas fa-download"></i> Instalar App';
-            installButton.style.cssText = `
-                position: fixed;
-                bottom: 2rem;
-                left: 2rem;
-                background: linear-gradient(135deg, var(--primary), var(--secondary));
-                color: white;
-                border: none;
-                padding: 1rem 1.5rem;
-                border-radius: 50px;
-                font-weight: 600;
-                box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-                cursor: pointer;
-                z-index: 1000;
-                font-size: 0.9rem;
-                display: none;
-                align-items: center;
-                gap: 0.5rem;
-                transition: all 0.3s ease;
-                font-family: inherit;
-            `;
-            
-            installButton.addEventListener('mouseover', () => {
-                installButton.style.transform = 'translateY(-3px)';
-                installButton.style.boxShadow = '0 8px 25px rgba(37, 99, 235, 0.4)';
-            });
-            
-            installButton.addEventListener('mouseout', () => {
-                installButton.style.transform = 'translateY(0)';
-                installButton.style.boxShadow = '0 4px 15px rgba(37, 99, 235, 0.3)';
-            });
+ // Crear botón de instalación
+ function createInstallButton() {
+ installButton = document.createElement('button');
+ installButton.id = 'installButton';
+ installButton.innerHTML = '<i class="fas fa-download"></i> Instalar App';
+ installButton.style.cssText = `
+ position: fixed;
+ bottom: 2rem;
+ left: 2rem;
+ background: linear-gradient(135deg, var(--primary), var(--secondary));
+ color: white;
+ border: none;
+ padding: 1rem 1.5rem;
+ border-radius: 50px;
+ font-weight: 600;
+ box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+ cursor: pointer;
+ z-index: 1000;
+ font-size: 0.9rem;
+ display: none;
+ align-items: center;
+ gap: 0.5rem;
+ transition: all 0.3s ease;
+ font-family: inherit;
+ `;
+ 
+ installButton.addEventListener('mouseover', () => {
+ installButton.style.transform = 'translateY(-3px)';
+ installButton.style.boxShadow = '0 8px 25px rgba(37, 99, 235, 0.4)';
+ });
+ 
+ installButton.addEventListener('mouseout', () => {
+ installButton.style.transform = 'translateY(0)';
+ installButton.style.boxShadow = '0 4px 15px rgba(37, 99, 235, 0.3)';
+ });
 
-            installButton.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    
-                    if (outcome === 'accepted') {
-                        showNotification('¡App instalada exitosamente! 🎉', 'success');
-                    } else {
-                        showNotification('Instalación cancelada', 'info');
-                    }
-                    
-                    deferredPrompt = null;
-                    installButton.style.display = 'none';
-                }
-            });
+ installButton.addEventListener('click', async () => {
+ if (deferredPrompt) {
+ deferredPrompt.prompt();
+ const { outcome } = await deferredPrompt.userChoice;
+ 
+ if (outcome === 'accepted') {
+ showNotification('¡App instalada exitosamente! 🎉', 'success');
+ } else {
+ showNotification('Instalación cancelada', 'info');
+ }
+ 
+ deferredPrompt = null;
+ installButton.style.display = 'none';
+ }
+ });
 
-            document.body.appendChild(installButton);
-        }
+ document.body.appendChild(installButton);
+ }
 
-        // Detectar si la app ya está instalada
-        function isAppInstalled() {
-            return window.matchMedia('(display-mode: standalone)').matches || 
-                   window.navigator.standalone === true;
-        }
+ // Detectar si la app ya está instalada
+ function isAppInstalled() {
+ return window.matchMedia('(display-mode: standalone)').matches || 
+ window.navigator.standalone === true;
+ }
 
-        // Event listener para el evento beforeinstallprompt
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            if (!isAppInstalled()) {
-                if (!installButton) {
-                    createInstallButton();
-                }
-                installButton.style.display = 'flex';
-                
-                setTimeout(() => {
-                    if (installButton.style.display === 'flex') {
-                        showNotification('💡 ¡Puedes instalar esta app en tu dispositivo!', 'info');
-                    }
-                }, 3000);
-            }
-        });
+ // Event listener para el evento beforeinstallprompt
+ window.addEventListener('beforeinstallprompt', (e) => {
+ e.preventDefault();
+ deferredPrompt = e;
+ 
+ if (!isAppInstalled()) {
+ if (!installButton) {
+ createInstallButton();
+ }
+ installButton.style.display = 'flex';
+ 
+ setTimeout(() => {
+ if (installButton.style.display === 'flex') {
+ showNotification('💡 ¡Puedes instalar esta app en tu dispositivo!', 'info');
+ }
+ }, 3000);
+ }
+ });
 
-        // Event listener para cuando la app se instala
-        window.addEventListener('appinstalled', () => {
-            showNotification('¡Todo Universidad se instaló correctamente! 🚀', 'success');
-            if (installButton) {
-                installButton.style.display = 'none';
-            }
-            deferredPrompt = null;
-        });
+ // Event listener para cuando la app se instala
+ window.addEventListener('appinstalled', () => {
+ showNotification('¡Todo Universidad se instaló correctamente! 🚀', 'success');
+ if (installButton) {
+ installButton.style.display = 'none';
+ }
+ deferredPrompt = null;
+ });
 
-        // Verificar si es iOS y mostrar instrucciones específicas
-        function checkiOSInstallation() {
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-            const isInStandaloneMode = window.navigator.standalone;
-            
-            if (isIOS && !isInStandaloneMode && !sessionStorage.getItem('iosInstallPromptShown')) {
-                setTimeout(() => {
-                    showIOSInstallPrompt();
-                    sessionStorage.setItem('iosInstallPromptShown', 'true');
-                }, 5000);
-            }
-        }
+ // Verificar si es iOS y mostrar instrucciones específicas
+ function checkiOSInstallation() {
+ const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+ const isInStandaloneMode = window.navigator.standalone;
+ 
+ if (isIOS && !isInStandaloneMode && !sessionStorage.getItem('iosInstallPromptShown')) {
+ setTimeout(() => {
+ showIOSInstallPrompt();
+ sessionStorage.setItem('iosInstallPromptShown', 'true');
+ }, 5000);
+ }
+ }
 
-        function showIOSInstallPrompt() {
-            const iosPrompt = document.createElement('div');
-            iosPrompt.style.cssText = `
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: linear-gradient(135deg, var(--primary), var(--secondary));
-                color: white;
-                padding: 1.5rem;
-                z-index: 10000;
-                box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
-                animation: slideInUp 0.3s ease;
-            `;
-            
-            iosPrompt.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                    <i class="fas fa-mobile-alt" style="font-size: 1.5rem;"></i>
-                    <div>
-                        <h4 style="margin: 0; font-size: 1.1rem;">¡Instala Todo Universidad!</h4>
-                        <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">
-                            Toca <i class="fas fa-share" style="margin: 0 0.2rem;"></i> y luego "Añadir a pantalla de inicio"
-                        </p>
-                    </div>
-                    <button onclick="this.parentElement.parentElement.remove()" 
-                            style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; margin-left: auto;">
-                        ✕
-                    </button>
-                </div>
-            `;
-            
-            document.body.appendChild(iosPrompt);
-            
-            setTimeout(() => {
-                if (iosPrompt.parentNode) {
-                    iosPrompt.style.animation = 'slideOutDown 0.3s ease';
-                    setTimeout(() => {
-                        if (iosPrompt.parentNode) {
-                            iosPrompt.remove();
-                        }
-                    }, 300);
-                }
-            }, 10000);
-        }
+ function showIOSInstallPrompt() {
+ const iosPrompt = document.createElement('div');
+ iosPrompt.style.cssText = `
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ background: linear-gradient(135deg, var(--primary), var(--secondary));
+ color: white;
+ padding: 1.5rem;
+ z-index: 10000;
+ box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+ animation: slideInUp 0.3s ease;
+ `;
+ 
+ iosPrompt.innerHTML = `
+ <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+ <i class="fas fa-mobile-alt" style="font-size: 1.5rem;"></i>
+ <div>
+ <h4 style="margin: 0; font-size: 1.1rem;">¡Instala Todo Universidad!</h4>
+ <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; opacity: 0.9;">
+ Toca <i class="fas fa-share" style="margin: 0 0.2rem;"></i> y luego "Añadir a pantalla de inicio"
+ </p>
+ </div>
+ <button onclick="this.parentElement.parentElement.remove()" 
+ style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; margin-left: auto;">
+ ✕
+ </button>
+ </div>
+ `;
+ 
+ document.body.appendChild(iosPrompt);
+ 
+ setTimeout(() => {
+ if (iosPrompt.parentNode) {
+ iosPrompt.style.animation = 'slideOutDown 0.3s ease';
+ setTimeout(() => {
+ if (iosPrompt.parentNode) {
+ iosPrompt.remove();
+ }
+ }, 300);
+ }
+ }, 10000);
+ }
 
-        // Agregar estilos para animaciones iOS
-        const iosStyles = document.createElement('style');
-        iosStyles.textContent = `
-            @keyframes slideInUp {
-                from {
-                    transform: translateY(100%);
-                }
-                to {
-                    transform: translateY(0);
-                }
-            }
-            
-            @keyframes slideOutDown {
-                from {
-                    transform: translateY(0);
-                }
-                to {
-                    transform: translateY(100%);
-                }
-            }
-        `;
-        document.head.appendChild(iosStyles);
+ // Agregar estilos para animaciones iOS
+ const iosStyles = document.createElement('style');
+ iosStyles.textContent = `
+ @keyframes slideInUp {
+ from {
+ transform: translateY(100%);
+ }
+ to {
+ transform: translateY(0);
+ }
+ }
+ 
+ @keyframes slideOutDown {
+ from {
+ transform: translateY(0);
+ }
+ to {
+ transform: translateY(100%);
+ }
+ }
+ `;
+ document.head.appendChild(iosStyles);
 
-        // Notification system
-        function showNotification(message, type = 'info') {
-            // Remover notificación existente si hay alguna
-            const existingNotification = document.querySelector('.notification');
-            if (existingNotification) {
-                existingNotification.remove();
-            }
+ // Notification system
+ function showNotification(message, type = 'info') {
+ // Remover notificación existente si hay alguna
+ const existingNotification = document.querySelector('.notification');
+ if (existingNotification) {
+ existingNotification.remove();
+ }
 
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            notification.innerHTML = `
-                <div class="notification-content">
-                    <i class="fas fa-${getIconForType(type)}"></i>
-                    <span>${message}</span>
-                    <button class="notification-close">&times;</button>
-                </div>
-            `;
+ const notification = document.createElement('div');
+ notification.className = `notification notification-${type}`;
+ notification.innerHTML = `
+ <div class="notification-content">
+ <i class="fas fa-${getIconForType(type)}"></i>
+ <span>${message}</span>
+ <button class="notification-close">&times;</button>
+ </div>
+ `;
 
-            // Estilos para la notificación
-            notification.style.cssText = `
-                position: fixed;
-                top: 2rem;
-                right: 2rem;
-                background: ${getColorForType(type)};
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 10px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-                z-index: 10000;
-                animation: slideInRight 0.3s ease;
-                max-width: 400px;
-                border-left: 4px solid rgba(255,255,255,0.5);
-            `;
+ // Estilos para la notificación
+ notification.style.cssText = `
+ position: fixed;
+ top: 2rem;
+ right: 2rem;
+ background: ${getColorForType(type)};
+ color: white;
+ padding: 1rem 1.5rem;
+ border-radius: 10px;
+ box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+ z-index: 10000;
+ animation: slideInRight 0.3s ease;
+ max-width: 400px;
+ border-left: 4px solid rgba(255,255,255,0.5);
+ `;
 
-            document.body.appendChild(notification);
+ document.body.appendChild(notification);
 
-            // Auto remove after 5 seconds
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.style.animation = 'slideOutRight 0.3s ease';
-                    setTimeout(() => {
-                        if (notification.parentNode) {
-                            notification.remove();
-                        }
-                    }, 300);
-                }
-            }, 5000);
+ // Auto remove after 5 seconds
+ setTimeout(() => {
+ if (notification.parentNode) {
+ notification.style.animation = 'slideOutRight 0.3s ease';
+ setTimeout(() => {
+ if (notification.parentNode) {
+ notification.remove();
+ }
+ }, 300);
+ }
+ }, 5000);
 
-            // Close button functionality
-            const closeBtn = notification.querySelector('.notification-close');
-            closeBtn.addEventListener('click', () => {
-                notification.style.animation = 'slideOutRight 0.3s ease';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.remove();
-                    }
-                }, 300);
-            });
-        }
+ // Close button functionality
+ const closeBtn = notification.querySelector('.notification-close');
+ closeBtn.addEventListener('click', () => {
+ notification.style.animation = 'slideOutRight 0.3s ease';
+ setTimeout(() => {
+ if (notification.parentNode) {
+ notification.remove();
+ }
+ }, 300);
+ });
+ }
 
-        function getIconForType(type) {
-            const icons = {
-                success: 'check-circle',
-                error: 'exclamation-circle',
-                warning: 'exclamation-triangle',
-                info: 'info-circle'
-            };
-            return icons[type] || icons.info;
-        }
+ function getIconForType(type) {
+ const icons = {
+ success: 'check-circle',
+ error: 'exclamation-circle',
+ warning: 'exclamation-triangle',
+ info: 'info-circle'
+ };
+ return icons[type] || icons.info;
+ }
 
-        function getColorForType(type) {
-            const colors = {
-                success: 'linear-gradient(135deg, #10b981, #059669)',
-                error: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                warning: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                info: 'linear-gradient(135deg, #3b82f6, #2563eb)'
-            };
-            return colors[type] || colors.info;
-        }
+ function getColorForType(type) {
+ const colors = {
+ success: 'linear-gradient(135deg, #10b981, #059669)',
+ error: 'linear-gradient(135deg, #ef4444, #dc2626)',
+ warning: 'linear-gradient(135deg, #f59e0b, #d97706)',
+ info: 'linear-gradient(135deg, #3b82f6, #2563eb)'
+ };
+ return colors[type] || colors.info;
+ }
 
-        // Agregar estilos de animación para notificaciones
-        const notificationStyles = document.createElement('style');
-        notificationStyles.textContent = `
-            @keyframes slideInRight {
-                from {
-                    opacity: 0;
-                    transform: translateX(100%);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-            }
-            
-            @keyframes slideOutRight {
-                from {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-                to {
-                    opacity: 0;
-                    transform: translateX(100%);
-                }
-            }
-            
-            .notification-content {
-                display: flex;
-                align-items: center;
-                gap: 0.8rem;
-            }
-            
-            .notification-close {
-                background: none;
-                border: none;
-                color: white;
-                font-size: 1.2rem;
-                cursor: pointer;
-                margin-left: auto;
-                padding: 0;
-                width: 20px;
-                height: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 50%;
-                transition: background 0.2s ease;
-            }
-            
-            .notification-close:hover {
-                background: rgba(255,255,255,0.2);
-            }
-        `;
-        document.head.appendChild(notificationStyles);
+ // Agregar estilos de animación para notificaciones
+ const notificationStyles = document.createElement('style');
+ notificationStyles.textContent = `
+ @keyframes slideInRight {
+ from {
+ opacity: 0;
+ transform: translateX(100%);
+ }
+ to {
+ opacity: 1;
+ transform: translateX(0);
+ }
+ }
+ 
+ @keyframes slideOutRight {
+ from {
+ opacity: 1;
+ transform: translateX(0);
+ }
+ to {
+ opacity: 0;
+ transform: translateX(100%);
+ }
+ }
+ 
+ .notification-content {
+ display: flex;
+ align-items: center;
+ gap: 0.8rem;
+ }
+ 
+ .notification-close {
+ background: none;
+ border: none;
+ color: white;
+ font-size: 1.2rem;
+ cursor: pointer;
+ margin-left: auto;
+ padding: 0;
+ width: 20px;
+ height: 20px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ border-radius: 50%;
+ transition: background 0.2s ease;
+ }
+ 
+ .notification-close:hover {
+ background: rgba(255,255,255,0.2);
+ }
+ `;
+ document.head.appendChild(notificationStyles);
 
-        // Funcionalidad del botón scroll to top y barra de progreso
-        function updateScrollElements() {
-            const scrollPercent = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-            scrollProgress.style.width = scrollPercent + '%';
-            
-            if (window.pageYOffset > 300) {
-                scrollToTopBtn.classList.add('visible');
-            } else {
-                scrollToTopBtn.classList.remove('visible');
-            }
-        }
+ // Funcionalidad del botón scroll to top y barra de progreso
+ function updateScrollElements() {
+ const scrollPercent = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+ scrollProgress.style.width = scrollPercent + '%';
+ 
+ if (window.pageYOffset > 300) {
+ scrollToTopBtn.classList.add('visible');
+ } else {
+ scrollToTopBtn.classList.remove('visible');
+ }
+ }
 
-        // Smooth scroll para el botón scroll to top
-        scrollToTopBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
+ // Smooth scroll para el botón scroll to top
+ scrollToTopBtn.addEventListener('click', function(e) {
+ e.preventDefault();
+ window.scrollTo({
+ top: 0,
+ behavior: 'smooth'
+ });
+ });
 
-        // Smooth scroll para links internos
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+ // Smooth scroll para links internos
+ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+ anchor.addEventListener('click', function (e) {
+ e.preventDefault();
+ const target = document.querySelector(this.getAttribute('href'));
+ if (target) {
+ target.scrollIntoView({
+ behavior: 'smooth',
+ block: 'start'
+ });
+ }
+ });
+ });
 
-        // Intersection Observer para animaciones
-        const observerOptions = {
-            root: null,
-            rootMargin: '50px',
-            threshold: 0.1
-        };
+ // Intersection Observer para animaciones
+ const observerOptions = {
+ root: null,
+ rootMargin: '50px',
+ threshold: 0.1
+ };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    // Solo desconectar si es una sección que solo necesita animarse una vez
-                    if (!entry.target.classList.contains('tool-card')) {
-                        observer.unobserve(entry.target);
-                    }
-                }
-            });
-        }, observerOptions);
+ const observer = new IntersectionObserver((entries) => {
+ entries.forEach(entry => {
+ if (entry.isIntersecting) {
+ entry.target.classList.add('visible');
+ // Solo desconectar si es una sección que solo necesita animarse una vez
+ if (!entry.target.classList.contains('tool-card')) {
+ observer.unobserve(entry.target);
+ }
+ }
+ });
+ }, observerOptions);
 
-        // Observar elementos para animaciones
-        document.querySelectorAll('.category-section').forEach(el => observer.observe(el));
+ // Observar elementos para animaciones
+ document.querySelectorAll('.category-section').forEach(el => observer.observe(el));
 
-        // Búsqueda mejorada con debounce
-        let searchTimeout;
-        function debounce(func, wait) {
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(searchTimeout);
-                    func(...args);
-                };
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(later, wait);
-            };
-        }
+ // Búsqueda mejorada con debounce
+ let searchTimeout;
+ function debounce(func, wait) {
+ return function executedFunction(...args) {
+ const later = () => {
+ clearTimeout(searchTimeout);
+ func(...args);
+ };
+ clearTimeout(searchTimeout);
+ searchTimeout = setTimeout(later, wait);
+ };
+ }
 
-        // Función de búsqueda
-        function performSearch(searchTerm) {
-            const results = [];
+ // Función de búsqueda
+ function performSearch(searchTerm) {
+ const results = [];
 
-            if (searchTerm.length < 2) {
-                searchResults.style.display = 'none';
-                return;
-            }
+ if (searchTerm.length < 2) {
+ searchResults.style.display = 'none';
+ return;
+ }
 
-            toolCards.forEach(card => {
-                const title = card.querySelector('.tool-title').textContent.toLowerCase();
-                const description = card.querySelector('.tool-description').textContent.toLowerCase();
-                
-                if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                    results.push({
-                        title: card.querySelector('.tool-title').textContent,
-                        description: card.querySelector('.tool-description').textContent,
-                        href: card.href
-                    });
-                }
-            });
+ toolCards.forEach(card => {
+ const title = card.querySelector('.tool-title').textContent.toLowerCase();
+ const description = card.querySelector('.tool-description').textContent.toLowerCase();
+ 
+ if (title.includes(searchTerm) || description.includes(searchTerm)) {
+ results.push({
+ title: card.querySelector('.tool-title').textContent,
+ description: card.querySelector('.tool-description').textContent,
+ href: card.href
+ });
+ }
+ });
 
-            if (results.length > 0) {
-                searchResults.innerHTML = results.map(result => `
-                    <a href="${result.href}" class="search-result-item">
-                        <div><strong>${result.title}</strong></div>
-                        <div style="font-size: 0.9rem; color: #64748b;">${result.description}</div>
-                    </a>
-                `).join('');
-                searchResults.style.display = 'block';
-            } else {
-                searchResults.innerHTML = `
-                    <div class="search-result-item">
-                        No se encontraron resultados para "${searchTerm}"
-                    </div>
-                `;
-                searchResults.style.display = 'block';
-            }
-        }
+ if (results.length > 0) {
+ searchResults.innerHTML = results.map(result => `
+ <a href="${result.href}" class="search-result-item">
+ <div><strong>${result.title}</strong></div>
+ <div style="font-size: 0.9rem; color: #64748b;">${result.description}</div>
+ </a>
+ `).join('');
+ searchResults.style.display = 'block';
+ } else {
+ searchResults.innerHTML = `
+ <div class="search-result-item">
+ No se encontraron resultados para "${searchTerm}"
+ </div>
+ `;
+ searchResults.style.display = 'block';
+ }
+ }
 
-        // Event listeners mejorados
-        searchBox.addEventListener('input', debounce(function(e) {
-            performSearch(e.target.value.toLowerCase());
-        }, 300));
+ // Event listeners mejorados
+ searchBox.addEventListener('input', debounce(function(e) {
+ performSearch(e.target.value.toLowerCase());
+ }, 300));
 
-        // Cerrar resultados al hacer clic fuera
-        document.addEventListener('click', function(e) {
-            if (!searchBox.contains(e.target) && !searchResults.contains(e.target)) {
-                searchResults.style.display = 'none';
-            }
-        });
+ // Cerrar resultados al hacer clic fuera
+ document.addEventListener('click', function(e) {
+ if (!searchBox.contains(e.target) && !searchResults.contains(e.target)) {
+ searchResults.style.display = 'none';
+ }
+ });
 
-        // Accesibilidad con teclado mejorada
-        searchBox.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                searchResults.style.display = 'none';
-                searchBox.blur();
-            }
-        });
+ // Accesibilidad con teclado mejorada
+ searchBox.addEventListener('keydown', function(e) {
+ if (e.key === 'Escape') {
+ searchResults.style.display = 'none';
+ searchBox.blur();
+ }
+ });
 
-        // Event listeners
-        window.addEventListener('scroll', debounce(updateScrollElements, 10));
-        window.addEventListener('load', updateScrollElements);
+ // Event listeners
+ window.addEventListener('scroll', debounce(updateScrollElements, 10));
+ window.addEventListener('load', updateScrollElements);
 
-        // Manejo de errores mejorado
-        window.addEventListener('error', function(e) {
-            console.error('Error:', e.message);
-            // Mostrar notificación amigable al usuario si es necesario
-        });
+ // Manejo de errores mejorado
+ window.addEventListener('error', function(e) {
+ console.error('Error:', e.message);
+ // Mostrar notificación amigable al usuario si es necesario
+ });
 
-        // Preload de imágenes críticas
-        function preloadImages() {
-            const criticalImages = [
-                './assets/Todo_Universidad.png'
-            ];
-            
-            criticalImages.forEach(src => {
-                const img = new Image();
-                img.src = src;
-            });
-        }
+ // Preload de imágenes críticas
+ function preloadImages() {
+ const criticalImages = [
+ './assets/Todo_Universidad.png'
+ ];
+ 
+ criticalImages.forEach(src => {
+ const img = new Image();
+ img.src = src;
+ });
+ }
 
-        // Inicializar cuando el DOM esté listo
-        document.addEventListener('DOMContentLoaded', function() {
-            preloadImages();
-            checkiOSInstallation();
-            
-            // DEPURACIÓN: Verificar que las tarjetas estén visibles
-            console.log('=== DEPURACIÓN TARJETAS ===');
-            const cards = document.querySelectorAll('.tool-card');
-            console.log('Tarjetas encontradas:', cards.length);
-            
-            cards.forEach((card, index) => {
-                const icon = card.querySelector('.tool-icon');
-                const title = card.querySelector('.tool-title');
-                const description = card.querySelector('.tool-description');
-                
-                console.log(`Tarjeta ${index + 1}:`);
-                console.log('- Icono:', icon ? icon.textContent : 'NO ENCONTRADO');
-                console.log('- Título:', title ? title.textContent : 'NO ENCONTRADO');
-                console.log('- Descripción:', description ? description.textContent.substring(0, 50) + '...' : 'NO ENCONTRADA');
-                
-                // Forzar estilos de visibilidad
-                if (card) {
-                    card.style.opacity = '1';
-                    card.style.visibility = 'visible';
-                    card.style.display = 'flex';
-                }
-                if (icon) {
-                    icon.style.opacity = '1';
-                    icon.style.visibility = 'visible';
-                    icon.style.display = 'block';
-                    icon.style.color = '#2563eb';
-                    icon.style.fontSize = '2rem';
-                }
-                if (title) {
-                    title.style.opacity = '1';
-                    title.style.visibility = 'visible';
-                    title.style.display = 'block';
-                    title.style.color = '#1e293b';
-                    title.style.fontSize = '1.3rem';
-                    title.style.fontWeight = '600';
-                }
-                if (description) {
-                    description.style.opacity = '1';
-                    description.style.visibility = 'visible';
-                    description.style.display = 'block';
-                    description.style.color = '#64748b';
-                    description.style.fontSize = '1rem';
-                }
-            });
-            
-            // Crear botón de instalación si no está instalado
-            if (!isAppInstalled()) {
-                createInstallButton();
-            }
-            
-            // Añadir efecto de typing al tagline
-            const tagline = document.querySelector('.tagline');
-            if (tagline) {
-                const text = tagline.textContent;
-                tagline.textContent = '';
-                let i = 0;
-                
-                function typeWriter() {
-                    if (i < text.length) {
-                        tagline.textContent += text.charAt(i);
-                        i++;
-                        setTimeout(typeWriter, 50);
-                    }
-                }
-                
-                setTimeout(typeWriter, 1000);
-            }
-        });
+ // Inicializar cuando el DOM esté listo
+ document.addEventListener('DOMContentLoaded', function() {
+ preloadImages();
+ checkiOSInstallation();
+ 
+ // DEPURACIÓN: Verificar que las tarjetas estén visibles
+ console.log('=== DEPURACIÓN TARJETAS ===');
+ const cards = document.querySelectorAll('.tool-card');
+ console.log('Tarjetas encontradas:', cards.length);
+ 
+ cards.forEach((card, index) => {
+ const icon = card.querySelector('.tool-icon');
+ const title = card.querySelector('.tool-title');
+ const description = card.querySelector('.tool-description');
+ 
+ console.log(`Tarjeta ${index + 1}:`);
+ console.log('- Icono:', icon ? icon.textContent : 'NO ENCONTRADO');
+ console.log('- Título:', title ? title.textContent : 'NO ENCONTRADO');
+ console.log('- Descripción:', description ? description.textContent.substring(0, 50) + '...' : 'NO ENCONTRADA');
+ 
+ // Forzar estilos de visibilidad
+ if (card) {
+ card.style.opacity = '1';
+ card.style.visibility = 'visible';
+ card.style.display = 'flex';
+ }
+ if (icon) {
+ icon.style.opacity = '1';
+ icon.style.visibility = 'visible';
+ icon.style.display = 'block';
+ icon.style.color = '#2563eb';
+ icon.style.fontSize = '2rem';
+ }
+ if (title) {
+ title.style.opacity = '1';
+ title.style.visibility = 'visible';
+ title.style.display = 'block';
+ title.style.color = '#1e293b';
+ title.style.fontSize = '1.3rem';
+ title.style.fontWeight = '600';
+ }
+ if (description) {
+ description.style.opacity = '1';
+ description.style.visibility = 'visible';
+ description.style.display = 'block';
+ description.style.color = '#64748b';
+ description.style.fontSize = '1rem';
+ }
+ });
+ 
+ // Crear botón de instalación si no está instalado
+ if (!isAppInstalled()) {
+ createInstallButton();
+ }
+ 
+ // Añadir efecto de typing al tagline
+ const tagline = document.querySelector('.tagline');
+ if (tagline) {
+ const text = tagline.textContent;
+ tagline.textContent = '';
+ let i = 0;
+ 
+ function typeWriter() {
+ if (i < text.length) {
+ tagline.textContent += text.charAt(i);
+ i++;
+ setTimeout(typeWriter, 50);
+ }
+ }
+ 
+ setTimeout(typeWriter, 1000);
+ }
+ });
 
-        // Optimización de rendimiento
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(function(registration) {
-                        console.log('SW registered: ', registration);
-                    })
-                    .catch(function(registrationError) {
-                        console.log('SW registration failed: ', registrationError);
-                    });
-            });
-        }
-    </script>
+ // Optimización de rendimiento
+ if ('serviceWorker' in navigator) {
+ window.addEventListener('load', function() {
+ navigator.serviceWorker.register('./sw.js')
+ .then(function(registration) {
+ console.log('SW registered: ', registration);
+ })
+ .catch(function(registrationError) {
+ console.log('SW registration failed: ', registrationError);
+ });
+ });
+ }
+ </script>
 </body>
 </html>
 
