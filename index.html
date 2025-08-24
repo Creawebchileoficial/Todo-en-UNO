@@ -29,13 +29,13 @@
  <meta name="msapplication-starturl" content="/">
  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
  <meta name="format-detection" content="telephone=no">
- <title>Todo Universidad - Calculadoras y Herramientas Académicas | La Mejor Plataforma Educativa</title>
- <meta name="description" content="Recursos educativos para estudiantes universitarios. Herramientas para mejorar tu rendimiento académico.">
+ <title>Todo Universidad</title>
+ <meta name="description" content="¡Celebra las Fiestas Patrias con Todo Universidad! Recursos educativos para estudiantes universitarios. Herramientas para mejorar tu rendimiento académico. ¡Viva Chile!">
  <meta name="keywords" content="calculadoras académicas, herramientas universitarias, promedio académico, convertidor documentos, calculadora GPA, recursos estudiantes">
  <meta name="robots" content="index, follow">
  <meta name="author" content="Todo Universidad">
- <meta property="og:title" content="Todo Universidad - Calculadoras y Herramientas Académicas">
- <meta property="og:description" content="Plataforma integral de herramientas académicas para estudiantes universitarios. Calculadoras, convertidores y recursos educativos gratuitos.">
+ <meta property="og:title" content="Todo Universidad - Fiestas Patrias 2025 | Herramientas Académicas">
+ <meta property="og:description" content="¡Celebra las Fiestas Patrias con Todo Universidad! Plataforma integral de herramientas académicas para estudiantes universitarios. ¡Viva Chile!">
  <meta property="og:image" content="./assets/Todo_Universidad.png">
  <meta property="og:type" content="website">
  <meta property="og:url" content="https://todouniversidad.xyz">
@@ -52,14 +52,38 @@
  <meta http-equiv="X-Frame-Options" content="DENY">
  <style>
  :root {
- --primary: #2563eb;
- --secondary: #3b82f6;
- --accent: #60a5fa;
- --background: #f8fafc;
- --card-bg: #ffffff;
+ /* Colores oficiales de la Bandera de Chile ÚNICAMENTE */
+ --chile-red: #da121a;
+ --chile-red-dark: #b01014;
+ --chile-red-light: #ff4444;
+ --chile-blue: #0039a6;
+ --chile-blue-dark: #002d7f;
+ --chile-blue-light: #3366cc;
+ --chile-white: #ffffff;
+ --chile-cream: #fafafa;
+ 
+ /* Colores principales */
+ --primary: var(--chile-blue);
+ --secondary: var(--chile-red);
+ --accent: var(--chile-blue-light);
+ --accent-light: #f8fafc;
+ 
+ /* Fondos mejorados */
+ --background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+ --header-bg: linear-gradient(135deg, var(--chile-blue) 0%, var(--chile-red) 50%, var(--chile-blue-dark) 100%);
+ --card-bg: rgba(255, 255, 255, 0.95);
+ --card-hover-bg: rgba(255, 255, 255, 0.98);
+ 
+ /* Textos */
  --text: #1e293b;
- --text-light: #64748b;
+ --text-light: #475569;
+ --text-muted: #64748b;
+ 
+ /* Otros */
  --border-radius: 16px;
+ --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+ --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+ --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
  --spacing-xs: 0.5rem;
  --spacing-sm: 1rem;
@@ -79,19 +103,142 @@
  background: var(--background);
  color: var(--text);
  line-height: 1.6;
+ position: relative;
+ overflow-x: hidden;
+ }
+
+ /* Decoraciones Festivas */
+ body::before {
+ content: '';
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 8px;
+ background: linear-gradient(90deg, 
+   var(--chile-blue) 0%, var(--chile-blue) 33.33%, 
+   var(--chile-white) 33.33%, var(--chile-white) 66.66%, 
+   var(--chile-red) 66.66%, var(--chile-red) 100%);
+ z-index: 1000;
+ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+ }
+
+ /* Guirnaldas decorativas profesionales */
+ .festive-garland {
+ position: fixed;
+ top: 8px;
+ left: 0;
+ width: 100%;
+ height: 6px;
+ background: linear-gradient(90deg, 
+   var(--chile-blue) 0%, 
+   var(--chile-white) 33.33%, 
+   var(--chile-red) 66.66%, 
+   var(--chile-blue) 100%);
+ z-index: 999;
+ opacity: 0.9;
+ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+ }
+
+ /* Decoración lateral izquierda */
+ .festive-garland::before {
+ content: '';
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 6px;
+ height: 100vh;
+ background: linear-gradient(180deg, 
+   var(--chile-blue) 0%, 
+   var(--chile-white) 33.33%, 
+   var(--chile-red) 66.66%, 
+   var(--chile-blue) 100%);
+ z-index: 999;
+ opacity: 0.8;
+ }
+
+ /* Decoración lateral derecha */
+ .festive-garland::after {
+ content: '';
+ position: fixed;
+ top: 0;
+ right: 0;
+ width: 6px;
+ height: 100vh;
+ background: linear-gradient(180deg, 
+   var(--chile-red) 0%, 
+   var(--chile-white) 33.33%, 
+   var(--chile-blue) 66.66%, 
+   var(--chile-red) 100%);
+ z-index: 999;
+ opacity: 0.8;
+ }
+
+ /* Bandera de Chile en header */
+ .chile-flag {
+ position: absolute;
+ top: 2rem;
+ right: 2rem;
+ width: 80px;
+ height: 60px;
+ border: 2px solid rgba(255, 255, 255, 0.3);
+ border-radius: 8px;
+ overflow: hidden;
+ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+ animation: wave 2s ease-in-out infinite;
+ z-index: 3;
+ }
+
+ @keyframes wave {
+ 0%, 100% { transform: rotate(-2deg); }
+ 50% { transform: rotate(2deg); }
+ }
+
+ .chile-flag img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ display: block;
  }
 
  header {
- background: linear-gradient(135deg, var(--primary), var(--secondary), #8b5cf6);
+ background: var(--header-bg);
  padding: 4rem 0;
  position: relative;
  overflow: hidden;
  min-height: 60vh;
  display: flex;
  align-items: center;
+ margin-top: 14px; /* Espacio para la guirnalda más delgada */
+ box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
  }
 
  header::before {
+ content: '¡Viva Chile!';
+ position: absolute;
+ top: 1rem;
+ left: 50%;
+ transform: translateX(-50%);
+ color: white;
+ font-size: 1.2rem;
+ font-weight: 700;
+ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+ background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(212, 158, 46, 0.2));
+ padding: 0.8rem 2.5rem;
+ border-radius: 30px;
+ backdrop-filter: blur(15px);
+ animation: bounce 2s ease-in-out infinite;
+ z-index: 2;
+ border: 2px solid rgba(255, 255, 255, 0.2);
+ }
+
+ @keyframes bounce {
+ 0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+ 40% { transform: translateX(-50%) translateY(-10px); }
+ 60% { transform: translateX(-50%) translateY(-5px); }
+ }
+
+ header::after {
  content: '';
  position: absolute;
  width: 100%;
@@ -100,7 +247,7 @@
  left: 0;
  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff20" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,208C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
  background-size: cover;
- opacity: 0.1;
+ opacity: 0.15;
  animation: float 6s ease-in-out infinite;
  }
 
@@ -175,20 +322,70 @@
  .logo-container h1 {
  font-size: 3.5rem;
  font-weight: 700;
- text-shadow: 0 4px 8px rgba(0,0,0,0.2);
- background: linear-gradient(45deg, #ffffff, #e0e7ff);
+ text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+ background: linear-gradient(45deg, #ffffff, #fef3c7);
  background-clip: text;
  -webkit-background-clip: text;
  -webkit-text-fill-color: transparent;
  animation: fadeInDown 1s ease 0.2s both;
+ position: relative;
+ }
+
+ .logo-container h1::after {
+ content: '🎉 Fiestas Patrias 🎉';
+ position: absolute;
+ top: -2rem;
+ left: 50%;
+ transform: translateX(-50%);
+ font-size: 1rem;
+ color: #fef3c7;
+ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+ animation: pulse 2s infinite;
+ white-space: nowrap;
  }
 
  .tagline {
  font-size: 1.8rem;
  color: rgba(255, 255, 255, 0.95);
- margin: var(--spacing-md) 0 3rem;
- text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+ margin: var(--spacing-md) 0 2rem;
+ text-shadow: 0 2px 4px rgba(0,0,0,0.3);
  animation: fadeInUp 1s ease 0.4s both;
+ font-weight: 600;
+ position: relative;
+ }
+
+ /* Mensaje Feliz Fiestas Patrias */
+ .feliz-fiestas-patrias {
+ text-align: center;
+ margin: 2rem 0 3rem;
+ padding: 1.5rem 2rem;
+ background: linear-gradient(135deg, rgba(218, 18, 26, 0.15), rgba(255, 255, 255, 0.2), rgba(0, 57, 166, 0.15));
+ border-radius: 20px;
+ backdrop-filter: blur(15px);
+ border: 2px solid rgba(255, 255, 255, 0.3);
+ animation: fadeInUp 1s ease 0.6s both;
+ box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+ }
+
+ .feliz-fiestas-patrias h2 {
+ font-size: 2.2rem;
+ font-weight: 700;
+ color: white;
+ text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+ margin: 0 0 0.5rem 0;
+ background: linear-gradient(45deg, #ffffff, #f8fafc);
+ background-clip: text;
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ animation: pulse 3s infinite;
+ }
+
+ .feliz-fiestas-patrias p {
+ font-size: 1.1rem;
+ color: rgba(255, 255, 255, 0.9);
+ margin: 0;
+ font-weight: 500;
+ text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
  }
 
  @keyframes fadeInUp {
@@ -225,23 +422,63 @@
 
  .cta-button {
  display: inline-block;
- background: linear-gradient(45deg, #ffffff, #f8fafc);
- color: var(--primary);
- padding: 1rem 2rem;
+ background: linear-gradient(45deg, #ffffff, var(--chile-cream));
+ color: var(--chile-blue-dark);
+ padding: 1.2rem 2.5rem;
  border-radius: 50px;
  text-decoration: none;
- font-weight: 600;
+ font-weight: 700;
  font-size: 1.1rem;
  margin-top: 2rem;
- box-shadow: 0 8px 25px rgba(0,0,0,0.2);
- transition: all 0.3s ease;
+ box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+ transition: all 0.4s ease;
  animation: fadeInUp 1s ease 0.8s both;
+ border: 3px solid rgba(255, 255, 255, 0.3);
+ position: relative;
+ overflow: hidden;
+ }
+
+ .cta-button::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: -100%;
+ width: 100%;
+ height: 100%;
+ background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+ transition: left 0.6s ease;
+ }
+
+ .cta-button::after {
+ content: '';
+ position: absolute;
+ right: 1.2rem;
+ top: 50%;
+ transform: translateY(-50%);
+ width: 22px;
+ height: 15px;
+ background-image: url('./patrias/bandera.png');
+ background-size: cover;
+ background-position: center;
+ border-radius: 3px;
+ opacity: 0.9;
+ transition: all 0.3s ease;
+ }
+
+ .cta-button:hover::before {
+ left: 100%;
  }
 
  .cta-button:hover {
- transform: translateY(-3px);
- box-shadow: 0 12px 35px rgba(0,0,0,0.3);
- background: linear-gradient(45deg, #f8fafc, #e2e8f0);
+ transform: translateY(-4px) scale(1.05);
+ box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+ background: linear-gradient(45deg, var(--chile-cream), #f8fafc);
+ border-color: rgba(255, 255, 255, 0.5);
+ }
+
+ .cta-button:hover::after {
+ opacity: 1;
+ transform: translateY(-50%) scale(1.1);
  }
 
  main {
@@ -257,12 +494,37 @@
  border-radius: var(--border-radius);
  padding: 2rem;
  margin-bottom: var(--spacing-lg, 2rem);
- box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+ box-shadow: var(--shadow-md);
  transition: var(--transition);
+ border: 3px solid transparent;
+ background-clip: padding-box;
+ position: relative;
+ backdrop-filter: blur(10px);
+ }
+
+ .category-section::before {
+ content: '';
+ position: absolute;
+ top: -3px;
+ left: -3px;
+ right: -3px;
+ bottom: -3px;
+ background: linear-gradient(45deg, var(--chile-red), var(--chile-white), var(--chile-blue), var(--chile-red));
+ border-radius: var(--border-radius);
+ z-index: -1;
+ animation: gradientShift 6s ease-in-out infinite;
+ background-size: 400% 400%;
+ }
+
+ @keyframes gradientShift {
+ 0%, 100% { background-position: 0% 50%; }
+ 50% { background-position: 100% 50%; }
  }
 
  .category-section:hover {
- transform: translateY(-5px);
+ transform: translateY(-8px);
+ box-shadow: var(--shadow-lg);
+ background: var(--card-hover-bg);
  }
 
  .category-header {
@@ -275,13 +537,32 @@
  .category-icon {
  width: 48px;
  height: 48px;
- background: linear-gradient(135deg, var(--primary), var(--secondary));
+ background: linear-gradient(135deg, var(--chile-blue), var(--chile-red));
  border-radius: 12px;
  display: flex;
  align-items: center;
  justify-content: center;
  color: white;
  font-size: 1.5rem;
+ box-shadow: 0 6px 20px rgba(218, 18, 26, 0.3);
+ animation: pulse 3s infinite;
+ position: relative;
+ overflow: hidden;
+ }
+
+ .category-icon::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: -100%;
+ width: 100%;
+ height: 100%;
+ background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+ transition: left 0.6s ease;
+ }
+
+ .category-icon:hover::before {
+ left: 100%;
  }
 
  .category-title {
@@ -430,6 +711,22 @@
  font-size: 1.5rem;
  font-weight: 700;
  color: #1e293b;
+ position: relative;
+ }
+
+ .footer-brand .footer-logo::after {
+ content: '';
+ position: absolute;
+ right: -2.5rem;
+ top: 50%;
+ transform: translateY(-50%);
+ width: 30px;
+ height: 20px;
+ background-image: url('./patrias/bandera.png');
+ background-size: cover;
+ background-position: center;
+ border-radius: 3px;
+ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
  }
 
  .footer-brand .footer-logo img {
@@ -525,6 +822,20 @@
 
  .copyright p {
  margin-bottom: 0.3rem;
+ }
+
+ .fiestas-patrias-footer {
+ background: linear-gradient(135deg, var(--chile-red) 0%, var(--chile-white) 50%, var(--chile-blue) 100%);
+ color: var(--chile-white);
+ text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+ font-weight: 700;
+ font-size: 1.1rem;
+ margin: 0.8rem 0;
+ padding: 0.8rem 1rem;
+ border-radius: 8px;
+ border: 2px solid var(--chile-red);
+ animation: pulse 3s infinite;
+ text-align: center;
  }
 
  .made-with {
@@ -633,57 +944,97 @@
  }
  }
 
- /* NUEVO CSS PARA TARJETAS - LIMPIO Y FUNCIONAL */
+ /* NUEVO CSS PARA TARJETAS - TEMÁTICA FIESTAS PATRIAS MEJORADA */
  .tool-card {
- background: #ffffff !important;
+ background: linear-gradient(135deg, var(--card-bg) 0%, var(--chile-cream) 100%) !important;
  border-radius: 20px !important;
  padding: 2rem !important;
  text-decoration: none !important;
- color: #1e293b !important;
- border: 1px solid rgba(148, 163, 184, 0.1) !important;
- transition: all 0.3s ease !important;
+ color: var(--text) !important;
+ border: 2px solid var(--chile-red-light) !important;
+ transition: all 0.4s ease !important;
  display: flex !important;
  flex-direction: column !important;
  gap: 1rem !important;
  position: relative !important;
  overflow: visible !important;
- box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+ box-shadow: var(--shadow-sm) !important;
  min-height: 200px !important;
  opacity: 1 !important;
  visibility: visible !important;
+ backdrop-filter: blur(5px) !important;
+ }
+
+ .tool-card::before {
+ content: '';
+ position: absolute;
+ top: -2px;
+ left: -2px;
+ right: -2px;
+ bottom: -2px;
+ background: linear-gradient(45deg, var(--chile-red), var(--chile-white), var(--chile-blue), var(--chile-red));
+ border-radius: 22px;
+ z-index: -1;
+ opacity: 0;
+ transition: opacity 0.4s ease;
+ background-size: 300% 300%;
+ animation: gradientMove 4s ease infinite;
+ }
+
+ @keyframes gradientMove {
+ 0%, 100% { background-position: 0% 50%; }
+ 50% { background-position: 100% 50%; }
+ }
+
+ .tool-card:hover::before {
+ opacity: 0.4;
  }
 
  .tool-card:hover {
- transform: translateY(-5px) !important;
- box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
- border-color: #2563eb !important;
+ transform: translateY(-10px) scale(1.03) !important;
+ box-shadow: var(--shadow-lg) !important;
+ border-color: var(--chile-red) !important;
+ background: linear-gradient(135deg, var(--card-hover-bg) 0%, #f8fafc 100%) !important;
  }
 
  .tool-card .tool-icon {
- color: #2563eb !important;
- font-size: 2rem !important;
+ color: var(--chile-red) !important;
+ font-size: 2.2rem !important;
  margin-bottom: 0.5rem !important;
  display: block !important;
- transition: all 0.3s ease !important;
+ transition: all 0.4s ease !important;
  opacity: 1 !important;
  visibility: visible !important;
  font-family: "Font Awesome 6 Free" !important;
  font-weight: 900 !important;
+ text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ filter: drop-shadow(0 2px 4px rgba(197, 48, 48, 0.3));
+ }
+
+ .tool-card:hover .tool-icon {
+ transform: scale(1.3) rotate(8deg) !important;
+ color: var(--chile-blue) !important;
+ filter: drop-shadow(0 4px 8px rgba(43, 108, 176, 0.4));
  }
 
  .tool-card .tool-title {
- color: #1e293b !important;
+ color: var(--chile-blue-dark) !important;
  font-size: 1.3rem !important;
- font-weight: 600 !important;
+ font-weight: 700 !important;
  margin: 0 !important;
  display: block !important;
  transition: color 0.3s ease !important;
  opacity: 1 !important;
  visibility: visible !important;
+ text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+ }
+
+ .tool-card:hover .tool-title {
+ color: var(--chile-red) !important;
  }
 
  .tool-card .tool-description {
- color: #64748b !important;
+ color: var(--text-light) !important;
  font-size: 1rem !important;
  line-height: 1.6 !important;
  margin: 0 !important;
@@ -691,11 +1042,6 @@
  transition: color 0.3s ease !important;
  opacity: 1 !important;
  visibility: visible !important;
- }
-
- .tool-card:hover .tool-icon {
- transform: scale(1.2) !important;
- color: #2563eb !important;
  }
 
  /* Font Awesome - Asegurar carga correcta */
@@ -858,8 +1204,8 @@
  }
 
  .search-box:focus {
- border-color: var(--primary);
- box-shadow: 0 8px 25px rgba(37, 99, 235, 0.2);
+ border-color: var(--chile-red);
+ box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
  transform: translateY(-2px);
  }
 
@@ -893,7 +1239,7 @@
  .feature-icon {
  width: 80px;
  height: 80px;
- background: linear-gradient(135deg, var(--primary), var(--secondary));
+ background: linear-gradient(135deg, var(--chile-blue), var(--chile-red));
  border-radius: 50%;
  display: flex;
  align-items: center;
@@ -901,7 +1247,25 @@
  margin: 0 auto 1.5rem;
  color: white;
  font-size: 2rem;
- box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+ box-shadow: 0 8px 25px rgba(218, 18, 26, 0.4);
+ animation: pulse 4s infinite;
+ position: relative;
+ overflow: hidden;
+ }
+
+ .feature-icon::before {
+ content: '';
+ position: absolute;
+ top: 0;
+ left: -100%;
+ width: 100%;
+ height: 100%;
+ background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+ transition: left 0.8s ease;
+ }
+
+ .feature-card:hover .feature-icon::before {
+ left: 100%;
  }
 
  .feature-card h3 {
@@ -951,14 +1315,14 @@
  right: 2rem;
  width: 50px;
  height: 50px;
- background: linear-gradient(135deg, var(--primary), var(--secondary));
+ background: linear-gradient(135deg, var(--chile-blue), var(--chile-red));
  color: white;
  border-radius: 50%;
  display: flex;
  align-items: center;
  justify-content: center;
  text-decoration: none;
- box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+ box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
  transition: all 0.3s ease;
  opacity: 0;
  visibility: hidden;
@@ -971,8 +1335,8 @@
  }
 
  .scroll-to-top:hover {
- transform: translateY(-3px);
- box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+ transform: translateY(-3px) scale(1.1);
+ box-shadow: 0 8px 25px rgba(220, 38, 38, 0.6);
  }
 
  /* Mejoras en responsive para características */
@@ -1043,16 +1407,17 @@
  top: 0;
  left: 0;
  width: 0%;
- height: 4px;
- background: linear-gradient(90deg, var(--primary), var(--secondary));
+ height: 6px;
+ background: linear-gradient(90deg, var(--chile-blue), var(--chile-red), var(--chile-blue));
  z-index: 1000;
  transition: width 0.1s ease;
+ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
  }
 
  /* CSS FINAL PARA ASEGURAR VISIBILIDAD - MÁXIMA PRIORIDAD */
  .tool-card {
- background: white !important;
- border: 1px solid #e2e8f0 !important;
+ background: linear-gradient(135deg, white 0%, #fef7cd 100%) !important;
+ border: 2px solid rgba(220, 38, 38, 0.2) !important;
  border-radius: 15px !important;
  padding: 1.5rem !important;
  margin: 0.5rem !important;
@@ -1062,28 +1427,39 @@
  text-decoration: none !important;
  color: inherit !important;
  min-height: 180px !important;
- box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
- transition: all 0.2s ease !important;
+ box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15) !important;
+ transition: all 0.3s ease !important;
  }
 
  .tool-card:hover {
- transform: translateY(-3px) !important;
- box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
+ transform: translateY(-5px) !important;
+ box-shadow: 0 8px 25px rgba(220, 38, 38, 0.25) !important;
+ border-color: var(--chile-red) !important;
+ background: linear-gradient(135deg, #ffffff 0%, #fed7aa 100%) !important;
  }
 
  .tool-card .tool-icon {
  font-size: 2rem !important;
- color: #3b82f6 !important;
+ color: var(--chile-red) !important;
  margin-bottom: 0.5rem !important;
  font-family: "Font Awesome 6 Free" !important;
  font-weight: 900 !important;
  }
 
+ .tool-card:hover .tool-icon {
+ color: var(--chile-blue) !important;
+ transform: scale(1.1) !important;
+ }
+
  .tool-card .tool-title {
  font-size: 1.2rem !important;
- font-weight: 600 !important;
- color: #1f2937 !important;
+ font-weight: 700 !important;
+ color: var(--chile-blue) !important;
  margin: 0 0 0.5rem 0 !important;
+ }
+
+ .tool-card:hover .tool-title {
+ color: var(--chile-red) !important;
  }
 
  .tool-card .tool-description {
@@ -1092,9 +1468,107 @@
  color: #6b7280 !important;
  margin: 0 !important;
  }
+
+ /* Responsividad mejorada para móviles */
+ @media (max-width: 768px) {
+ .chile-flag {
+ width: 60px;
+ height: 45px;
+ top: 1rem;
+ right: 1rem;
+ }
+
+ .chile-flag img {
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ }
+
+ .footer-brand .footer-logo::after {
+ width: 24px;
+ height: 16px;
+ right: -2rem;
+ }
+
+ .cta-button::after {
+ width: 16px;
+ height: 11px;
+ right: 0.8rem;
+ }
+
+ .logo-container h1::after {
+ font-size: 0.8rem;
+ top: -1.5rem;
+ }
+
+ .feliz-fiestas-patrias {
+ margin: 1.5rem 0 2rem;
+ padding: 1rem 1.5rem;
+ }
+
+ .feliz-fiestas-patrias h2 {
+ font-size: 1.6rem;
+ }
+
+ .feliz-fiestas-patrias p {
+ font-size: 1rem;
+ }
+
+ .festive-garland {
+ height: 4px;
+ }
+
+ .festive-garland::before,
+ .festive-garland::after {
+ width: 4px;
+ }
+
+ header {
+ margin-top: 12px;
+ }
+ }
+
+ /* Efecto estrella para días especiales */
+ .star-effect {
+ position: absolute;
+ color: #fbbf24;
+ font-size: 1.5rem;
+ animation: twinkle 2s infinite;
+ pointer-events: none;
+ }
+
+ @keyframes twinkle {
+ 0%, 100% { opacity: 1; transform: scale(1); }
+ 50% { opacity: 0.3; transform: scale(0.8); }
+ }
+
+ /* Confeti virtual */
+ .confetti {
+ position: fixed;
+ top: -10px;
+ background: var(--chile-red);
+ width: 10px;
+ height: 10px;
+ animation: confetti-fall 3s linear infinite;
+ z-index: 999;
+ }
+
+ .confetti:nth-child(odd) {
+ background: var(--chile-blue);
+ animation-delay: 0.5s;
+ }
+
+ @keyframes confetti-fall {
+ to {
+ transform: translateY(100vh) rotate(360deg);
+ }
+ }
  </style>
 </head>
 <body>
+ <!-- Guirnalda festiva -->
+ <div class="festive-garland"></div>
+ 
  <script type="application/ld+json">
  {
  "@context": "https://schema.org",
@@ -1110,6 +1584,11 @@
  }
  </script>
  <header role="banner">
+ <!-- Bandera de Chile -->
+ <div class="chile-flag">
+ <img src="./patrias/bandera.png" alt="Bandera de Chile" />
+ </div>
+ 
  <div class="floating-shapes">
  <div class="shape"></div>
  <div class="shape"></div>
@@ -1122,6 +1601,10 @@
  <h1>Todo Universidad</h1>
  </div>
  <p class="tagline">Tu plataforma integral de herramientas académicas</p>
+ <div class="feliz-fiestas-patrias">
+ <h2><img src="./patrias/bandera.png" alt="Bandera de Chile" style="width: 24px; height: 15px; margin-right: 8px; vertical-align: middle;"> ¡Feliz Fiestas Patrias! <img src="./patrias/bandera.png" alt="Bandera de Chile" style="width: 24px; height: 15px; margin-left: 8px; vertical-align: middle;"></h2>
+ <p>Celebremos juntos el orgullo de ser chilenos</p>
+ </div>
  <div class="hero-stats">
  <div class="stat-item">
  <span class="stat-number">30+</span>
@@ -1305,6 +1788,7 @@
  </a>
  <a href="https://savemoney.cl/clubs" class="tool-card" target="_blank" rel="noopener noreferrer">
  <i class="fas fa-percentage tool-icon"></i>
+ <img src="./patrias/bandera.png" alt="Bandera de Chile" style="width: 20px; height: 12px; margin-left: 5px; border-radius: 2px;">
  <span class="tool-title">SaveMoney</span>
  <span class="tool-description">IA 100% gratuita que encuentra los mejores descuentos para ti en segundos. Reunimos ofertas de tus tarjetas bancarias, fidelidad, celular y más en un solo lugar.</span>
  </a>
@@ -1470,7 +1954,8 @@
  <div class="footer-bottom-content">
  <div class="copyright">
  <p>© 2025 Todo Universidad. Todos los derechos reservados.</p>
- <p class="made-with">Diseñado con <i class="fas fa-heart" style="color: #e74c3c;"></i> por <a href="https://creawebchile.cl/" class="creaweb-link" target="_blank" rel="noopener">CreaWeb Chile</a></p>
+ <p class="fiestas-patrias-footer"><img src="./patrias/bandera.png" alt="Bandera de Chile" style="width: 20px; height: 12px; margin-right: 5px; vertical-align: middle;"> ¡Feliz Fiestas Patrias 2025! Orgullosos de ser chilenos <img src="./patrias/bandera.png" alt="Bandera de Chile" style="width: 20px; height: 12px; margin-left: 5px; vertical-align: middle;"></p>
+ <p class="made-with">Diseñado con <i class="fas fa-heart" style="color: #e74c3c;"></i> por <a href="https://creawebchile.cl/" class="creaweb-link" target="_blank" rel="noopener">CreaWeb Chile</a> <img src="./patrias/bandera.png" alt="Bandera de Chile" style="width: 16px; height: 10px; margin-left: 3px; border-radius: 1px; vertical-align: middle;"></p>
  <p class="version-info">
  <i class="fas fa-code-branch" style="margin-right: 0.5rem; color: #64748b;"></i>
  <span style="color: #64748b;">Versión 1.2.0</span>
