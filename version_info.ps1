@@ -1,7 +1,7 @@
 # Todo Universidad - Version Manager
 # Gestor de versiones de la aplicacion
 
-$currentVersion = "1.2.0"
+$currentVersion = "1.3.0"
 $currentDate = Get-Date -Format "dd/MM/yyyy"
 $buildTime = Get-Date -Format "HH:mm:ss"
 
@@ -21,12 +21,22 @@ Write-Host "CHANGELOG:" -ForegroundColor Yellow
 Write-Host "==========" -ForegroundColor Yellow
 Write-Host ""
 
+Write-Host "v1.3.0 - 26/09/2025" -ForegroundColor White
+Write-Host "- Dashboard personalizable con sistema de favoritos" -ForegroundColor Green
+Write-Host "- PWA avanzada con caching inteligente offline-first" -ForegroundColor Green  
+Write-Host "- Sistema de sincronización de favoritos en background" -ForegroundColor Green
+Write-Host "- Indicador de estado de conexión en tiempo real" -ForegroundColor Green
+Write-Host "- Estrategias de caching optimizadas (Network First, Cache First, SWR)" -ForegroundColor Green
+Write-Host "- Comunicación bidireccional entre Service Worker y app" -ForegroundColor Green
+Write-Host "- Pre-caching de herramientas favoritas para acceso offline" -ForegroundColor Green
+Write-Host ""
+
 Write-Host "v1.2.0 - 06/08/2025" -ForegroundColor White
-Write-Host "- Favicon unificado en todos los archivos HTML" -ForegroundColor Green
-Write-Host "- PWA completamente funcional" -ForegroundColor Green  
-Write-Host "- Herramientas reorganizadas" -ForegroundColor Green
-Write-Host "- Lectura.html mejorado con cronometro" -ForegroundColor Green
-Write-Host "- Integracion con servicios externos (BibGuru, UniTools)" -ForegroundColor Green
+Write-Host "- Favicon unificado en todos los archivos HTML" -ForegroundColor Gray
+Write-Host "- PWA completamente funcional" -ForegroundColor Gray  
+Write-Host "- Herramientas reorganizadas" -ForegroundColor Gray
+Write-Host "- Lectura.html mejorado con cronometro" -ForegroundColor Gray
+Write-Host "- Integracion con servicios externos (BibGuru, UniTools)" -ForegroundColor Gray
 Write-Host ""
 
 Write-Host "v1.1.0 - 05/08/2025" -ForegroundColor White

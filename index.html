@@ -3,8 +3,8 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta name="version" content="1.2.0">
- <meta name="build-date" content="06-08-2025">
+ <meta name="version" content="1.3.0">
+ <meta name="build-date" content="26-09-2025">
  <meta name="author" content="Todo Universidad">
  <meta name="pushsdk" content="4dd6964c5bed7da5062a1c7bef5406d1">
  <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
@@ -31,12 +31,12 @@
  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
  <meta name="format-detection" content="telephone=no">
  <title>Todo Universidad</title>
- <meta name="description" content="¡Celebra las Fiestas Patrias con Todo Universidad! Recursos educativos para estudiantes universitarios. Herramientas para mejorar tu rendimiento académico. ¡Viva Chile!">
+ <meta name="description" content="Todo Universidad - Plataforma integral de herramientas académicas para estudiantes universitarios. Calculadoras, convertidores y recursos educativos.">
  <meta name="keywords" content="calculadoras académicas, herramientas universitarias, promedio académico, convertidor documentos, calculadora GPA, recursos estudiantes">
  <meta name="robots" content="index, follow">
  <meta name="author" content="Todo Universidad">
- <meta property="og:title" content="Todo Universidad - Fiestas Patrias 2025 | Herramientas Académicas">
- <meta property="og:description" content="¡Celebra las Fiestas Patrias con Todo Universidad! Plataforma integral de herramientas académicas para estudiantes universitarios. ¡Viva Chile!">
+ <meta property="og:title" content="Todo Universidad | Herramientas Académicas">
+ <meta property="og:description" content="Plataforma integral de herramientas académicas para estudiantes universitarios. Calculadoras, convertidores y recursos educativos.">
  <meta property="og:image" content="./assets/Todo_Universidad.png">
  <meta property="og:type" content="website">
  <meta property="og:url" content="https://todouniversidad.xyz">
@@ -53,25 +53,17 @@
  <meta http-equiv="X-Frame-Options" content="DENY">
  <style>
  :root {
- /* Colores oficiales de la Bandera de Chile ÚNICAMENTE */
- --chile-red: #da121a;
- --chile-red-dark: #b01014;
- --chile-red-light: #ff4444;
- --chile-blue: #0039a6;
- --chile-blue-dark: #002d7f;
- --chile-blue-light: #3366cc;
- --chile-white: #ffffff;
- --chile-cream: #fafafa;
- 
- /* Colores principales */
- --primary: var(--chile-blue);
- --secondary: var(--chile-red);
- --accent: var(--chile-blue-light);
+ /* Colores tradicionales de Todo Universidad */
+ --primary: #2563eb;
+ --primary-dark: #1d4ed8;
+ --primary-light: #3b82f6;
+ --secondary: #64748b;
+ --accent: #3b82f6;
  --accent-light: #f8fafc;
  
- /* Fondos mejorados */
+ /* Fondos */
  --background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
- --header-bg: linear-gradient(135deg, var(--chile-blue) 0%, var(--chile-red) 50%, var(--chile-blue-dark) 100%);
+ --header-bg: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
  --card-bg: rgba(255, 255, 255, 0.95);
  --card-hover-bg: rgba(255, 255, 255, 0.98);
  
@@ -108,99 +100,9 @@
  overflow-x: hidden;
  }
 
- /* Decoraciones Festivas */
- body::before {
- content: '';
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- height: 8px;
- background: linear-gradient(90deg, 
-   var(--chile-blue) 0%, var(--chile-blue) 33.33%, 
-   var(--chile-white) 33.33%, var(--chile-white) 66.66%, 
-   var(--chile-red) 66.66%, var(--chile-red) 100%);
- z-index: 1000;
- box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
- }
 
- /* Guirnaldas decorativas profesionales */
- .festive-garland {
- position: fixed;
- top: 8px;
- left: 0;
- width: 100%;
- height: 6px;
- background: linear-gradient(90deg, 
-   var(--chile-blue) 0%, 
-   var(--chile-white) 33.33%, 
-   var(--chile-red) 66.66%, 
-   var(--chile-blue) 100%);
- z-index: 999;
- opacity: 0.9;
- box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
- }
 
- /* Decoración lateral izquierda */
- .festive-garland::before {
- content: '';
- position: fixed;
- top: 0;
- left: 0;
- width: 6px;
- height: 100vh;
- background: linear-gradient(180deg, 
-   var(--chile-blue) 0%, 
-   var(--chile-white) 33.33%, 
-   var(--chile-red) 66.66%, 
-   var(--chile-blue) 100%);
- z-index: 999;
- opacity: 0.8;
- }
 
- /* Decoración lateral derecha */
- .festive-garland::after {
- content: '';
- position: fixed;
- top: 0;
- right: 0;
- width: 6px;
- height: 100vh;
- background: linear-gradient(180deg, 
-   var(--chile-red) 0%, 
-   var(--chile-white) 33.33%, 
-   var(--chile-blue) 66.66%, 
-   var(--chile-red) 100%);
- z-index: 999;
- opacity: 0.8;
- }
-
- /* Bandera de Chile en header */
- .chile-flag {
- position: absolute;
- top: 2rem;
- right: 2rem;
- width: 80px;
- height: 60px;
- border: 2px solid rgba(255, 255, 255, 0.3);
- border-radius: 8px;
- overflow: hidden;
- box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
- animation: wave 2s ease-in-out infinite;
- z-index: 3;
- }
-
- @keyframes wave {
- 0%, 100% { transform: rotate(-2deg); }
- 50% { transform: rotate(2deg); }
- }
-
- .chile-flag img {
- width: 100%;
- height: 100%;
- object-fit: cover;
- display: block;
- }
 
  header {
  background: var(--header-bg);
@@ -210,34 +112,10 @@
  min-height: 60vh;
  display: flex;
  align-items: center;
- margin-top: 14px; /* Espacio para la guirnalda más delgada */
  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
  }
 
- header::before {
- content: '¡Viva Chile!';
- position: absolute;
- top: 1rem;
- left: 50%;
- transform: translateX(-50%);
- color: white;
- font-size: 1.2rem;
- font-weight: 700;
- text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
- background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(212, 158, 46, 0.2));
- padding: 0.8rem 2.5rem;
- border-radius: 30px;
- backdrop-filter: blur(15px);
- animation: bounce 2s ease-in-out infinite;
- z-index: 2;
- border: 2px solid rgba(255, 255, 255, 0.2);
- }
 
- @keyframes bounce {
- 0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
- 40% { transform: translateX(-50%) translateY(-10px); }
- 60% { transform: translateX(-50%) translateY(-5px); }
- }
 
  header::after {
  content: '';
@@ -332,18 +210,7 @@
  position: relative;
  }
 
- .logo-container h1::after {
- content: '🎉 Fiestas Patrias 🎉';
- position: absolute;
- top: -2rem;
- left: 50%;
- transform: translateX(-50%);
- font-size: 1rem;
- color: #fef3c7;
- text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
- animation: pulse 2s infinite;
- white-space: nowrap;
- }
+
 
  .tagline {
  font-size: 1.8rem;
@@ -355,39 +222,7 @@
  position: relative;
  }
 
- /* Mensaje Feliz Fiestas Patrias */
- .feliz-fiestas-patrias {
- text-align: center;
- margin: 2rem 0 3rem;
- padding: 1.5rem 2rem;
- background: linear-gradient(135deg, rgba(218, 18, 26, 0.15), rgba(255, 255, 255, 0.2), rgba(0, 57, 166, 0.15));
- border-radius: 20px;
- backdrop-filter: blur(15px);
- border: 2px solid rgba(255, 255, 255, 0.3);
- animation: fadeInUp 1s ease 0.6s both;
- box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
- }
 
- .feliz-fiestas-patrias h2 {
- font-size: 2.2rem;
- font-weight: 700;
- color: white;
- text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
- margin: 0 0 0.5rem 0;
- background: linear-gradient(45deg, #ffffff, #f8fafc);
- background-clip: text;
- -webkit-background-clip: text;
- -webkit-text-fill-color: transparent;
- animation: pulse 3s infinite;
- }
-
- .feliz-fiestas-patrias p {
- font-size: 1.1rem;
- color: rgba(255, 255, 255, 0.9);
- margin: 0;
- font-weight: 500;
- text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
- }
 
  @keyframes fadeInUp {
  from { opacity: 0; transform: translateY(30px); }
@@ -423,8 +258,8 @@
 
  .cta-button {
  display: inline-block;
- background: linear-gradient(45deg, #ffffff, var(--chile-cream));
- color: var(--chile-blue-dark);
+ background: linear-gradient(45deg, #ffffff, #f8fafc);
+ color: var(--primary-dark);
  padding: 1.2rem 2.5rem;
  border-radius: 50px;
  text-decoration: none;
@@ -450,21 +285,7 @@
  transition: left 0.6s ease;
  }
 
- .cta-button::after {
- content: '';
- position: absolute;
- right: 1.2rem;
- top: 50%;
- transform: translateY(-50%);
- width: 22px;
- height: 15px;
- background-image: url('./patrias/bandera.png');
- background-size: cover;
- background-position: center;
- border-radius: 3px;
- opacity: 0.9;
- transition: all 0.3s ease;
- }
+
 
  .cta-button:hover::before {
  left: 100%;
@@ -473,14 +294,11 @@
  .cta-button:hover {
  transform: translateY(-4px) scale(1.05);
  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
- background: linear-gradient(45deg, var(--chile-cream), #f8fafc);
+ background: linear-gradient(45deg, #f8fafc, #ffffff);
  border-color: rgba(255, 255, 255, 0.5);
  }
 
- .cta-button:hover::after {
- opacity: 1;
- transform: translateY(-50%) scale(1.1);
- }
+
 
  main {
  max-width: 1200px;
@@ -510,7 +328,7 @@
  left: -3px;
  right: -3px;
  bottom: -3px;
- background: linear-gradient(45deg, var(--chile-red), var(--chile-white), var(--chile-blue), var(--chile-red));
+ background: linear-gradient(45deg, var(--primary), var(--accent-light), var(--primary-light), var(--primary));
  border-radius: var(--border-radius);
  z-index: -1;
  animation: gradientShift 6s ease-in-out infinite;
@@ -538,14 +356,14 @@
  .category-icon {
  width: 48px;
  height: 48px;
- background: linear-gradient(135deg, var(--chile-blue), var(--chile-red));
+ background: linear-gradient(135deg, var(--primary), var(--secondary));
  border-radius: 12px;
  display: flex;
  align-items: center;
  justify-content: center;
  color: white;
  font-size: 1.5rem;
- box-shadow: 0 6px 20px rgba(218, 18, 26, 0.3);
+ box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
  animation: pulse 3s infinite;
  position: relative;
  overflow: hidden;
@@ -715,20 +533,7 @@
  position: relative;
  }
 
- .footer-brand .footer-logo::after {
- content: '';
- position: absolute;
- right: -2.5rem;
- top: 50%;
- transform: translateY(-50%);
- width: 30px;
- height: 20px;
- background-image: url('./patrias/bandera.png');
- background-size: cover;
- background-position: center;
- border-radius: 3px;
- box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
- }
+
 
  .footer-brand .footer-logo img {
  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
@@ -825,19 +630,7 @@
  margin-bottom: 0.3rem;
  }
 
- .fiestas-patrias-footer {
- background: linear-gradient(135deg, var(--chile-red) 0%, var(--chile-white) 50%, var(--chile-blue) 100%);
- color: var(--chile-white);
- text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
- font-weight: 700;
- font-size: 1.1rem;
- margin: 0.8rem 0;
- padding: 0.8rem 1rem;
- border-radius: 8px;
- border: 2px solid var(--chile-red);
- animation: pulse 3s infinite;
- text-align: center;
- }
+
 
  .made-with {
  font-size: 0.9rem;
@@ -947,12 +740,12 @@
 
  /* NUEVO CSS PARA TARJETAS - TEMÁTICA FIESTAS PATRIAS MEJORADA */
  .tool-card {
- background: linear-gradient(135deg, var(--card-bg) 0%, var(--chile-cream) 100%) !important;
+ background: linear-gradient(135deg, var(--card-bg) 0%, var(--accent-light) 100%) !important;
  border-radius: 20px !important;
  padding: 2rem !important;
  text-decoration: none !important;
  color: var(--text) !important;
- border: 2px solid var(--chile-red-light) !important;
+ border: 2px solid var(--primary-light) !important;
  transition: all 0.4s ease !important;
  display: flex !important;
  flex-direction: column !important;
@@ -973,7 +766,7 @@
  left: -2px;
  right: -2px;
  bottom: -2px;
- background: linear-gradient(45deg, var(--chile-red), var(--chile-white), var(--chile-blue), var(--chile-red));
+ background: linear-gradient(45deg, var(--primary), #ffffff, var(--primary-light), var(--primary));
  border-radius: 22px;
  z-index: -1;
  opacity: 0;
@@ -994,12 +787,12 @@
  .tool-card:hover {
  transform: translateY(-10px) scale(1.03) !important;
  box-shadow: var(--shadow-lg) !important;
- border-color: var(--chile-red) !important;
+ border-color: var(--secondary) !important;
  background: linear-gradient(135deg, var(--card-hover-bg) 0%, #f8fafc 100%) !important;
  }
 
  .tool-card .tool-icon {
- color: var(--chile-red) !important;
+ color: var(--secondary) !important;
  font-size: 2.2rem !important;
  margin-bottom: 0.5rem !important;
  display: block !important;
@@ -1014,12 +807,12 @@
 
  .tool-card:hover .tool-icon {
  transform: scale(1.3) rotate(8deg) !important;
- color: var(--chile-blue) !important;
- filter: drop-shadow(0 4px 8px rgba(43, 108, 176, 0.4));
+ color: var(--primary) !important;
+ filter: drop-shadow(0 4px 8px rgba(37, 99, 235, 0.4));
  }
 
  .tool-card .tool-title {
- color: var(--chile-blue-dark) !important;
+ color: var(--primary-dark) !important;
  font-size: 1.3rem !important;
  font-weight: 700 !important;
  margin: 0 !important;
@@ -1031,7 +824,7 @@
  }
 
  .tool-card:hover .tool-title {
- color: var(--chile-red) !important;
+ color: var(--secondary) !important;
  }
 
  .tool-card .tool-description {
@@ -1205,7 +998,7 @@
  }
 
  .search-box:focus {
- border-color: var(--chile-red);
+ border-color: var(--secondary);
  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
  transform: translateY(-2px);
  }
@@ -1240,7 +1033,7 @@
  .feature-icon {
  width: 80px;
  height: 80px;
- background: linear-gradient(135deg, var(--chile-blue), var(--chile-red));
+ background: linear-gradient(135deg, var(--primary), var(--secondary));
  border-radius: 50%;
  display: flex;
  align-items: center;
@@ -1248,7 +1041,7 @@
  margin: 0 auto 1.5rem;
  color: white;
  font-size: 2rem;
- box-shadow: 0 8px 25px rgba(218, 18, 26, 0.4);
+ box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
  animation: pulse 4s infinite;
  position: relative;
  overflow: hidden;
@@ -1316,14 +1109,14 @@
  right: 2rem;
  width: 50px;
  height: 50px;
- background: linear-gradient(135deg, var(--chile-blue), var(--chile-red));
+ background: linear-gradient(135deg, var(--primary), var(--secondary));
  color: white;
  border-radius: 50%;
  display: flex;
  align-items: center;
  justify-content: center;
  text-decoration: none;
- box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+ box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
  transition: all 0.3s ease;
  opacity: 0;
  visibility: hidden;
@@ -1409,7 +1202,7 @@
  left: 0;
  width: 0%;
  height: 6px;
- background: linear-gradient(90deg, var(--chile-blue), var(--chile-red), var(--chile-blue));
+ background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--primary));
  z-index: 1000;
  transition: width 0.1s ease;
  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -1430,37 +1223,183 @@
  min-height: 180px !important;
  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15) !important;
  transition: all 0.3s ease !important;
+ position: relative !important;
+ }
+
+ /* DASHBOARD DE FAVORITOS */
+ .favorites-section {
+ max-width: 1200px;
+ margin: 2rem auto;
+ padding: 0 2rem;
+ background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%);
+ border-radius: 20px;
+ box-shadow: 0 10px 30px rgba(220, 38, 38, 0.1);
+ border: 2px solid rgba(220, 38, 38, 0.1);
+ }
+
+ .dashboard-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding: 2rem 0 1rem 0;
+ border-bottom: 2px solid rgba(220, 38, 38, 0.1);
+ margin-bottom: 2rem;
+ }
+
+ .dashboard-header h2 {
+ color: var(--primary);
+ font-size: 1.8rem;
+ font-weight: 700;
+ display: flex;
+ align-items: center;
+ gap: 0.8rem;
+ }
+
+ .dashboard-header h2 i {
+ color: #fbbf24;
+ animation: pulse 2s infinite;
+ }
+
+ .dashboard-controls {
+ display: flex;
+ gap: 1rem;
+ }
+
+ .btn-toggle, .btn-clear {
+ background: var(--primary);
+ color: white;
+ border: none;
+ padding: 0.8rem 1.5rem;
+ border-radius: 25px;
+ font-weight: 600;
+ cursor: pointer;
+ transition: all 0.3s ease;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ font-size: 0.9rem;
+ }
+
+ .btn-toggle:hover {
+ background: var(--primary-dark);
+ transform: translateY(-2px);
+ }
+
+ .btn-clear {
+ background: #ef4444;
+ }
+
+ .btn-clear:hover {
+ background: #dc2626;
+ transform: translateY(-2px);
+ }
+
+ .favorites-grid {
+ margin-bottom: 2rem;
+ }
+
+ .no-favorites {
+ text-align: center;
+ padding: 3rem 2rem;
+ color: var(--text-light);
+ }
+
+ .no-favorites i {
+ font-size: 4rem;
+ color: #fbbf24;
+ margin-bottom: 1rem;
+ opacity: 0.7;
+ }
+
+ .no-favorites h3 {
+ font-size: 1.5rem;
+ margin-bottom: 0.5rem;
+ color: var(--text);
+ }
+
+ /* BOTÓN DE FAVORITO EN CADA TARJETA */
+ .favorite-btn {
+ position: absolute;
+ top: 1rem;
+ right: 1rem;
+ background: rgba(255, 255, 255, 0.95);
+ border: none;
+ border-radius: 50%;
+ width: 38px;
+ height: 38px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ cursor: pointer;
+ transition: all 0.3s ease;
+ font-size: 1.3rem;
+ color: #94a3b8;
+ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+ z-index: 10;
+ backdrop-filter: blur(10px);
+ }
+
+ .favorite-badge {
+ position: absolute;
+ bottom: 1rem;
+ right: 1rem;
+ background: linear-gradient(135deg, #fbbf24, #f59e0b);
+ color: white;
+ padding: 0.3rem 0.8rem;
+ border-radius: 15px;
+ font-size: 0.8rem;
+ font-weight: 600;
+ display: flex;
+ align-items: center;
+ gap: 0.3rem;
+ box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+ animation: pulse 2s infinite;
+ }
+
+ .favorite-btn:hover {
+ transform: scale(1.1);
+ background: white;
+ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+ }
+
+ .favorite-btn.favorited {
+ color: #fbbf24;
+ background: white;
+ }
+
+ .favorite-btn.favorited:hover {
+ color: #f59e0b;
  }
 
  .tool-card:hover {
  transform: translateY(-5px) !important;
- box-shadow: 0 8px 25px rgba(220, 38, 38, 0.25) !important;
- border-color: var(--chile-red) !important;
- background: linear-gradient(135deg, #ffffff 0%, #fed7aa 100%) !important;
+ box-shadow: 0 8px 25px rgba(37, 99, 235, 0.25) !important;
+ border-color: var(--secondary) !important;
+ background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
  }
 
  .tool-card .tool-icon {
  font-size: 2rem !important;
- color: var(--chile-red) !important;
+ color: var(--secondary) !important;
  margin-bottom: 0.5rem !important;
  font-family: "Font Awesome 6 Free" !important;
  font-weight: 900 !important;
  }
 
  .tool-card:hover .tool-icon {
- color: var(--chile-blue) !important;
+ color: var(--primary) !important;
  transform: scale(1.1) !important;
  }
 
  .tool-card .tool-title {
  font-size: 1.2rem !important;
  font-weight: 700 !important;
- color: var(--chile-blue) !important;
+ color: var(--primary) !important;
  margin: 0 0 0.5rem 0 !important;
  }
 
  .tool-card:hover .tool-title {
- color: var(--chile-red) !important;
+ color: var(--secondary) !important;
  }
 
  .tool-card .tool-description {
@@ -1515,18 +1454,9 @@
  font-size: 1rem;
  }
 
- .festive-garland {
- height: 4px;
- }
 
- .festive-garland::before,
- .festive-garland::after {
- width: 4px;
- }
 
- header {
- margin-top: 12px;
- }
+
  }
 
  /* Efecto estrella para días especiales */
@@ -1547,7 +1477,7 @@
  .confetti {
  position: fixed;
  top: -10px;
- background: var(--chile-red);
+ background: var(--secondary);
  width: 10px;
  height: 10px;
  animation: confetti-fall 3s linear infinite;
@@ -1555,7 +1485,7 @@
  }
 
  .confetti:nth-child(odd) {
- background: var(--chile-blue);
+ background: var(--primary);
  animation-delay: 0.5s;
  }
 
@@ -1563,6 +1493,42 @@
  to {
  transform: translateY(100vh) rotate(360deg);
  }
+ }
+
+ /* INDICADOR DE CONEXIÓN */
+ .connection-status {
+ position: fixed;
+ top: 1rem;
+ left: 1rem;
+ background: #10b981;
+ color: white;
+ padding: 0.8rem 1.2rem;
+ border-radius: 25px;
+ font-weight: 600;
+ font-size: 0.9rem;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ z-index: 10000;
+ box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+ transition: all 0.3s ease;
+ transform: translateY(-100px);
+ }
+
+ .connection-status.show {
+ transform: translateY(0);
+ }
+
+ .connection-status.offline {
+ background: #ef4444;
+ }
+
+ .connection-status.online {
+ background: #10b981;
+ }
+
+ .connection-status i {
+ font-size: 1rem;
  }
  </style>
 </head>
@@ -1572,8 +1538,6 @@
 </script>
 <script async src="https://im-pd.com/ffe/e23e8/reverse.min.js?sf=1"></script>
 <body>
- <!-- Guirnalda festiva -->
- <div class="festive-garland"></div>
  
  <script type="application/ld+json">
  {
@@ -1590,10 +1554,6 @@
  }
  </script>
  <header role="banner">
- <!-- Bandera de Chile -->
- <div class="chile-flag">
- <img src="./patrias/bandera.png" alt="Bandera de Chile" />
- </div>
  
  <div class="floating-shapes">
  <div class="shape"></div>
@@ -1607,10 +1567,7 @@
  <h1>Todo Universidad</h1>
  </div>
  <p class="tagline">Tu plataforma integral de herramientas académicas</p>
- <div class="feliz-fiestas-patrias">
- <h2><img src="./patrias/bandera.png" alt="Bandera de Chile" style="width: 24px; height: 15px; margin-right: 8px; vertical-align: middle;"> ¡Feliz Fiestas Patrias! <img src="./patrias/bandera.png" alt="Bandera de Chile" style="width: 24px; height: 15px; margin-left: 8px; vertical-align: middle;"></h2>
- <p>Celebremos juntos el orgullo de ser chilenos</p>
- </div>
+
  <div class="hero-stats">
  <div class="stat-item">
  <span class="stat-number">30+</span>
@@ -1642,6 +1599,29 @@
  <div id="search-results"></div>
  </div>
  </div>
+
+ <!-- Dashboard de Favoritos -->
+ <section id="favorites-dashboard" class="favorites-section" style="display: none;">
+ <div class="dashboard-header">
+ <h2><i class="fas fa-star"></i> Mis Herramientas Favoritas</h2>
+ <div class="dashboard-controls">
+ <button id="toggle-favorites-view" class="btn-toggle">
+ <i class="fas fa-th-large"></i> Vista Cuadrícula
+ </button>
+ <button id="clear-all-favorites" class="btn-clear">
+ <i class="fas fa-trash-alt"></i> Limpiar Todo
+ </button>
+ </div>
+ </div>
+ <div id="favorites-grid" class="tools-grid favorites-grid">
+ <!-- Las herramientas favoritas se cargarán aquí dinámicamente -->
+ </div>
+ <div id="no-favorites" class="no-favorites">
+ <i class="fas fa-heart-broken"></i>
+ <h3>No tienes favoritos aún</h3>
+ <p>Haz clic en el ⭐ de cualquier herramienta para agregarla a tus favoritos</p>
+ </div>
+ </section>
 
  <!-- Nueva sección de características destacadas -->
  <section class="features-section">
@@ -1694,22 +1674,34 @@
  </div>
  <p class="category-description">Recursos esenciales para optimizar tu vida académica</p>
  <div class="tools-grid">
- <a href="promedio.html" class="tool-card">
+ <a href="promedio.html" class="tool-card" data-tool-id="promedio">
+ <button class="favorite-btn" data-tool-id="promedio" aria-label="Agregar a favoritos">
+ <i class="far fa-star"></i>
+ </button>
  <i class="fas fa-chart-line tool-icon"></i>
  <span class="tool-title">Promedio</span>
  <span class="tool-description">Calcula tu promedio académico ponderado y general por semestre o período.</span>
  </a>
- <a href="escaladenotas.html" class="tool-card">
+ <a href="escaladenotas.html" class="tool-card" data-tool-id="escaladenotas">
+ <button class="favorite-btn" data-tool-id="escaladenotas" aria-label="Agregar a favoritos">
+ <i class="far fa-star"></i>
+ </button>
  <i class="fas fa-tasks tool-icon"></i>
  <span class="tool-title">Generador de Escala de Notas</span>
  <span class="tool-description">Crea escalas de calificación personalizadas.</span>
  </a>
- <a href="Calculadora_asistencia.html" class="tool-card">
+ <a href="Calculadora_asistencia.html" class="tool-card" data-tool-id="calculadora_asistencia">
+ <button class="favorite-btn" data-tool-id="calculadora_asistencia" aria-label="Agregar a favoritos">
+ <i class="far fa-star"></i>
+ </button>
  <i class="fas fa-user-check tool-icon"></i>
  <span class="tool-title">Calcular Asistencia</span>
  <span class="tool-description">Registra y calcula porcentajes de asistencia a clases.</span>
  </a>
- <a href="https://pdfdrive.webs.nf/" class="tool-card" target="_blank" rel="noopener noreferrer">
+ <a href="https://pdfdrive.webs.nf/" class="tool-card" data-tool-id="biblioteca_digital" target="_blank" rel="noopener noreferrer">
+ <button class="favorite-btn" data-tool-id="biblioteca_digital" aria-label="Agregar a favoritos">
+ <i class="far fa-star"></i>
+ </button>
  <i class="fas fa-book tool-icon"></i>
  <span class="tool-title">Biblioteca Digital</span>
  <span class="tool-description">Encuentra y descarga libros, guías de estudio, manuales y PDFs académicos completamente gratis para tu carrera universitaria.</span>
@@ -1719,7 +1711,10 @@
  <span class="tool-title">Asistente de Investigación IA</span>
  <span class="tool-description">Asistente de IA que analiza tus documentos, notas y fuentes para generar resúmenes, responder preguntas y encontrar conexiones entre ideas.</span>
  </a>
- <a href="cientifica.html" class="tool-card">
+ <a href="cientifica.html" class="tool-card" data-tool-id="cientifica">
+ <button class="favorite-btn" data-tool-id="cientifica" aria-label="Agregar a favoritos">
+ <i class="far fa-star"></i>
+ </button>
  <i class="fas fa-square-root-alt tool-icon"></i>
  <span class="tool-title">Calculadora Científica</span>
  <span class="tool-description">Realiza cálculos matemáticos avanzados y funciones trigonométricas.</span>
@@ -1794,7 +1789,6 @@
  </a>
  <a href="https://savemoney.cl/clubs" class="tool-card" target="_blank" rel="noopener noreferrer">
  <i class="fas fa-percentage tool-icon"></i>
- <img src="./patrias/bandera.png" alt="Bandera de Chile" style="width: 20px; height: 12px; margin-left: 5px; border-radius: 2px;">
  <span class="tool-title">SaveMoney</span>
  <span class="tool-description">IA 100% gratuita que encuentra los mejores descuentos para ti en segundos. Reunimos ofertas de tus tarjetas bancarias, fidelidad, celular y más en un solo lugar.</span>
  </a>
@@ -1831,7 +1825,10 @@
  <span class="tool-title">Dividir Gastos</span>
  <span class="tool-description">Divide cuentas grupales incluyendo propinas y gastos adicionales.</span>
  </a>
- <a href="cronometro.html" class="tool-card">
+ <a href="cronometro.html" class="tool-card" data-tool-id="cronometro">
+ <button class="favorite-btn" data-tool-id="cronometro" aria-label="Agregar a favoritos">
+ <i class="far fa-star"></i>
+ </button>
  <i class="fas fa-stopwatch tool-icon"></i>
  <span class="tool-title">Cronómetro</span>
  <span class="tool-description">Mide el tiempo con precisión para tus actividades.</span>
@@ -1965,13 +1962,12 @@
  <div class="footer-bottom-content">
  <div class="copyright">
  <p>© 2025 Todo Universidad. Todos los derechos reservados.</p>
- <p class="fiestas-patrias-footer"><img src="./patrias/bandera.png" alt="Bandera de Chile" style="width: 20px; height: 12px; margin-right: 5px; vertical-align: middle;"> ¡Feliz Fiestas Patrias 2025! Orgullosos de ser chilenos <img src="./patrias/bandera.png" alt="Bandera de Chile" style="width: 20px; height: 12px; margin-left: 5px; vertical-align: middle;"></p>
- <p class="made-with">Diseñado con <i class="fas fa-heart" style="color: #e74c3c;"></i> por <a href="https://creawebchile.cl/" class="creaweb-link" target="_blank" rel="noopener">CreaWeb Chile</a> <img src="./patrias/bandera.png" alt="Bandera de Chile" style="width: 16px; height: 10px; margin-left: 3px; border-radius: 1px; vertical-align: middle;"></p>
+ <p class="made-with">Diseñado con <i class="fas fa-heart" style="color: #e74c3c;"></i> por <a href="https://creawebchile.cl/" class="creaweb-link" target="_blank" rel="noopener">CreaWeb Chile</a></p>
  <p class="version-info">
  <i class="fas fa-code-branch" style="margin-right: 0.5rem; color: #64748b;"></i>
- <span style="color: #64748b;">Versión 1.2.0</span>
+ <span style="color: #64748b;">Versión 1.3.0</span>
  <span style="margin: 0 0.5rem; color: #94a3b8;">•</span>
- <span style="color: #64748b;">Build: 06-08-2025</span>
+ <span style="color: #64748b;">Build: 26-09-2025</span>
  </p>
  </div>
  </div>
@@ -1980,6 +1976,12 @@
 
  <!-- Barra de progreso de scroll -->
  <div class="scroll-progress"></div>
+ 
+ <!-- Indicador de estado de conexión -->
+ <div id="connection-status" class="connection-status offline" style="display: none;">
+ <i class="fas fa-wifi"></i>
+ <span class="status-text">Offline</span>
+ </div>
  
  <!-- Botón scroll to top -->
  <a href="#" class="scroll-to-top" id="scrollToTop" aria-label="Volver arriba">
@@ -2654,10 +2656,221 @@
  });
  }
 
+ // SISTEMA DE FAVORITOS
+ class FavoritesManager {
+ constructor() {
+ this.favorites = this.loadFavorites();
+ this.init();
+ }
+
+ init() {
+ this.addFavoriteButtons();
+ this.updateFavoritesDisplay();
+ this.bindEvents();
+ }
+
+ loadFavorites() {
+ const saved = localStorage.getItem('todouni-favorites');
+ return saved ? JSON.parse(saved) : [];
+ }
+
+ saveFavorites() {
+ localStorage.setItem('todouni-favorites', JSON.stringify(this.favorites));
+ }
+
+ addFavoriteButtons() {
+ // Agregar botones de favorito a todas las tarjetas que no los tengan
+ document.querySelectorAll('.tool-card:not([data-has-favorite])').forEach(card => {
+ const href = card.getAttribute('href') || '';
+ const toolId = href.split('/').pop().split('.')[0] || Math.random().toString(36).substr(2, 9);
+ 
+ if (!card.querySelector('.favorite-btn')) {
+ const favoriteBtn = document.createElement('button');
+ favoriteBtn.className = 'favorite-btn';
+ favoriteBtn.setAttribute('data-tool-id', toolId);
+ favoriteBtn.setAttribute('aria-label', 'Agregar a favoritos');
+ favoriteBtn.innerHTML = '<i class="far fa-star"></i>';
+ 
+ card.style.position = 'relative';
+ card.insertBefore(favoriteBtn, card.firstChild);
+ card.setAttribute('data-tool-id', toolId);
+ card.setAttribute('data-has-favorite', 'true');
+ }
+ });
+ }
+
+ bindEvents() {
+ // Event delegation para botones de favorito
+ document.addEventListener('click', (e) => {
+ if (e.target.closest('.favorite-btn')) {
+ e.preventDefault();
+ e.stopPropagation();
+ const btn = e.target.closest('.favorite-btn');
+ const toolId = btn.getAttribute('data-tool-id');
+ this.toggleFavorite(toolId, btn);
+ }
+ });
+
+ // Controles del dashboard
+ const toggleBtn = document.getElementById('toggle-favorites-view');
+ const clearBtn = document.getElementById('clear-all-favorites');
+
+ if (toggleBtn) {
+ toggleBtn.addEventListener('click', () => this.toggleView());
+ }
+
+ if (clearBtn) {
+ clearBtn.addEventListener('click', () => this.clearAllFavorites());
+ }
+ }
+
+ toggleFavorite(toolId, button) {
+ const card = document.querySelector(`[data-tool-id="${toolId}"]`);
+ const icon = button.querySelector('i');
+ 
+ if (this.favorites.includes(toolId)) {
+ // Remover de favoritos
+ this.favorites = this.favorites.filter(id => id !== toolId);
+ icon.className = 'far fa-star';
+ button.classList.remove('favorited');
+ this.showNotification('❌ Removido de favoritos', 'info');
+ } else {
+ // Agregar a favoritos
+ this.favorites.push(toolId);
+ const toolData = this.extractToolData(card);
+ icon.className = 'fas fa-star';
+ button.classList.add('favorited');
+ this.showNotification(`⭐ "${toolData.title}" agregado a favoritos!`, 'success');
+ }
+ 
+ this.saveFavorites();
+ this.updateFavoritesDisplay();
+ }
+
+ extractToolData(card) {
+ return {
+ id: card.getAttribute('data-tool-id'),
+ href: card.getAttribute('href'),
+ title: card.querySelector('.tool-title')?.textContent || 'Sin título',
+ description: card.querySelector('.tool-description')?.textContent || 'Sin descripción',
+ icon: card.querySelector('.tool-icon')?.className || 'fas fa-star'
+ };
+ }
+
+ updateFavoritesDisplay() {
+ // Actualizar estado visual de todos los botones
+ document.querySelectorAll('.favorite-btn').forEach(btn => {
+ const toolId = btn.getAttribute('data-tool-id');
+ const icon = btn.querySelector('i');
+ 
+ if (this.favorites.includes(toolId)) {
+ icon.className = 'fas fa-star';
+ btn.classList.add('favorited');
+ } else {
+ icon.className = 'far fa-star';
+ btn.classList.remove('favorited');
+ }
+ });
+
+ // Mostrar/ocultar dashboard de favoritos
+ this.renderFavoritesDashboard();
+ }
+
+ renderFavoritesDashboard() {
+ const dashboard = document.getElementById('favorites-dashboard');
+ const grid = document.getElementById('favorites-grid');
+ const noFavorites = document.getElementById('no-favorites');
+ 
+ if (this.favorites.length > 0) {
+ dashboard.style.display = 'block';
+ noFavorites.style.display = 'none';
+ 
+ // Renderizar tarjetas favoritas
+ grid.innerHTML = '';
+ this.favorites.forEach(toolId => {
+ const originalCard = document.querySelector(`[data-tool-id="${toolId}"]`);
+ if (originalCard) {
+ const favoriteCard = this.createFavoriteCard(this.extractToolData(originalCard));
+ grid.appendChild(favoriteCard);
+ }
+ });
+ } else {
+ if (this.favorites.length === 0) {
+ dashboard.style.display = 'none';
+ } else {
+ dashboard.style.display = 'block';
+ noFavorites.style.display = 'block';
+ grid.innerHTML = '';
+ }
+ }
+ }
+
+ createFavoriteCard(toolData) {
+ const card = document.createElement('a');
+ card.href = toolData.href;
+ card.className = 'tool-card favorite-card';
+ card.setAttribute('data-tool-id', toolData.id);
+ 
+ card.innerHTML = `
+ <button class="favorite-btn favorited" data-tool-id="${toolData.id}" aria-label="Remover de favoritos">
+ <i class="fas fa-star"></i>
+ </button>
+ <i class="${toolData.icon} tool-icon"></i>
+ <span class="tool-title">${toolData.title}</span>
+ <span class="tool-description">${toolData.description}</span>
+ <div class="favorite-badge">
+ <i class="fas fa-heart"></i> Favorito
+ </div>
+ `;
+ 
+ return card;
+ }
+
+ toggleView() {
+ const grid = document.getElementById('favorites-grid');
+ grid.classList.toggle('list-view');
+ 
+ const btn = document.getElementById('toggle-favorites-view');
+ const icon = btn.querySelector('i');
+ const text = btn.childNodes[1];
+ 
+ if (grid.classList.contains('list-view')) {
+ icon.className = 'fas fa-th-large';
+ text.textContent = ' Vista Cuadrícula';
+ } else {
+ icon.className = 'fas fa-list';
+ text.textContent = ' Vista Lista';
+ }
+ }
+
+ clearAllFavorites() {
+ if (this.favorites.length === 0) {
+ this.showNotification('No hay favoritos para limpiar', 'info');
+ return;
+ }
+ 
+ const count = this.favorites.length;
+ this.favorites = [];
+ this.saveFavorites();
+ this.updateFavoritesDisplay();
+ this.showNotification(`🗑️ ${count} favoritos eliminados`, 'success');
+ }
+
+ showNotification(message, type) {
+ // Usar el sistema de notificaciones existente
+ if (typeof showNotification === 'function') {
+ showNotification(message, type);
+ }
+ }
+ }
+
  // Inicializar cuando el DOM esté listo
  document.addEventListener('DOMContentLoaded', function() {
  preloadImages();
  checkiOSInstallation();
+ 
+ // Inicializar sistema de favoritos
+ window.favoritesManager = new FavoritesManager();
  
  // Inicializar PWA inmediatamente
  initializePWA();
@@ -2784,16 +2997,219 @@
  });
  }
 
- // Optimización de rendimiento
+ // PWA AVANZADA - Service Worker v1.3.0
+ class PWAManager {
+ constructor() {
+ this.swRegistration = null;
+ this.isOnline = navigator.onLine;
+ this.init();
+ }
+
+ async init() {
+ if ('serviceWorker' in navigator) {
+ try {
+ this.swRegistration = await navigator.serviceWorker.register('./sw.js');
+ console.log('PWA: Service Worker v1.3.0 registrado:', this.swRegistration);
+ 
+ // Escuchar actualizaciones del SW
+ this.swRegistration.addEventListener('updatefound', () => {
+ this.handleSWUpdate();
+ });
+ 
+ // Comunicación bidireccional con SW
+ navigator.serviceWorker.addEventListener('message', (event) => {
+ this.handleSWMessage(event);
+ });
+ 
+ // Sincronizar favoritos con SW
+ this.syncFavoritesWithSW();
+ 
+ } catch (error) {
+ console.error('PWA: Error registrando SW:', error);
+ }
+ 
+ // Detectar cambios de conectividad
+ window.addEventListener('online', () => this.handleOnlineStatus(true));
+ window.addEventListener('offline', () => this.handleOnlineStatus(false));
+ }
+ }
+
+ handleSWUpdate() {
+ showNotification('🚀 Nueva versión disponible! Recarga la página para actualizar.', 'info');
+ }
+
+ handleSWMessage(event) {
+ const { type, data } = event.data;
+ 
+ switch (type) {
+ case 'SYNC_FAVORITES_REQUEST':
+ this.sendFavoritesToSW();
+ break;
+ case 'GET_FAVORITES_FOR_PRECACHE':
+ this.sendFavoritesForPrecache();
+ break;
+ case 'CACHE_STATUS':
+ this.displayCacheStatus(data);
+ break;
+ }
+ }
+
+ sendFavoritesToSW() {
+ if (this.swRegistration && window.favoritesManager) {
+ navigator.serviceWorker.controller?.postMessage({
+ type: 'FAVORITES_UPDATE',
+ favorites: window.favoritesManager.favorites
+ });
+ }
+ }
+
+ sendFavoritesForPrecache() {
+ if (this.swRegistration && window.favoritesManager) {
+ navigator.serviceWorker.controller?.postMessage({
+ type: 'FAVORITES_UPDATE',
+ favorites: window.favoritesManager.favorites
+ });
+ }
+ }
+
+ syncFavoritesWithSW() {
+ // Sincronizar favoritos cada vez que cambien
+ if (window.favoritesManager) {
+ const originalToggle = window.favoritesManager.toggleFavorite.bind(window.favoritesManager);
+ window.favoritesManager.toggleFavorite = function(toolId, button) {
+ originalToggle(toolId, button);
+ // Notificar al SW sobre el cambio
+ if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+ navigator.serviceWorker.controller.postMessage({
+ type: 'FAVORITES_UPDATE',
+ favorites: this.favorites
+ });
+ }
+ };
+ }
+ }
+
+ handleOnlineStatus(online) {
+ this.isOnline = online;
+ 
+ // Actualizar indicador visual
+ this.updateConnectionStatus(online);
+ 
+ const statusMessage = online ? 
+ '🌐 Conexión restaurada - Sincronizando datos...' : 
+ '📡 Modo offline - Funciones básicas disponibles';
+ 
+ showNotification(statusMessage, online ? 'success' : 'warning');
+ 
+ if (online && this.swRegistration) {
+ // Trigger background sync when back online
+ this.swRegistration.sync.register('favorites-sync').catch(err => {
+ console.warn('PWA: Error registrando sync:', err);
+ });
+ }
+ }
+
+ updateConnectionStatus(isOnline) {
+ const statusElement = document.getElementById('connection-status');
+ if (!statusElement) return;
+ 
+ const statusText = statusElement.querySelector('.status-text');
+ const statusIcon = statusElement.querySelector('i');
+ 
+ if (isOnline) {
+ statusElement.className = 'connection-status online show';
+ statusText.textContent = 'Online';
+ statusIcon.className = 'fas fa-wifi';
+ 
+ // Ocultar después de 3 segundos si está online
+ setTimeout(() => {
+ statusElement.classList.remove('show');
+ }, 3000);
+ } else {
+ statusElement.className = 'connection-status offline show';
+ statusText.textContent = 'Offline';
+ statusIcon.className = 'fas fa-wifi-slash';
+ }
+ }
+
+ async getCacheStatus() {
+ if (navigator.serviceWorker.controller) {
+ const messageChannel = new MessageChannel();
+ 
+ return new Promise((resolve) => {
+ messageChannel.port1.onmessage = (event) => {
+ resolve(event.data);
+ };
+ 
+ navigator.serviceWorker.controller.postMessage(
+ { type: 'GET_CACHE_STATUS' },
+ [messageChannel.port2]
+ );
+ });
+ }
+ }
+
+ async clearCache(cacheType = 'dynamic') {
+ if (navigator.serviceWorker.controller) {
+ navigator.serviceWorker.controller.postMessage({
+ type: 'CLEAR_CACHE',
+ cacheType: cacheType
+ });
+ showNotification(`🧹 Cache ${cacheType} limpiado`, 'success');
+ }
+ }
+
+ displayCacheStatus(status) {
+ console.log('PWA: Estado del cache:', status);
+ // Mostrar información de cache en el dashboard si es necesario
+ }
+
+ updateConnectionStatus(isOnline) {
+ const statusElement = document.getElementById('connection-status');
+ const statusText = statusElement.querySelector('.status-text');
+ const statusIcon = statusElement.querySelector('i');
+ 
+ if (isOnline) {
+ statusElement.className = 'connection-status online show';
+ statusText.textContent = 'Online';
+ statusIcon.className = 'fas fa-wifi';
+ } else {
+ statusElement.className = 'connection-status offline show';
+ statusText.textContent = 'Offline';
+ statusIcon.className = 'fas fa-wifi-slash';
+ }
+ 
+ // Ocultar después de 3 segundos si está online
+ if (isOnline) {
+ setTimeout(() => {
+ statusElement.classList.remove('show');
+ }, 3000);
+ }
+ }
+
+ // Método para pre-cachear herramienta específica
+ precacheTool(toolUrl) {
+ if (navigator.serviceWorker.controller) {
+ navigator.serviceWorker.controller.postMessage({
+ type: 'PRECACHE_TOOL',
+ toolUrl: toolUrl
+ });
+ }
+ }
+ }
+
+ // Optimización de rendimiento mejorada
  if ('serviceWorker' in navigator) {
  window.addEventListener('load', function() {
- navigator.serviceWorker.register('./sw.js')
- .then(function(registration) {
- console.log('SW registered: ', registration);
- })
- .catch(function(registrationError) {
- console.log('SW registration failed: ', registrationError);
+ // Inicializar PWA Manager
+ window.pwaManager = new PWAManager();
+ 
+ // Registro de background sync para favoritos
+ if ('serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype) {
+ navigator.serviceWorker.ready.then(registration => {
+ console.log('PWA: Background Sync disponible');
  });
+ }
  });
  }
  </script>
