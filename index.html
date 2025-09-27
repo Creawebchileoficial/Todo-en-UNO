@@ -1378,6 +1378,109 @@
  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
  }
 
+ /* ESTILOS PARA VISTA LISTA DE FAVORITOS */
+ .favorites-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+ gap: 1.5rem;
+ margin-bottom: 2rem;
+ }
+
+ .favorites-grid.list-view {
+ display: flex;
+ flex-direction: column;
+ gap: 1rem;
+ }
+
+ .favorites-grid.list-view .tool-card {
+ display: flex;
+ align-items: center;
+ padding: 1.5rem 2rem;
+ width: 100%;
+ height: auto;
+ min-height: 80px;
+ transition: all 0.3s ease;
+ }
+
+ .favorites-grid.list-view .tool-card .tool-icon {
+ font-size: 2.5rem;
+ margin-right: 1.5rem;
+ flex-shrink: 0;
+ width: 60px;
+ display: flex;
+ justify-content: center;
+ }
+
+ .favorites-grid .tool-card .tool-content {
+ display: flex;
+ flex-direction: column;
+ flex: 1;
+ }
+
+ .favorites-grid.list-view .tool-card .tool-content {
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ }
+
+ .favorites-grid.list-view .tool-card .tool-title {
+ font-size: 1.2rem;
+ font-weight: 600;
+ margin-bottom: 0.3rem;
+ color: var(--primary);
+ }
+
+ .favorites-grid.list-view .tool-card .tool-description {
+ font-size: 0.95rem;
+ color: var(--text-light);
+ line-height: 1.4;
+ }
+
+ .favorites-grid.list-view .tool-card .favorite-btn {
+ position: relative;
+ top: auto;
+ right: auto;
+ margin-left: 1rem;
+ flex-shrink: 0;
+ }
+
+ .favorites-grid.list-view .tool-card .favorite-badge {
+ position: relative;
+ bottom: auto;
+ right: auto;
+ margin-left: 1rem;
+ flex-shrink: 0;
+ }
+
+ .favorites-grid.list-view .tool-card:hover {
+ transform: translateX(10px);
+ box-shadow: 0 4px 20px rgba(37, 99, 235, 0.15);
+ background: var(--card-hover-bg);
+ }
+
+ /* Ajustes responsivos para vista lista */
+ @media (max-width: 768px) {
+ .favorites-grid.list-view .tool-card {
+ padding: 1rem 1.5rem;
+ flex-direction: column;
+ text-align: center;
+ }
+
+ .favorites-grid.list-view .tool-card .tool-icon {
+ margin-right: 0;
+ margin-bottom: 0.8rem;
+ }
+
+ .favorites-grid.list-view .tool-card .favorite-btn,
+ .favorites-grid.list-view .tool-card .favorite-badge {
+ margin-left: 0;
+ margin-top: 0.8rem;
+ position: absolute;
+ top: 1rem;
+ right: 1rem;
+ }
+ }
+
  .tool-card .tool-icon {
  font-size: 2rem !important;
  color: var(--secondary) !important;
@@ -1529,6 +1632,60 @@
 
  .connection-status i {
  font-size: 1rem;
+ }
+
+ /* ARREGLO RESPONSIVE PARA CONTROLES DE FAVORITOS EN MÓVILES */
+ @media (max-width: 768px) {
+ .dashboard-header {
+ flex-direction: column;
+ align-items: flex-start;
+ gap: 1rem;
+ padding: 1.5rem 0;
+ }
+
+ .dashboard-header h2 {
+ font-size: 1.5rem;
+ width: 100%;
+ }
+
+ .dashboard-controls {
+ display: flex;
+ flex-direction: column;
+ gap: 0.8rem;
+ width: 100%;
+ }
+
+ .btn-toggle, .btn-clear {
+ padding: 0.8rem 1rem;
+ font-size: 0.85rem;
+ width: 100%;
+ justify-content: center;
+ border-radius: 8px;
+ }
+
+ .btn-toggle i, .btn-clear i {
+ font-size: 0.9rem;
+ }
+ }
+
+ @media (max-width: 480px) {
+ .dashboard-header {
+ padding: 1rem 0;
+ }
+
+ .dashboard-header h2 {
+ font-size: 1.3rem;
+ gap: 0.5rem;
+ }
+
+ .dashboard-controls {
+ gap: 0.6rem;
+ }
+
+ .btn-toggle, .btn-clear {
+ padding: 0.7rem 0.8rem;
+ font-size: 0.8rem;
+ }
  }
  </style>
 </head>
@@ -2816,8 +2973,10 @@
  <i class="fas fa-star"></i>
  </button>
  <i class="${toolData.icon} tool-icon"></i>
+ <div class="tool-content">
  <span class="tool-title">${toolData.title}</span>
  <span class="tool-description">${toolData.description}</span>
+ </div>
  <div class="favorite-badge">
  <i class="fas fa-heart"></i> Favorito
  </div>
