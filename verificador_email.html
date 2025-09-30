@@ -329,6 +329,38 @@
             return location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.hostname === '';
         }
 
+        // Detectar si la app está ejecutándose como PWA
+        function isPWA() {
+            return window.navigator.standalone === true || 
+                   window.matchMedia('(display-mode: standalone)').matches ||
+                   window.matchMedia('(display-mode: fullscreen)').matches ||
+                   document.referrer.includes('android-app://');
+        }
+
+        // Mostrar notificación PWA si es necesario
+        function showPWANotification() {
+            if (isPWA()) {
+                const container = document.querySelector('.container');
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    background: #fff3cd;
+                    border: 1px solid #ffeaa7;
+                    border-radius: 10px;
+                    padding: 15px;
+                    margin-bottom: 20px;
+                    text-align: center;
+                    color: #856404;
+                    font-size: 0.9rem;
+                `;
+                notification.innerHTML = `
+                    <i class="fas fa-mobile-alt"></i> 
+                    <strong>Modo PWA:</strong> 
+                    La verificación automática puede fallar. Usa el botón verde para verificar en Have I Been Pwned.
+                `;
+                container.insertBefore(notification, container.children[1]);
+            }
+        }
+
         async function checkEmail() {
             const emailInput = document.getElementById('emailInput');
             const checkBtn = document.getElementById('checkBtn');
@@ -353,6 +385,31 @@
             checkBtn.disabled = true;
             loading.style.display = 'flex';
             result.style.display = 'none';
+
+            const isInPWA = isPWA();
+            console.log('PWA Mode (Email):', isInPWA);
+
+            // En PWA, ir directamente al método alternativo
+            if (isInPWA) {
+                checkBtn.disabled = false;
+                loading.style.display = 'none';
+                
+                showResult('error', 
+                    `📱 <strong>Modo PWA Detectado</strong>
+                    <br><br>
+                    Las restricciones de seguridad en PWA impiden la verificación automática.
+                    <br><br>
+                    <strong>Solución:</strong> Verifica tu email directamente en Have I Been Pwned:
+                    <br><br>
+                    <button onclick="checkOnHIBP()" style="background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; margin: 5px; font-size: 0.9rem;">
+                        <i class="fas fa-external-link-alt"></i> Verificar en Have I Been Pwned
+                    </button>
+                    <button onclick="copyEmailToClipboard()" style="background: #17a2b8; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; margin: 5px; font-size: 0.9rem;">
+                        <i class="fas fa-copy"></i> Copiar Email
+                    </button>`, 
+                    'fas fa-info-circle');
+                return;
+            }
 
             try {
                 // Intentar con diferentes proxies y métodos
@@ -516,8 +573,31 @@
             }
         }
 
+        // Función para copiar email al portapapeles (útil en PWA)
+        async function copyEmailToClipboard() {
+            const email = document.getElementById('emailInput').value.trim();
+            if (!email) {
+                showResult('error', 'Por favor ingresa un correo electrónico primero', 'fas fa-exclamation-triangle');
+                return;
+            }
+            
+            try {
+                await navigator.clipboard.writeText(email);
+                showResult('safe', 
+                    '✅ Email copiado al portapapeles. Ahora puedes pegarlo en Have I Been Pwned.', 
+                    'fas fa-check-circle');
+            } catch (err) {
+                console.error('Error al copiar:', err);
+                showResult('error', 
+                    'No se pudo copiar automáticamente. Selecciona y copia manualmente tu email.', 
+                    'fas fa-exclamation-triangle');
+            }
+        }
+
         // Agregar botón alternativo después del botón principal
         document.addEventListener('DOMContentLoaded', function() {
+            showPWANotification();
+            
             const checkBtn = document.getElementById('checkBtn');
             const alternativeBtn = document.createElement('button');
             alternativeBtn.className = 'check-btn';
