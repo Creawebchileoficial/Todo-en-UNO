@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./assets/favicon_iotodo/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_iotodo/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_iotodo/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_iotodo/favicon-16x16.png">
+    <title>Calculadora de Comisiones de Afiliados - Todo Universidad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #0f172a;
+            --background: #f1f5f9;
+            --card-bg: #ffffff;
+            --accent: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%);
+            color: var(--secondary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 960px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
+            backdrop-filter: blur(8px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            color: #475569;
+            font-size: 1.05rem;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        input {
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .actions {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        button {
+            border: none;
+            border-radius: 16px;
+            padding: 14px 24px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: var(--secondary);
+            flex: none;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(15, 23, 42, 0.12);
+        }
+
+        .results {
+            margin-top: 36px;
+            display: none;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .result-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 12px 30px rgba(15, 23, 42, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .result-card:hover::after {
+            opacity: 1;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .result-detail {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .tips {
+            margin-top: 32px;
+            padding: 24px;
+            border-radius: 20px;
+            background: #f8fafc;
+            border: 2px dashed rgba(37, 99, 235, 0.15);
+        }
+
+        .tips h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .tips ul {
+            list-style: none;
+            display: grid;
+            gap: 8px;
+        }
+
+        .tips li {
+            padding-left: 20px;
+            position: relative;
+            color: #475569;
+        }
+
+        .tips li::before {
+            content: '\2713';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        footer {
+            margin-top: 36px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            .container {
+                padding: 24px;
+            }
+
+            header h1 {
+                font-size: 1.9rem;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculadora de Comisiones de Afiliados</h1>
+            <p>Descubre en segundos cuánto ganarás por cada venta y proyecta tus ingresos totales.</p>
+        </header>
+
+        <form id="commissionForm">
+            <div class="form-group">
+                <label for="productPrice">Precio del producto (CLP)</label>
+                <input type="number" id="productPrice" min="0" step="100" placeholder="Ejemplo: 23000" required>
+                <span class="input-hint">Ingresa el precio de venta sin puntos ni comas.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="commissionRate">Porcentaje de comisión (%)</label>
+                <input type="number" id="commissionRate" min="0" max="100" step="0.1" placeholder="Ejemplo: 10" required>
+                <span class="input-hint">Introduce el porcentaje que recibes por cada venta.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Cantidad de ventas</label>
+                <input type="number" id="quantity" min="1" step="1" value="1" required>
+                <span class="input-hint">Calcula el total de comisiones para múltiples ventas.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="extraCost">Costos adicionales por venta (opcional)</label>
+                <input type="number" id="extraCost" min="0" step="100" placeholder="Ejemplo: 1500">
+                <span class="input-hint">Incluye gastos como publicidad o envíos para tener la ganancia neta.</span>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn-primary">Calcular comisión</button>
+                <button type="button" class="btn-secondary" id="resetButton">Limpiar campos</button>
+            </div>
+        </form>
+
+        <section class="results" id="results" aria-live="polite">
+            <div class="results-grid">
+                <article class="result-card">
+                    <div class="result-label">Comisión por venta</div>
+                    <div class="result-value" id="commissionPerSale">$0</div>
+                    <p class="result-detail">Ingreso que recibes por cada venta concretada.</p>
+                </article>
+
+                <article class="result-card">
+                    <div class="result-label">Comisiones totales</div>
+                    <div class="result-value" id="totalCommission">$0</div>
+                    <p class="result-detail">Monto total acumulado según la cantidad de ventas ingresada.</p>
+                </article>
+
+                <article class="result-card">
+                    <div class="result-label">Ganancia neta</div>
+                    <div class="result-value" id="netEarnings">$0</div>
+                    <p class="result-detail">Comisiones totales menos los costos adicionales por venta.</p>
+                </article>
+
+                <article class="result-card">
+                    <div class="result-label">Ventas totales</div>
+                    <div class="result-value" id="grossSales">$0</div>
+                    <p class="result-detail">Suma de todas las ventas generadas con el precio indicado.</p>
+                </article>
+            </div>
+        </section>
+
+        <aside class="tips">
+            <h2>Consejos rápidos para optimizar tus comisiones</h2>
+            <ul>
+                <li>Experimenta con diferentes porcentajes para ver cómo impacta en tus ingresos.</li>
+                <li>Suma costos de publicidad o envíos para entender tu ganancia neta real.</li>
+                <li>Proyecta escenarios con diversas cantidades de ventas para definir tus metas.</li>
+            </ul>
+        </aside>
+
+        <footer>
+            <p>Parte del ecosistema de herramientas de <a href="index.html">Todo Universidad</a>.</p>
+        </footer>
+    </div>
+
+    <script>
+        const commissionForm = document.getElementById('commissionForm');
+        const resetButton = document.getElementById('resetButton');
+        const resultsSection = document.getElementById('results');
+        const commissionPerSaleElm = document.getElementById('commissionPerSale');
+        const totalCommissionElm = document.getElementById('totalCommission');
+        const netEarningsElm = document.getElementById('netEarnings');
+        const grossSalesElm = document.getElementById('grossSales');
+
+        const formatCurrency = (value) => {
+            return new Intl.NumberFormat('es-CL', {
+                style: 'currency',
+                currency: 'CLP',
+                maximumFractionDigits: 0
+            }).format(value);
+        };
+
+        const sanitizeNumber = (value) => {
+            if (typeof value !== 'number') {
+                value = parseFloat(value);
+            }
+            if (Number.isNaN(value) || !Number.isFinite(value)) {
+                return 0;
+            }
+            return value;
+        };
+
+        commissionForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const price = sanitizeNumber(document.getElementById('productPrice').value);
+            const commissionRate = sanitizeNumber(document.getElementById('commissionRate').value);
+            const quantity = sanitizeNumber(document.getElementById('quantity').value);
+            const extraCost = sanitizeNumber(document.getElementById('extraCost').value);
+
+            if (price <= 0 || commissionRate < 0 || quantity <= 0) {
+                alert('Revisa los valores ingresados. El precio y la cantidad deben ser mayores a 0, y la comisión no puede ser negativa.');
+                return;
+            }
+
+            if (commissionRate > 100) {
+                alert('El porcentaje de comisión no puede superar el 100%.');
+                return;
+            }
+
+            const commissionPerSale = price * (commissionRate / 100);
+            const totalCommission = commissionPerSale * quantity;
+            const totalExtraCosts = extraCost > 0 ? extraCost * quantity : 0;
+            const netEarnings = Math.max(totalCommission - totalExtraCosts, 0);
+            const grossSales = price * quantity;
+
+            commissionPerSaleElm.textContent = formatCurrency(commissionPerSale);
+            totalCommissionElm.textContent = formatCurrency(totalCommission);
+            netEarningsElm.textContent = formatCurrency(netEarnings);
+            grossSalesElm.textContent = formatCurrency(grossSales);
+
+            resultsSection.style.display = 'block';
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        resetButton.addEventListener('click', () => {
+            commissionForm.reset();
+            document.getElementById('quantity').value = 1;
+            resultsSection.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
